@@ -22,6 +22,9 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.arcrobotics.ftclib.drivebase.MecanumDrive;
+import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -71,8 +74,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 public class GoBildaStraferKit extends LinearOpMode {
 
     /* Declare OpMode members. */
-    public DcMotor  leftDrive   = null; //the left drivetrain motor
-    public DcMotor  rightDrive  = null; //the right drivetrain motor
     public DcMotor  armMotor    = null; //the arm motor
     public CRServo  intake      = null; //the active intake servo
     public Servo    wrist       = null; //the wrist servo
@@ -105,13 +106,15 @@ public class GoBildaStraferKit extends LinearOpMode {
     If you'd like it to move further, increase that number. If you'd like it to not move
     as far from the starting position, decrease it. */
 
+    private final double ARM_STARTING_DELTA = -3;
+
     final double ARM_COLLAPSED_INTO_ROBOT  = 0;
-    final double ARM_COLLECT               = 250 * ARM_TICKS_PER_DEGREE;
-    final double ARM_CLEAR_BARRIER         = 230 * ARM_TICKS_PER_DEGREE;
-    final double ARM_SCORE_SPECIMEN        = 160 * ARM_TICKS_PER_DEGREE;
-    final double ARM_SCORE_SAMPLE_IN_LOW   = 160 * ARM_TICKS_PER_DEGREE;
-    final double ARM_ATTACH_HANGING_HOOK   = 120 * ARM_TICKS_PER_DEGREE;
-    final double ARM_WINCH_ROBOT           = 15  * ARM_TICKS_PER_DEGREE;
+    final double ARM_COLLECT               = (250 + ARM_STARTING_DELTA) * ARM_TICKS_PER_DEGREE;
+    final double ARM_CLEAR_BARRIER         = (230 + ARM_STARTING_DELTA) * ARM_TICKS_PER_DEGREE;
+    final double ARM_SCORE_SPECIMEN        = (160 + ARM_STARTING_DELTA) * ARM_TICKS_PER_DEGREE;
+    final double ARM_SCORE_SAMPLE_IN_LOW   = (160 + ARM_STARTING_DELTA) * ARM_TICKS_PER_DEGREE;
+    final double ARM_ATTACH_HANGING_HOOK   = (120 + ARM_STARTING_DELTA) * ARM_TICKS_PER_DEGREE;
+    final double ARM_WINCH_ROBOT           = (15 + ARM_STARTING_DELTA)  * ARM_TICKS_PER_DEGREE;
 
     /* Variables to store the speed the intake servo should be set at to intake, and deposit game elements. */
     final double INTAKE_COLLECT    = -1.0;
@@ -143,27 +146,30 @@ public class GoBildaStraferKit extends LinearOpMode {
 
 
         /* Define and Initialize Motors */
-        leftDrive  = hardwareMap.get(DcMotor.class, "left_front_drive"); //the left drivetrain motor
-        rightDrive = hardwareMap.get(DcMotor.class, "right_front_drive"); //the right drivetrain motor
         armMotor   = hardwareMap.get(DcMotor.class, "left_arm"); //the arm motor
 
 
         /* Most skid-steer/differential drive robots require reversing one motor to drive forward.
         for this robot, we reverse the right motor.*/
-        leftDrive.setDirection(DcMotor.Direction.FORWARD);
-        rightDrive.setDirection(DcMotor.Direction.REVERSE);
 
 
         /* Setting zeroPowerBehavior to BRAKE enables a "brake mode". This causes the motor to slow down
         much faster when it is coasting. This creates a much more controllable drivetrain. As the robot
         stops much quicker. */
-        leftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         /*This sets the maximum current that the control hub will apply to the arm before throwing a flag */
         ((DcMotorEx) armMotor).setCurrentAlert(5,CurrentUnit.AMPS);
+        com.arcrobotics.ftclib.drivebase.MecanumDrive drive = new MecanumDrive(
+                new Motor(hardwareMap, "frontLeftMotor", Motor.GoBILDA.RPM_312),
+                new Motor(hardwareMap, "frontRightMotor", Motor.GoBILDA.RPM_312),
+                new Motor(hardwareMap, "backLeftMotor", Motor.GoBILDA.RPM_312),
+                new Motor(hardwareMap, "backRightMotor", Motor.GoBILDA.RPM_312)
+        );
 
+
+        // the extended gamepad object
+        GamepadEx driverOp = new GamepadEx(gamepad1);
 
         /* Before starting the armMotor. We'll make sure the TargetPosition is set to 0.
         Then we'll set the RunMode to RUN_TO_POSITION. And we'll ask it to stop and reset encoder.
@@ -179,7 +185,7 @@ public class GoBildaStraferKit extends LinearOpMode {
 
         /* Make sure that the intake is off, and the wrist is folded in. */
         intake.setPower(INTAKE_OFF);
-        wrist.setPosition(WRIST_FOLDED_IN);
+        wrist.setPosition(WRIST_FOLDED_OUT);
 
         /* Send telemetry message to signify robot waiting */
         telemetry.addLine("Robot Ready.");
@@ -190,34 +196,12 @@ public class GoBildaStraferKit extends LinearOpMode {
 
         /* Run until the driver presses stop */
         while (opModeIsActive()) {
-
-            /* Set the drive and turn variables to follow the joysticks on the gamepad.
-            the joysticks decrease as you push them up. So reverse the Y axis. */
-            forward = -gamepad1.left_stick_y;
-            rotate  = gamepad1.right_stick_x;
-
-
-            /* Here we "mix" the input channels together to find the power to apply to each motor.
-            The both motors need to be set to a mix of how much you're retesting the robot move
-            forward, and how much you're requesting the robot turn. When you ask the robot to rotate
-            the right and left motors need to move in opposite directions. So we will add rotate to
-            forward for the left motor, and subtract rotate from forward for the right motor. */
-
-            left  = forward + rotate;
-            right = forward - rotate;
-
-            /* Normalize the values so neither exceed +/- 1.0 */
-            max = Math.max(Math.abs(left), Math.abs(right));
-            if (max > 1.0)
-            {
-                left /= max;
-                right /= max;
-            }
-
-            /* Set the motor power to the variables we've mixed and normalized */
-            leftDrive.setPower(left);
-            rightDrive.setPower(right);
-
+            drive.driveRobotCentric(
+                    -driverOp.getLeftX(),
+                    -driverOp.getLeftY(),
+                    -driverOp.getRightX(),
+                    false
+            );
 
 
             /* Here we handle the three buttons that have direct control of the intake speed.
@@ -278,7 +262,7 @@ public class GoBildaStraferKit extends LinearOpMode {
                     back to folded inside the robot. This is also the starting configuration */
                 armPosition = ARM_COLLAPSED_INTO_ROBOT;
                 intake.setPower(INTAKE_OFF);
-                wrist.setPosition(WRIST_FOLDED_IN);
+                wrist.setPosition(WRIST_FOLDED_OUT);
             }
 
             else if (gamepad1.dpad_right){
