@@ -51,7 +51,7 @@ public class MeepMeepTesting {
                 .setTangent(Math.toRadians(150))
                 .splineToLinearHeading(new Pose2d(robotBasketDeliveryLocationX, robotBasketDeliveryLocationY, Math.toRadians(45)), Math.toRadians(45))
                 .waitSeconds(1)
-                // Picks up third sample into the field ( this might be wrong bc i changed it to 45 last second )
+                // Picks up third sample into the field (this might be wrong bc i changed it to 45 last second )
                 .setTangent(Math.toRadians(180))
                 .splineToLinearHeading(new Pose2d(robotThirdSampleLocationX,robotSamplePickupLocationY, Math.toRadians(45)), Math.toRadians(0))
                 .waitSeconds(1)
