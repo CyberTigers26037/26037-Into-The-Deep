@@ -6,7 +6,7 @@ import com.noahbres.meepmeep.MeepMeep;
 import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder;
 import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 
-public class MeepMeepTesting {
+public class MeepMeepTestingBaskets {
     private static final double TILE_WIDTH = 23.5;
     private static final double TILE_HEIGHT = 23.5;
     private static final double ROBOT_HEIGHT = 18;
@@ -27,8 +27,8 @@ public class MeepMeepTesting {
         double robotFirstSampleLocationX = 38;
         double robotSecondSampleLocationX = 48;
         double robotThirdSampleLocationX = 58;
-        double observationZoneLocationX = -57;
-        double observationZoneLocationY = 61;
+        double observationZoneLocationX = -34;
+        double observationZoneLocationY = 58;
 
 
         myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(robotStartingPositionX, robotStartingPositionY, Math.toRadians(270)))
@@ -52,17 +52,16 @@ public class MeepMeepTesting {
                 .splineToLinearHeading(new Pose2d(robotBasketDeliveryLocationX, robotBasketDeliveryLocationY, Math.toRadians(45)), Math.toRadians(45))
                 .waitSeconds(1)
                 // Picks up third sample into the field ( this might be wrong bc i changed it to 45 last second )
-                .setTangent(Math.toRadians(180))
-                .splineToLinearHeading(new Pose2d(robotThirdSampleLocationX,robotSamplePickupLocationY, Math.toRadians(45)), Math.toRadians(0))
+                .setTangent(Math.toRadians(215))
+                .splineToLinearHeading(new Pose2d(robotThirdSampleLocationX,robotSamplePickupLocationY, Math.toRadians(0)), Math.toRadians(0))
                 .waitSeconds(1)
                 // Drops off third sample into the basket
                 .setTangent(Math.toRadians(180))
                 .splineToLinearHeading(new Pose2d(robotBasketDeliveryLocationX, robotBasketDeliveryLocationY, Math.toRadians(45)), Math.toRadians(45))
                 .waitSeconds(1)
                 // Parks robot into observation zone (spins for some reason must fix once comes back)
-                .setTangent(Math.toRadians(180))
-                .splineToLinearHeading(new Pose2d(observationZoneLocationX, observationZoneLocationY, Math.toRadians(270)), Math.toRadians(130))
-                        .waitSeconds(1)
+                        .setTangent(Math.toRadians(200))
+                        .splineToLinearHeading(new Pose2d(observationZoneLocationX, observationZoneLocationY, Math.toRadians(0)), Math.toRadians(180))
                                 .build());
         meepMeep.setBackground(MeepMeep.Background.FIELD_INTO_THE_DEEP_JUICE_DARK)
                 .setDarkMode(true)
