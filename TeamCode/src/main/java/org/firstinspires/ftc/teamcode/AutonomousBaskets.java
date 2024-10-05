@@ -6,16 +6,21 @@ import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class AutonomousBaskets {
+
     private static final double TILE_WIDTH = 23.5;
     private static final double TILE_HEIGHT = 23.5;
     private static final double ROBOT_HEIGHT = 18;
     private static final double SAMPLE_HEIGHT = 3.5;
-    public void runAutonomous(HardwareMap hardwareMap) {
+    private MecanumDrive drive;
+    private double  robotStartingPositionY = 3*TILE_HEIGHT-ROBOT_HEIGHT/2;
+    private double robotStartingPositionX = TILE_WIDTH*1.5;
 
+    public AutonomousBaskets(HardwareMap hardwareMap) {
+        Pose2d beginningPose = new Pose2d(robotStartingPositionX, robotStartingPositionY, Math.toRadians(270));
+        drive = new MecanumDrive(hardwareMap,beginningPose);
+    }
+    public void runAutonomous() {
 
-
-        double robotStartingPositionY = 3*TILE_HEIGHT-ROBOT_HEIGHT/2;
-        double robotStartingPositionX = TILE_WIDTH*1.5;
         double robotSamplePickupLocationY = TILE_HEIGHT+(SAMPLE_HEIGHT)/2;
         double robotBasketDeliveryLocationX = 56;
         double robotBasketDeliveryLocationY = 56;
@@ -25,8 +30,6 @@ public class AutonomousBaskets {
         double observationZoneLocationX = -34;
         double observationZoneLocationY = 58;
 
-        Pose2d beginningPose = new Pose2d(robotStartingPositionX, robotStartingPositionY, Math.toRadians(270));
-        MecanumDrive drive = new MecanumDrive(hardwareMap,beginningPose);
 
         Actions.runBlocking(drive.actionBuilder(new Pose2d(robotStartingPositionX, robotStartingPositionY, Math.toRadians(270)))
                 // Goes to basket and drops off first sample
