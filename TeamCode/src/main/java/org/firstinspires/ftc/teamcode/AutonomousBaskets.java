@@ -24,7 +24,7 @@ public class AutonomousBaskets {
         double robotSamplePickupLocationY = TILE_HEIGHT+(SAMPLE_HEIGHT)/2;
         double robotBasketDeliveryLocationX = 56;
         double robotBasketDeliveryLocationY = 56;
-        double robotFirstSampleLocationX = 38;
+        double robotFirstSampleLocationX = 34.5;
         double robotSecondSampleLocationX = 48;
         double robotThirdSampleLocationX = 58;
         double observationZoneLocationX = -34;
@@ -36,9 +36,10 @@ public class AutonomousBaskets {
                 .splineTo(new Vector2d(56, 56), Math.toRadians(45))
                 .waitSeconds(1)
                 // Picks up first sample off of the field
-                .setTangent(Math.toRadians(215))
-                .splineToLinearHeading(new Pose2d(robotFirstSampleLocationX, robotSamplePickupLocationY, Math.toRadians(0)), 0)
-                .waitSeconds(1)
+                .setTangent(Math.toRadians(230))
+                .splineToLinearHeading(new Pose2d(robotFirstSampleLocationX,robotSamplePickupLocationY,Math.toRadians(0)), Math.toRadians(270))
+                .setTangent(0)
+                .lineToX(38)
                 // Drops off first sample into the basket
                 .setTangent(Math.toRadians(45))
                 .splineToLinearHeading(new Pose2d(robotBasketDeliveryLocationX, robotBasketDeliveryLocationY, Math.toRadians(45)), Math.toRadians(45))

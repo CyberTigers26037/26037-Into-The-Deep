@@ -39,14 +39,17 @@ public class AutoOp extends LinearOpMode {
         telemetry.addData("Auto Mode", basketDelivery ? "Baskets" : "Specimen");
         telemetry.update();
 
-        AutonomousBaskets opMode = new AutonomousBaskets(hardwareMap);
+        AutonomousBaskets opModeBaskets = new AutonomousBaskets(hardwareMap);
+        AutonomousSpecimens opModeSpecimens = new AutonomousSpecimens(hardwareMap);
 
         waitForStart();
 
         if (basketDelivery) {
-            opMode.runAutonomous();
+            opModeBaskets.runAutonomous();
         }
-
+        else {
+            opModeSpecimens.runAutonomous();
+        }
         while (opModeIsActive()) {
             telemetry.addData("Status", "Running");
             telemetry.update();

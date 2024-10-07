@@ -1,26 +1,26 @@
-package com.example.meepmeeptesting;
+package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.Vector2d;
-import com.noahbres.meepmeep.MeepMeep;
-import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder;
-import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
+import com.acmerobotics.roadrunner.ftc.Actions;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
-public class MeepMeepTestingSpecimens {
+public class AutonomousSpecimens {
+
     private static final double TILE_WIDTH = 23.5;
     private static final double TILE_HEIGHT = 23.5;
     private static final double ROBOT_HEIGHT = 18;
     private static final double SAMPLE_HEIGHT = 3.5;
-    public static void main(String[] args) {
-        MeepMeep meepMeep = new MeepMeep(600);
+    private MecanumDrive drive;
+    private double robotStartingPositionY = 3*TILE_HEIGHT-ROBOT_HEIGHT/2;
+    private double robotStartingPositionX = -TILE_WIDTH*0.5;
 
-        RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep)
-                // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
-                .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
-                .build();
+    public AutonomousSpecimens(HardwareMap hardwareMap) {
+        Pose2d beginningPose = new Pose2d(robotStartingPositionX, robotStartingPositionY, Math.toRadians(270));
+        drive = new MecanumDrive(hardwareMap,beginningPose);
+    }
+    public void runAutonomous() {
 
-        double robotStartingPositionY = 3*TILE_HEIGHT-ROBOT_HEIGHT/2;
-        double robotStartingPositionX = -TILE_WIDTH*0.5;
         double robotSamplePickupLocationY = TILE_HEIGHT+(SAMPLE_HEIGHT)/2;
         double robotFirstTeamSampleLocationX = -38;
         double robotSecondTeamSampleLocationX = -48;
@@ -29,8 +29,8 @@ public class MeepMeepTestingSpecimens {
         double observationZoneLocationY = 57;
 
 
-        myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(robotStartingPositionX, robotStartingPositionY, Math.toRadians(270)))
-                // Goes to bar and hangs beginning sample sample
+        Actions.runBlocking(drive.actionBuilder(new Pose2d(robotStartingPositionX, robotStartingPositionY, Math.toRadians(270)))
+                // Goes to bar and hangs beginning sample
                 .splineTo(new Vector2d(0,32), Math.toRadians(270))
                 .waitSeconds(1)
                 // Picks up first team sample off of the field
@@ -57,12 +57,7 @@ public class MeepMeepTestingSpecimens {
                 .setTangent(Math.toRadians(90))
                 .splineToLinearHeading(new Pose2d(observationZoneLocationX, observationZoneLocationY, Math.toRadians(90)), Math.toRadians(130))
                 .waitSeconds(1)
-
                 .build());
-        meepMeep.setBackground(MeepMeep.Background.FIELD_INTO_THE_DEEP_JUICE_DARK)
-                .setDarkMode(true)
-                .setBackgroundAlpha(0.95f)
-                .addEntity(myBot)
-                .start();
+
     }
 }
