@@ -36,7 +36,7 @@ public class MeepMeepTestingBaskets {
                 .splineTo(new Vector2d(56,56), Math.toRadians(45))
                 .waitSeconds(1)
                 // Picks up first sample off of the field
-                .setTangent(Math.toRadians(215))
+                .setTangent(Math.toRadians(180))
                 .splineToLinearHeading(new Pose2d(robotFirstSampleLocationX,robotSamplePickupLocationY,Math.toRadians(0)), 0)
                 .waitSeconds(1)
                 // Drops off first sample into the basket

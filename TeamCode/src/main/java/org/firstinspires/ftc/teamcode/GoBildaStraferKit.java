@@ -106,7 +106,7 @@ public class GoBildaStraferKit extends LinearOpMode {
     If you'd like it to move further, increase that number. If you'd like it to not move
     as far from the starting position, decrease it. */
 
-    private final double ARM_STARTING_DELTA = -3;
+    private final double ARM_STARTING_DELTA = 0;
 
     final double ARM_COLLAPSED_INTO_ROBOT  = 0;
     final double ARM_COLLECT               = (250 + ARM_STARTING_DELTA) * ARM_TICKS_PER_DEGREE;
@@ -184,8 +184,8 @@ public class GoBildaStraferKit extends LinearOpMode {
         wrist  = hardwareMap.get(Servo.class, "wrist");
 
         /* Make sure that the intake is off, and the wrist is folded in. */
-        intake.setPower(INTAKE_OFF);
-        wrist.setPosition(WRIST_FOLDED_OUT);
+       intake.setPower(INTAKE_OFF);
+       wrist.setPosition(WRIST_FOLDED_OUT);
 
         /* Send telemetry message to signify robot waiting */
         telemetry.addLine("Robot Ready.");
