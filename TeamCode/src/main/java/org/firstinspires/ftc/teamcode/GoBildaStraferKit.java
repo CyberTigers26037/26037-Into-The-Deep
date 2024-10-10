@@ -108,6 +108,7 @@ public class GoBildaStraferKit extends LinearOpMode {
     as far from the starting position, decrease it. */
 
     private final double ARM_STARTING_DELTA = -7;
+    private final double EXPO_RATE = 1.4;
 
     final double ARM_COLLAPSED_INTO_ROBOT  = 0;
     final double ARM_COLLECT               = (250 + ARM_STARTING_DELTA) * ARM_TICKS_PER_DEGREE;
@@ -229,9 +230,9 @@ public class GoBildaStraferKit extends LinearOpMode {
         /* Run until the driver presses stop */
         while (opModeIsActive()) {
             drive.driveRobotCentric(
-                    -driverOp.getLeftX(),
-                    -driverOp.getLeftY(),
-                    -driverOp.getRightX(),
+                    -exponentialRate(driverOp.getLeftX(), EXPO_RATE),
+                    -exponentialRate(driverOp.getLeftY(), EXPO_RATE),
+                    -exponentialRate(driverOp.getRightX(), EXPO_RATE),
                     false
             );
 
@@ -369,5 +370,8 @@ public class GoBildaStraferKit extends LinearOpMode {
             telemetry.update();
 
         }
+    }
+    private double exponentialRate(double oldValue, double exponent) {
+        return Math.signum(oldValue) * Math.pow(Math.abs(oldValue), exponent);
     }
 }

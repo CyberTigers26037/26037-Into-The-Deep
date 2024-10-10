@@ -10,6 +10,11 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 @TeleOp
 public class MecanumDrivingSample extends LinearOpMode {
 
+    private double expoRate = 1.0;
+    private boolean previousDpadUp = false;
+    private boolean previousDpadDown = false;
+
+
     @Override
     public void runOpMode() throws InterruptedException {
         // constructor takes in frontLeft, frontRight, backLeft, backRight motors
@@ -28,14 +33,26 @@ public class MecanumDrivingSample extends LinearOpMode {
         waitForStart();
 
         while (!isStopRequested()) {
-
+                if (gamepad1.dpad_up && !previousDpadUp) {
+                    expoRate += 0.1;
+                }
+                if (gamepad1.dpad_down && !previousDpadDown) {
+                    expoRate -= 0.1;
+                }
+                previousDpadUp = gamepad1.dpad_up;
+                previousDpadDown = gamepad1.dpad_down;
                 drive.driveRobotCentric(
-                        driverOp.getLeftX(),
-                        driverOp.getLeftY(),
-                        driverOp.getRightX(),
+                        -exponentialRate(driverOp.getLeftX(), expoRate),
+                        -exponentialRate(driverOp.getLeftY(), expoRate),
+                        -exponentialRate(driverOp.getRightX(), expoRate),
                         false
                 );
-            }
-            }
-
+                telemetry.addData("Expo Rate:", expoRate);
+                telemetry.update();
         }
+    }
+
+    private double exponentialRate(double oldValue, double exponent) {
+        return Math.signum(oldValue) * Math.pow(Math.abs(oldValue), exponent);
+    }
+}
