@@ -117,6 +117,7 @@ public class GoBildaStraferKit extends LinearOpMode {
     final double ARM_SCORE_SAMPLE_IN_LOW   = (160 + ARM_STARTING_DELTA) * ARM_TICKS_PER_DEGREE;
     final double ARM_ATTACH_HANGING_HOOK   = (120 + ARM_STARTING_DELTA) * ARM_TICKS_PER_DEGREE;
     final double ARM_WINCH_ROBOT           = (15 + ARM_STARTING_DELTA)  * ARM_TICKS_PER_DEGREE;
+    final double ARM_JOYSTICK_Y            = (0.5 * ARM_TICKS_PER_DEGREE);
 
     /* Variables to store the speed the intake servo should be set at to intake, and deposit game elements. */
     final double INTAKE_COLLECT    = -1.0;
@@ -328,7 +329,7 @@ public class GoBildaStraferKit extends LinearOpMode {
             The FUDGE_FACTOR is the number of degrees that we can adjust the arm by with this function. */
 
             armPositionFudgeFactor = FUDGE_FACTOR * (armGamepad.right_trigger + (-armGamepad.left_trigger));
-
+            armPosition += ARM_JOYSTICK_Y * (armGamepad.right_stick_y);
 
             /* Here we set the target position of our arm to match the variable that was selected
             by the driver.
