@@ -30,6 +30,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
@@ -132,6 +133,10 @@ public class GoBildaStraferKit extends LinearOpMode {
     double armPosition = (int)ARM_COLLAPSED_INTO_ROBOT;
     double armPositionFudgeFactor;
 
+    Boolean twoPlayers = null;
+
+    boolean initialized = false;
+
 
     @Override
     public void runOpMode() {
@@ -187,12 +192,39 @@ public class GoBildaStraferKit extends LinearOpMode {
        intake.setPower(INTAKE_OFF);
        wrist.setPosition(WRIST_FOLDED_OUT);
 
+        boolean previousA = false;
+        boolean previousB = false;
+
+        while (!initialized) {
+            boolean currentA = gamepad1.a;
+            boolean currentB = gamepad1.b;
+
+            if (twoPlayers == null) {
+                telemetry.addData("Num Players", "A = 1, B = 2");
+                telemetry.update();
+                if (currentA && !previousA) {
+                    twoPlayers = false;
+                }
+                if (currentB && !previousB) {
+                    twoPlayers = true;
+                }
+            }
+            else {
+                initialized = true;
+            }
+            previousA = currentA;
+            previousB = currentB;
+        }
+        telemetry.addData("Num Players", twoPlayers ? "2" : "1");
+
         /* Send telemetry message to signify robot waiting */
         telemetry.addLine("Robot Ready.");
         telemetry.update();
 
         /* Wait for the game driver to press play */
         waitForStart();
+
+        Gamepad armGamepad = twoPlayers ? gamepad2 : gamepad1;
 
         /* Run until the driver presses stop */
         while (opModeIsActive()) {
@@ -218,13 +250,13 @@ public class GoBildaStraferKit extends LinearOpMode {
             three if statements, then it will set the intake servo's power to multiple speeds in
             one cycle. Which can cause strange behavior. */
 
-            if (gamepad1.a) {
+            if (armGamepad.a) {
                 intake.setPower(INTAKE_COLLECT);
             }
-            else if (gamepad1.x) {
+            else if (armGamepad.x) {
                 intake.setPower(INTAKE_OFF);
             }
-            else if (gamepad1.b) {
+            else if (armGamepad.b) {
                 intake.setPower(INTAKE_DEPOSIT);
             }
 
@@ -237,14 +269,14 @@ public class GoBildaStraferKit extends LinearOpMode {
             it folds out the wrist to make sure it is in the correct orientation to intake, and it
             turns the intake on to the COLLECT mode.*/
 
-            if(gamepad1.right_bumper){
+            if(armGamepad.right_bumper){
                 /* This is the intaking/collecting arm position */
                 armPosition = ARM_COLLECT;
                 wrist.setPosition(WRIST_FOLDED_OUT);
                 intake.setPower(INTAKE_COLLECT);
             }
 
-            else if (gamepad1.left_bumper){
+            else if (armGamepad.left_bumper){
                     /* This is about 20° up from the collecting position to clear the barrier
                     Note here that we don't set the wrist position or the intake power when we
                     select this "mode", this means that the intake and wrist will continue what
@@ -252,12 +284,12 @@ public class GoBildaStraferKit extends LinearOpMode {
                 armPosition = ARM_CLEAR_BARRIER;
             }
 
-            else if (gamepad1.y){
+            else if (armGamepad.y){
                 /* This is the correct height to score the sample in the LOW BASKET */
                 armPosition = ARM_SCORE_SAMPLE_IN_LOW;
             }
 
-            else if (gamepad1.dpad_left) {
+            else if (armGamepad.dpad_left) {
                     /* This turns off the intake, folds in the wrist, and moves the arm
                     back to folded inside the robot. This is also the starting configuration */
                 armPosition = ARM_COLLAPSED_INTO_ROBOT;
@@ -265,20 +297,20 @@ public class GoBildaStraferKit extends LinearOpMode {
                 wrist.setPosition(WRIST_FOLDED_OUT);
             }
 
-            else if (gamepad1.dpad_right){
+            else if (armGamepad.dpad_right){
                 /* This is the correct height to score SPECIMEN on the HIGH CHAMBER */
                 armPosition = ARM_SCORE_SPECIMEN;
                 wrist.setPosition(WRIST_FOLDED_IN);
             }
 
-            else if (gamepad1.dpad_up){
+            else if (armGamepad.dpad_up){
                 /* This sets the arm to vertical to hook onto the LOW RUNG for hanging */
                 armPosition = ARM_ATTACH_HANGING_HOOK;
                 intake.setPower(INTAKE_OFF);
                 wrist.setPosition(WRIST_FOLDED_IN);
             }
 
-            else if (gamepad1.dpad_down){
+            else if (armGamepad.dpad_down){
                 /* this moves the arm down to lift the robot up once it has been hooked */
                 armPosition = ARM_WINCH_ROBOT;
                 intake.setPower(INTAKE_OFF);
@@ -294,7 +326,7 @@ public class GoBildaStraferKit extends LinearOpMode {
             than the other, it "wins out". This variable is then multiplied by our FUDGE_FACTOR.
             The FUDGE_FACTOR is the number of degrees that we can adjust the arm by with this function. */
 
-            armPositionFudgeFactor = FUDGE_FACTOR * (gamepad1.right_trigger + (-gamepad1.left_trigger));
+            armPositionFudgeFactor = FUDGE_FACTOR * (armGamepad.right_trigger + (-armGamepad.left_trigger));
 
 
             /* Here we set the target position of our arm to match the variable that was selected
