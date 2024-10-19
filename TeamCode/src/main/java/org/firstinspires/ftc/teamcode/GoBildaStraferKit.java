@@ -127,7 +127,7 @@ public class GoBildaStraferKit extends LinearOpMode {
     /* Variables to store the positions that the wrist should be set to when folding in, or folding out. */
     final double WRIST_FOLDED_IN   = 0.8333;
     final double WRIST_FOLDED_OUT  = 0.5;
-    double WRIST_SERVO_ADJUSTMENT = -0.02;
+    final double WRIST_SERVO_ADJUSTMENT = -0.02;
 
     /* A number in degrees that the triggers can adjust the arm position by */
     final double FUDGE_FACTOR = 15 * ARM_TICKS_PER_DEGREE;
