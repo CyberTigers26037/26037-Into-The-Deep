@@ -127,6 +127,7 @@ public class GoBildaStraferKit extends LinearOpMode {
     /* Variables to store the positions that the wrist should be set to when folding in, or folding out. */
     final double WRIST_FOLDED_IN   = 0.8333;
     final double WRIST_FOLDED_OUT  = 0.5;
+    double WRIST_SERVO_ADJUSTMENT = 0.02;
 
     /* A number in degrees that the triggers can adjust the arm position by */
     final double FUDGE_FACTOR = 15 * ARM_TICKS_PER_DEGREE;
@@ -192,7 +193,7 @@ public class GoBildaStraferKit extends LinearOpMode {
 
         /* Make sure that the intake is off, and the wrist is folded in. */
        intake.setPower(INTAKE_OFF);
-       wrist.setPosition(WRIST_FOLDED_OUT);
+       wrist.setPosition(WRIST_FOLDED_OUT + WRIST_SERVO_ADJUSTMENT);
 
         boolean previousA = false;
         boolean previousB = false;
@@ -274,7 +275,7 @@ public class GoBildaStraferKit extends LinearOpMode {
             if(armGamepad.right_bumper){
                 /* This is the intaking/collecting arm position */
                 armPosition = ARM_COLLECT;
-                wrist.setPosition(WRIST_FOLDED_OUT);
+                wrist.setPosition(WRIST_FOLDED_OUT + WRIST_SERVO_ADJUSTMENT);
                 intake.setPower(INTAKE_COLLECT);
             }
 
@@ -296,27 +297,27 @@ public class GoBildaStraferKit extends LinearOpMode {
                     back to folded inside the robot. This is also the starting configuration */
                 armPosition = ARM_COLLAPSED_INTO_ROBOT;
                 intake.setPower(INTAKE_OFF);
-                wrist.setPosition(WRIST_FOLDED_OUT);
+                wrist.setPosition(WRIST_FOLDED_OUT + WRIST_SERVO_ADJUSTMENT);
             }
 
             else if (armGamepad.dpad_right){
                 /* This is the correct height to score SPECIMEN on the HIGH CHAMBER */
                 armPosition = ARM_SCORE_SPECIMEN;
-                wrist.setPosition(WRIST_FOLDED_IN);
+                wrist.setPosition(WRIST_FOLDED_IN + WRIST_SERVO_ADJUSTMENT);
             }
 
             else if (armGamepad.dpad_up){
                 /* This sets the arm to vertical to hook onto the LOW RUNG for hanging */
                 armPosition = ARM_ATTACH_HANGING_HOOK;
                 intake.setPower(INTAKE_OFF);
-                wrist.setPosition(WRIST_FOLDED_IN);
+                wrist.setPosition(WRIST_FOLDED_IN + WRIST_SERVO_ADJUSTMENT);
             }
 
             else if (armGamepad.dpad_down){
                 /* this moves the arm down to lift the robot up once it has been hooked */
                 armPosition = ARM_WINCH_ROBOT;
                 intake.setPower(INTAKE_OFF);
-                wrist.setPosition(WRIST_FOLDED_IN);
+                wrist.setPosition(WRIST_FOLDED_IN + WRIST_SERVO_ADJUSTMENT);
             }
 
 
