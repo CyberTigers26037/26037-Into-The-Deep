@@ -25,6 +25,7 @@ package org.firstinspires.ftc.teamcode;
 import com.arcrobotics.ftclib.drivebase.MecanumDrive;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -71,7 +72,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 
 
 @TeleOp(name="FTC Starter Kit Example Robot (INTO THE DEEP)", group="Robot")
-//@Disabled
+@Disabled
 public class GoBildaStraferKit extends LinearOpMode {
 
     /* Declare OpMode members. */
