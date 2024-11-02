@@ -31,6 +31,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
+import org.firstinspires.ftc.teamcode.subassembly.Claw;
 
 /*
  * This is (mostly) the OpMode used in the goBILDA Robot in 3 Days for the 24-25 Into The Deep FTC Season.
@@ -61,6 +62,7 @@ public class GoBildaRi3D2425 extends LinearOpMode {
 
     public DcMotor  armMotor         = null; //the arm motor
     public DcMotor viperSlideMotor = null; //
+    private Claw claw;
 
 
     private final double EXPO_RATE = 1.4;
@@ -111,7 +113,7 @@ public class GoBildaRi3D2425 extends LinearOpMode {
 
     final double VIPERSLIDE_COLLAPSED = 0 * VIPERSLIDE_TICKS_PER_MM;
 
-    final double VIPERSLIDE_SCORING_IN_HIGH_BASKET = 480 * VIPERSLIDE_TICKS_PER_MM;
+    final double VIPERSLIDE_SCORING_IN_HIGH_BASKET = 460 * VIPERSLIDE_TICKS_PER_MM;
 
     double viperSlidePosition = VIPERSLIDE_COLLAPSED;
 
@@ -154,7 +156,8 @@ public class GoBildaRi3D2425 extends LinearOpMode {
         viperSlideMotor.setTargetPosition(0);
         viperSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         viperSlideMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
+        claw = new Claw(hardwareMap);
+        claw.zero();
         /* Send telemetry message to signify robot waiting */
         telemetry.addLine("Robot Ready.");
         telemetry.update();
@@ -190,13 +193,13 @@ public class GoBildaRi3D2425 extends LinearOpMode {
             it folds out the wrist to make sure it is in the correct orientation to intake, and it
             turns the intake on to the COLLECT mode.*/
 
-            if(gamepad1.a){
-                /* This is the intaking/collecting arm position */
+            if(gamepad2.a){
+                /* This is the vertical claw pick-up/collecting arm position */
                 armPosition = ARM_COLLECT;
                 viperSlidePosition = VIPERSLIDE_COLLAPSED;
+                claw.prepareToPickupVerticalSample();
             }
-
-            else if (gamepad1.b){
+            else if (gamepad2.b){
                     /* This is about 20° up from the collecting position to clear the barrier
                     Note here that we don't set the wrist position or the intake power when we
                     select this "mode", this means that the intake and wrist will continue what
@@ -204,32 +207,39 @@ public class GoBildaRi3D2425 extends LinearOpMode {
                 armPosition = ARM_CLEAR_BARRIER;
             }
 
-            else if (gamepad1.x){
+            else if (gamepad2.x){
                 /* This is the correct height to score the sample in the HIGH BASKET */
                 armPosition = ARM_SCORE_SAMPLE_IN_LOW;
                 viperSlidePosition = VIPERSLIDE_SCORING_IN_HIGH_BASKET;
+                claw.prepareToDropSampleBasket();
             }
 
-            else if (gamepad1.dpad_left) {
+            else if (gamepad2.dpad_left) {
                     /* This turns off the intake, folds in the wrist, and moves the arm
                     back to folded inside the robot. This is also the starting configuration */
                 armPosition = ARM_COLLAPSED_INTO_ROBOT;
                 viperSlidePosition = VIPERSLIDE_COLLAPSED;
+                claw.zero();
             }
 
-            else if (gamepad1.dpad_right){
+            else if (gamepad2.dpad_right){
                 /* This is the correct height to score SPECIMEN on the HIGH CHAMBER */
                 armPosition = ARM_SCORE_SPECIMEN;
+                claw.prepareToHangSpecimen();
             }
 
-            else if (gamepad1.dpad_up){
+            else if (gamepad2.dpad_up){
                 /* This sets the arm to vertical to hook onto the LOW RUNG for hanging */
                 armPosition = ARM_ATTACH_HANGING_HOOK;
+                claw.zero();
             }
 
-            else if (gamepad1.dpad_down){
+            else if (gamepad2.dpad_down){
                 /* this moves the arm down to viper slide the robot up once it has been hooked */
                 armPosition = ARM_WINCH_ROBOT;
+            }
+            else if (gamepad2.right_stick_button) {
+                claw.togglePincher();
             }
 
             /*
@@ -281,10 +291,10 @@ public class GoBildaRi3D2425 extends LinearOpMode {
             that our viper slide can move 2800mm in one cycle, but since each cycle is only a fraction of a second,
             we are only incrementing it a small amount each cycle.
              */
-            if (gamepad1.right_bumper){
+            if (gamepad2.right_bumper){
                 viperSlidePosition += 2800 * cycletime;
             }
-            else if (gamepad1.left_bumper){
+            else if (gamepad2.left_bumper){
                 viperSlidePosition -= 2800 * cycletime;
             }
             /*here we check to see if the viper slide is trying to go higher than the maximum extension.
