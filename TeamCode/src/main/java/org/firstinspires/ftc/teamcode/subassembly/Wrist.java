@@ -14,22 +14,32 @@ public class Wrist {
         servo = hwMap.get(Servo.class, "Wrist");
     }
 
-    public void straight() {
+    private boolean isStraight;
+    public void straight(){
         setServoToAngle(0);
+        isStraight = true;
     }
     public void right90() {
         setServoToAngle(-90);
+        isStraight = false;
     }
+
     public void left90() {
         setServoToAngle(90);
+        isStraight = false;
     }
+
     public void zero() {
         setServoToAngle(0);
+        isStraight = true;
     }
+
     public void adjustAngle(double degrees){
         setServoToAngle(currentAngle+degrees);
+        isStraight = false;
     }
-    private void setServoToAngle(double degrees) {
+
+    private void setServoToAngle(double degrees){
         degrees=Range.clip(degrees,MIN_SAFE_DEGREES,MAX_SAFE_DEGREES);
         currentAngle = degrees;
         servo.setPosition(Range.scale(degrees, -SERVO_DEGREES / 2, SERVO_DEGREES / 2, 0, 1));
@@ -41,4 +51,14 @@ public class Wrist {
         return currentAngle;
 
     }
+    public void toggleAngle() {
+        if (isStraight) {
+            right90();
+        }
+        else{
+            straight();
+        }
+
+    }
 }
+

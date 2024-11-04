@@ -30,6 +30,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.util.Range;
+
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.subassembly.Claw;
 
@@ -97,10 +99,14 @@ public class GoBildaRi3D2425 extends LinearOpMode {
     final double ARM_COLLAPSED_INTO_ROBOT  = 0;
     final double ARM_COLLECT               = 0 * ARM_TICKS_PER_DEGREE;
     final double ARM_CLEAR_BARRIER         = 15 * ARM_TICKS_PER_DEGREE;
-    final double ARM_SCORE_SPECIMEN        = 90 * ARM_TICKS_PER_DEGREE;
-    final double ARM_SCORE_SAMPLE_IN_LOW   = 90 * ARM_TICKS_PER_DEGREE;
+    final double ARM_SCORE_SPECIMEN_LOW_CHAMBER        = 32 * ARM_TICKS_PER_DEGREE;
+    final double ARM_SCORE_SPECIMEN_HIGH_CHAMBER       = 70 * ARM_TICKS_PER_DEGREE;
+    final double ARM_SCORE_SAMPLE_IN_LOW   = 72 * ARM_TICKS_PER_DEGREE;
+    final double ARM_SCORE_SAMPLE_IN_HIGH  = 90 * ARM_TICKS_PER_DEGREE; //TODO
     final double ARM_ATTACH_HANGING_HOOK   = 110 * ARM_TICKS_PER_DEGREE;
     final double ARM_WINCH_ROBOT           = 10  * ARM_TICKS_PER_DEGREE;
+    final double ARM_MINIMUM               = 0;
+    final double ARM_MAXIMUM               = 110 * ARM_TICKS_PER_DEGREE;
 
     /* A number in degrees that the triggers can adjust the arm position by */
     final double FUDGE_FACTOR = 15 * ARM_TICKS_PER_DEGREE;
@@ -114,6 +120,13 @@ public class GoBildaRi3D2425 extends LinearOpMode {
     final double VIPERSLIDE_COLLAPSED = 0 * VIPERSLIDE_TICKS_PER_MM;
 
     final double VIPERSLIDE_SCORING_IN_HIGH_BASKET = 460 * VIPERSLIDE_TICKS_PER_MM;
+
+    final double VIPERSLIDE_SCORING_IN_LOW_BASKET = 120 * VIPERSLIDE_TICKS_PER_MM; //TODO
+
+    final double VIPERSLIDE_HIGH_CHAMBER = 0 * VIPERSLIDE_TICKS_PER_MM; //TODO
+
+    final double VIPERSLIDE_LOW_CHAMBER = 0 * VIPERSLIDE_TICKS_PER_MM; //TODO
+
 
     double viperSlidePosition = VIPERSLIDE_COLLAPSED;
 
@@ -194,10 +207,11 @@ public class GoBildaRi3D2425 extends LinearOpMode {
             turns the intake on to the COLLECT mode.*/
 
             if(gamepad2.a){
-                /* This is the vertical claw pick-up/collecting arm position */
-                armPosition = ARM_COLLECT;
-                viperSlidePosition = VIPERSLIDE_COLLAPSED;
-                claw.prepareToPickupVerticalSample();
+                /* This is the correct height to score the sample in the LOW BASKET */
+                armPosition = ARM_SCORE_SAMPLE_IN_LOW;
+                viperSlidePosition = VIPERSLIDE_SCORING_IN_LOW_BASKET;
+                claw.prepareToDropSampleBasket();
+
             }
             else if (gamepad2.b){
                     /* This is about 20° up from the collecting position to clear the barrier
@@ -208,13 +222,25 @@ public class GoBildaRi3D2425 extends LinearOpMode {
             }
 
             else if (gamepad2.x){
-                /* This is the correct height to score the sample in the HIGH BASKET */
-                armPosition = ARM_SCORE_SAMPLE_IN_LOW;
+                /* This is the vertical claw pick-up/collecting arm position */
+                armPosition = ARM_COLLECT;
+                viperSlidePosition = VIPERSLIDE_COLLAPSED;
+                claw.prepareToPickupVerticalSample();
+            }
+            else if (gamepad2.y){
+                /* This is the correct height to score the sample in the HIGH BASKET*/
+                armPosition = ARM_SCORE_SAMPLE_IN_HIGH;
                 viperSlidePosition = VIPERSLIDE_SCORING_IN_HIGH_BASKET;
                 claw.prepareToDropSampleBasket();
             }
 
-            else if (gamepad2.dpad_left) {
+            else if (gamepad2.dpad_left){
+                armPosition = ARM_SCORE_SPECIMEN_LOW_CHAMBER;
+                viperSlidePosition = VIPERSLIDE_LOW_CHAMBER;
+                claw.prepareToHangSpecimen();
+            }
+
+            else if (gamepad1.dpad_left) {
                     /* This turns off the intake, folds in the wrist, and moves the arm
                     back to folded inside the robot. This is also the starting configuration */
                 armPosition = ARM_COLLAPSED_INTO_ROBOT;
@@ -224,23 +250,34 @@ public class GoBildaRi3D2425 extends LinearOpMode {
 
             else if (gamepad2.dpad_right){
                 /* This is the correct height to score SPECIMEN on the HIGH CHAMBER */
-                armPosition = ARM_SCORE_SPECIMEN;
+                armPosition = ARM_SCORE_SPECIMEN_HIGH_CHAMBER;
+                viperSlidePosition = VIPERSLIDE_HIGH_CHAMBER;
                 claw.prepareToHangSpecimen();
             }
 
-            else if (gamepad2.dpad_up){
+            else if (gamepad1.dpad_up){
                 /* This sets the arm to vertical to hook onto the LOW RUNG for hanging */
                 armPosition = ARM_ATTACH_HANGING_HOOK;
+                viperSlidePosition = VIPERSLIDE_COLLAPSED;
                 claw.zero();
             }
 
-            else if (gamepad2.dpad_down){
+            else if (gamepad1.dpad_down){
                 /* this moves the arm down to viper slide the robot up once it has been hooked */
                 armPosition = ARM_WINCH_ROBOT;
             }
             else if (gamepad2.right_stick_button) {
                 claw.togglePincher();
             }
+            else if (gamepad2.left_stick_button)  {
+                claw.toggleWristAngle();
+            }
+            claw.adjustWristAngle(gamepad2.left_stick_y);
+
+            claw.adjustElbowAngle(gamepad2.left_stick_x);
+
+            armPosition += gamepad2.right_stick_y * ARM_TICKS_PER_DEGREE * 0.1;
+            armPosition = Range.clip(armPosition, ARM_MINIMUM, ARM_MAXIMUM);
 
             /*
             This is probably my favorite piece of code on this robot. It's a clever little software
@@ -335,8 +372,10 @@ public class GoBildaRi3D2425 extends LinearOpMode {
 
             /* send telemetry to the driver of the arm's current position and target position */
             telemetry.addData("arm Target Position: ", armMotor.getTargetPosition());
+            telemetry.addData("arm Position (degrees): ", armPosition/ARM_TICKS_PER_DEGREE);
             telemetry.addData("arm Encoder: ", armMotor.getCurrentPosition());
             telemetry.addData("slide variable", viperSlidePosition);
+            telemetry.addData("slide Position (mm) : ", viperSlidePosition/VIPERSLIDE_TICKS_PER_MM);
             telemetry.addData("slide Target Position", viperSlideMotor.getTargetPosition());
             telemetry.addData("slide current position", viperSlideMotor.getCurrentPosition());
             telemetry.addData("slideMotor Current:",((DcMotorEx) viperSlideMotor).getCurrent(CurrentUnit.AMPS));
