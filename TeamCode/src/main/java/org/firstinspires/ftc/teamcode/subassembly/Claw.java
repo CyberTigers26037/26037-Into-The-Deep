@@ -5,9 +5,9 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Claw {
 
-    private Elbow elbow;
-    private Pincher pincher;
-    private Wrist wrist;
+    private final Elbow elbow;
+    private final Pincher pincher;
+    private final Wrist wrist;
 
     public Claw(HardwareMap hwMap) {
         elbow = new Elbow(hwMap);
