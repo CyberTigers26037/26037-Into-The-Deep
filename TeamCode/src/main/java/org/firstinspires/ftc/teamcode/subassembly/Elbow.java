@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 public class Elbow {
     private Servo servo;
     private static final double SERVO_DEGREES = 270;
@@ -18,7 +20,23 @@ public class Elbow {
         setServoToAngle(-90);
     }
     public void down() {
-    setServoToAngle(0);
+        setServoToAngle(0);
+    }
+
+    public void prepareToDropSampleLowBasket() {
+        setServoToAngle(-47);
+    }
+
+    public void prepareToDropSampleHighBasket() {
+        setServoToAngle(-33);
+    }
+
+    public void prepareToPickupVerticalSample() {
+        setServoToAngle(-12);
+    }
+
+    public void prepareToHangHighSpecimen() {
+        setServoToAngle(-50);
     }
 
     public void zero() {setServoToAngle(0);}
@@ -36,5 +54,7 @@ public class Elbow {
 
         return currentAngle;
     }
-
+    public void outputTelemetry(Telemetry telemetry) {
+        telemetry.addData("Elbow Angle", currentAngle);
+    }
 }

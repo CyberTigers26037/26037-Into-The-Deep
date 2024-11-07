@@ -97,7 +97,7 @@ public class GoBildaRi3D2425 extends LinearOpMode {
     as far from the starting position, decrease it. */
 
     final double ARM_COLLAPSED_INTO_ROBOT  = 0;
-    final double ARM_COLLECT               = 0 * ARM_TICKS_PER_DEGREE;
+    final double ARM_COLLECT               = 8 * ARM_TICKS_PER_DEGREE;
     final double ARM_CLEAR_BARRIER         = 15 * ARM_TICKS_PER_DEGREE;
     final double ARM_SCORE_SPECIMEN_LOW_CHAMBER        = 32 * ARM_TICKS_PER_DEGREE;
     final double ARM_SCORE_SPECIMEN_HIGH_CHAMBER       = 70 * ARM_TICKS_PER_DEGREE;
@@ -210,7 +210,8 @@ public class GoBildaRi3D2425 extends LinearOpMode {
                 /* This is the correct height to score the sample in the LOW BASKET */
                 armPosition = ARM_SCORE_SAMPLE_IN_LOW;
                 viperSlidePosition = VIPERSLIDE_SCORING_IN_LOW_BASKET;
-                claw.prepareToDropSampleBasket();
+
+                claw.prepareToDropSampleLowBasket();
 
             }
             else if (gamepad2.b){
@@ -231,13 +232,13 @@ public class GoBildaRi3D2425 extends LinearOpMode {
                 /* This is the correct height to score the sample in the HIGH BASKET*/
                 armPosition = ARM_SCORE_SAMPLE_IN_HIGH;
                 viperSlidePosition = VIPERSLIDE_SCORING_IN_HIGH_BASKET;
-                claw.prepareToDropSampleBasket();
+                claw.prepareToDropSampleHighBasket();
             }
 
             else if (gamepad2.dpad_left){
                 armPosition = ARM_SCORE_SPECIMEN_LOW_CHAMBER;
                 viperSlidePosition = VIPERSLIDE_LOW_CHAMBER;
-                claw.prepareToHangSpecimen();
+                claw.prepareToHangLowSpecimen();
             }
 
             else if (gamepad1.dpad_left) {
@@ -252,7 +253,7 @@ public class GoBildaRi3D2425 extends LinearOpMode {
                 /* This is the correct height to score SPECIMEN on the HIGH CHAMBER */
                 armPosition = ARM_SCORE_SPECIMEN_HIGH_CHAMBER;
                 viperSlidePosition = VIPERSLIDE_HIGH_CHAMBER;
-                claw.prepareToHangSpecimen();
+                claw.prepareToHangHighSpecimen();
             }
 
             else if (gamepad1.dpad_up){
@@ -272,11 +273,11 @@ public class GoBildaRi3D2425 extends LinearOpMode {
             else if (gamepad2.left_stick_button)  {
                 claw.toggleWristAngle();
             }
-            claw.adjustWristAngle(gamepad2.left_stick_y);
+            claw.adjustWristAngle(-gamepad2.left_stick_x);
 
-            claw.adjustElbowAngle(gamepad2.left_stick_x);
+            claw.adjustElbowAngle(gamepad2.left_stick_y);
 
-            armPosition += gamepad2.right_stick_y * ARM_TICKS_PER_DEGREE * 0.1;
+            armPosition += -gamepad2.right_stick_y * ARM_TICKS_PER_DEGREE * 0.1;
             armPosition = Range.clip(armPosition, ARM_MINIMUM, ARM_MAXIMUM);
 
             /*
@@ -379,6 +380,7 @@ public class GoBildaRi3D2425 extends LinearOpMode {
             telemetry.addData("slide Target Position", viperSlideMotor.getTargetPosition());
             telemetry.addData("slide current position", viperSlideMotor.getCurrentPosition());
             telemetry.addData("slideMotor Current:",((DcMotorEx) viperSlideMotor).getCurrent(CurrentUnit.AMPS));
+            claw.outputTelemetry(telemetry);
             telemetry.update();
 
         }

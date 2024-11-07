@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.subassembly;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 public class Claw {
 
     private Elbow elbow;
@@ -21,7 +23,7 @@ public class Claw {
     }
 
     public void prepareToPickupVerticalSample() {
-        elbow.down();
+        elbow.prepareToPickupVerticalSample();
         wrist.straight();
         pincher.open();
 
@@ -33,16 +35,24 @@ public class Claw {
 
     }
 
-    public void prepareToDropSampleBasket() {
-
-        elbow.straight();
+    public void prepareToDropSampleLowBasket() {
+        elbow.prepareToDropSampleLowBasket();
         wrist.straight();
-
     }
 
-    public void prepareToHangSpecimen() {
+    public void prepareToDropSampleHighBasket() {
+        elbow.prepareToDropSampleHighBasket();
+        wrist.straight();
+    }
+
+    public void prepareToHangLowSpecimen() {
         elbow.straight();
-        wrist.right90();
+        wrist.straight();
+    }
+
+    public void prepareToHangHighSpecimen() {
+        elbow.prepareToHangHighSpecimen();
+        wrist.straight();
     }
 
     public void togglePincher() {
@@ -66,5 +76,9 @@ public class Claw {
     public void toggleWristAngle(){
         wrist.toggleAngle();
     }
-
+    public void outputTelemetry(Telemetry telemetry) {
+        elbow.outputTelemetry(telemetry);
+        wrist.outputTelemetry(telemetry);
+        pincher.outputTelemetry(telemetry);
+    }
 }
