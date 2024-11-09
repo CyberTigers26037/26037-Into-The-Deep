@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.subassembly.Claw;
 
+@SuppressWarnings("unused")
 @TeleOp
 public class TestClaw extends OpMode {
 

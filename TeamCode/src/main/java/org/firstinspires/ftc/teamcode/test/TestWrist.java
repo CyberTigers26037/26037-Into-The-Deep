@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.subassembly.Wrist;
 
+@SuppressWarnings("unused")
 @TeleOp
 public class TestWrist extends OpMode {
     private Wrist wrist;
@@ -27,9 +28,8 @@ public class TestWrist extends OpMode {
         }
         if(gamepad2.a)
             wrist.straight();
-        wrist.adjustAngle(-gamepad2.left_trigger * 0.1);
-        wrist.adjustAngle(gamepad2.right_trigger * 0.1);
+        wrist.adjustAngle(-gamepad2.left_stick_x);
 
-        telemetry.addData("Wrist Angle", wrist.getCurrentAngle());
+        wrist.outputTelemetry(telemetry);
     }
 }
