@@ -38,7 +38,7 @@ public class Wrist {
 
     public void adjustAngle(double degrees){
         setServoToAngle(currentAngle+degrees);
-        isStraight = false;
+        isStraight = (currentAngle > -1 && currentAngle <1);
     }
 
     private void setServoToAngle(double degrees){
@@ -64,6 +64,7 @@ public class Wrist {
     }
     public void outputTelemetry(Telemetry telemetry) {
         telemetry.addData("Wrist Angle", currentAngle);
+        telemetry.addData("Wrist Straight", isStraight);
     }
 }
 

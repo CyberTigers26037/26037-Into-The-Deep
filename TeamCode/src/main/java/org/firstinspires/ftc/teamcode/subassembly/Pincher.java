@@ -63,5 +63,6 @@ public class Pincher {
     }
     public void outputTelemetry(Telemetry telemetry) {
         telemetry.addData("Pincher Angle", currentAngle);
+        telemetry.addData("Pincher Open", isOpen);
     }
 }

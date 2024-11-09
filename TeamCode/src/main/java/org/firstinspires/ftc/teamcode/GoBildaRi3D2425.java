@@ -24,6 +24,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.arcrobotics.ftclib.drivebase.MecanumDrive;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -146,6 +147,7 @@ public class GoBildaRi3D2425 extends LinearOpMode {
                 new Motor(hardwareMap, "backRightMotor", Motor.GoBILDA.RPM_312)
         );
         GamepadEx driverOp = new GamepadEx(gamepad1);
+        GamepadEx subDriverOp = new GamepadEx(gamepad2);
 
         viperSlideMotor = hardwareMap.dcMotor.get("viperSlideMotor");
         armMotor        = hardwareMap.get(DcMotor.class, "armMotor"); //the arm motor
@@ -188,6 +190,7 @@ public class GoBildaRi3D2425 extends LinearOpMode {
                 -exponentialRate(driverOp.getRightX(), EXPO_RATE),
                 false
             );
+            subDriverOp.readButtons();
 
             /* Here we create a "fudge factor" for the arm position.
             This allows you to adjust (or "fudge") the arm position slightly with the gamepad triggers.
@@ -206,7 +209,7 @@ public class GoBildaRi3D2425 extends LinearOpMode {
             it folds out the wrist to make sure it is in the correct orientation to intake, and it
             turns the intake on to the COLLECT mode.*/
 
-            if(gamepad2.a){
+            if(gamepad2.a) {
                 /* This is the correct height to score the sample in the LOW BASKET */
                 armPosition = ARM_SCORE_SAMPLE_IN_LOW;
                 viperSlidePosition = VIPERSLIDE_SCORING_IN_LOW_BASKET;
@@ -214,7 +217,7 @@ public class GoBildaRi3D2425 extends LinearOpMode {
                 claw.prepareToDropSampleLowBasket();
 
             }
-            else if (gamepad2.b){
+            else if (gamepad2.b) {
                     /* This is about 20° up from the collecting position to clear the barrier
                     Note here that we don't set the wrist position or the intake power when we
                     select this "mode", this means that the intake and wrist will continue what
@@ -222,7 +225,7 @@ public class GoBildaRi3D2425 extends LinearOpMode {
                 armPosition = ARM_CLEAR_BARRIER;
             }
 
-            else if (gamepad2.x){
+            else if (gamepad2.x) {
                 /* This is the vertical claw pick-up/collecting arm position */
                 armPosition = ARM_COLLECT;
                 viperSlidePosition = VIPERSLIDE_COLLAPSED;
@@ -267,11 +270,13 @@ public class GoBildaRi3D2425 extends LinearOpMode {
                 /* this moves the arm down to viper slide the robot up once it has been hooked */
                 armPosition = ARM_WINCH_ROBOT;
             }
-            else if (gamepad2.right_stick_button) {
+            else if (subDriverOp.wasJustPressed(GamepadKeys.Button.RIGHT_STICK_BUTTON)) {
                 claw.togglePincher();
+                telemetry.addLine("Right Stick Button Pressed");
             }
-            else if (gamepad2.left_stick_button)  {
+            else if (subDriverOp.wasJustPressed(GamepadKeys.Button.LEFT_STICK_BUTTON))  {
                 claw.toggleWristAngle();
+                telemetry.addLine("Left Stick Button");
             }
             claw.adjustWristAngle(-gamepad2.left_stick_x);
 
