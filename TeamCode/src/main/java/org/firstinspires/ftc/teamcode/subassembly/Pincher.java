@@ -11,7 +11,7 @@ public class Pincher extends ServoSubassembly {
     private static final double MAX_SAFE_DEGREES = -30;
     private boolean isOpen;
     public Pincher (HardwareMap hwMap) {
-        super (MIN_SAFE_DEGREES, MAX_SAFE_DEGREES, hwMap.get(Servo.class, "Pincher Servo"));
+        super (MIN_SAFE_DEGREES, MAX_SAFE_DEGREES, hwMap.get(Servo.class, "Pincher"));
     }
     public void toggle() {
         if (isOpen) {

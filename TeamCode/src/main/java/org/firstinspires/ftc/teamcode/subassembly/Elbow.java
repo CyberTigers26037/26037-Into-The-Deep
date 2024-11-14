@@ -35,6 +35,8 @@ public class Elbow extends ServoSubassembly {
         setServoToAngle(-50);
     }
 
+    public void fieldPickUpElbow() {setServoToAngle(-45);}
+
     public void zero() {setServoToAngle(0);}
     public void adjustAngle(double degrees){
         setServoToAngle(currentAngle+degrees);

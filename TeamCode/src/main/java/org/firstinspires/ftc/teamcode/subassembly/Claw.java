@@ -34,6 +34,16 @@ public class Claw {
         pincher.open();
 
     }
+    public void prepareToPickUpFieldSpecimen(){
+        elbow.fieldPickUpElbow();
+        wrist.straight();
+        pincher.open();
+    }
+    public void prepareToPickUpWallSpecimen(){
+        elbow.straight();
+        wrist.straight();
+        pincher.open();
+    }
 
     public void prepareToDropSampleLowBasket() {
         elbow.prepareToDropSampleLowBasket();

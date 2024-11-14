@@ -32,7 +32,6 @@ public class Wrist extends ServoSubassembly {
         setServoToAngle(0);
         isStraight = true;
     }
-
     public void adjustAngle(double degrees){
         setServoToAngle(currentAngle+degrees);
         isStraight = (currentAngle > -1 && currentAngle <1);

@@ -57,7 +57,7 @@ import org.firstinspires.ftc.teamcode.subassembly.Claw;
  * https://gm0.org/en/latest/docs/software/tutorials/mecanum-drive.html#field-centric
  *
  */
-
+@SuppressWarnings("unused")
 @TeleOp(name="goBILDA Robot in 3 Days 24-25", group="Robot")
 public class GoBildaRi3D2425 extends LinearOpMode {
 
@@ -65,10 +65,8 @@ public class GoBildaRi3D2425 extends LinearOpMode {
 
     public DcMotor  armMotor         = null; //the arm motor
     public DcMotor viperSlideMotor = null; //
-    private Claw claw;
 
 
-    private final double EXPO_RATE = 1.4;
 
     /* This constant is the number of encoder ticks for each degree of rotation of the arm.
     To find this, we first need to consider the total gear reduction powering our arm.
@@ -102,8 +100,10 @@ public class GoBildaRi3D2425 extends LinearOpMode {
     final double ARM_CLEAR_BARRIER         = 15 * ARM_TICKS_PER_DEGREE;
     final double ARM_SCORE_SPECIMEN_LOW_CHAMBER        = 32 * ARM_TICKS_PER_DEGREE;
     final double ARM_SCORE_SPECIMEN_HIGH_CHAMBER       = 70 * ARM_TICKS_PER_DEGREE;
-    final double ARM_SCORE_SAMPLE_IN_LOW   = 72 * ARM_TICKS_PER_DEGREE;
-    final double ARM_SCORE_SAMPLE_IN_HIGH  = 90 * ARM_TICKS_PER_DEGREE; //TODO
+    final double ARM_PICKUP_HANGING_SPECIMEN = 32 * ARM_TICKS_PER_DEGREE;
+    final double ARM_PICKUP_FIELD_SPECIMEN =  30 * ARM_TICKS_PER_DEGREE; //TODO
+    final double ARM_SCORE_SAMPLE_IN_LOW   = 82 * ARM_TICKS_PER_DEGREE;
+    final double ARM_SCORE_SAMPLE_IN_HIGH  = 100 * ARM_TICKS_PER_DEGREE; //TODO original position was 90
     final double ARM_ATTACH_HANGING_HOOK   = 110 * ARM_TICKS_PER_DEGREE;
     final double ARM_WINCH_ROBOT           = 10  * ARM_TICKS_PER_DEGREE;
     final double ARM_MINIMUM               = 0;
@@ -113,7 +113,7 @@ public class GoBildaRi3D2425 extends LinearOpMode {
     final double FUDGE_FACTOR = 15 * ARM_TICKS_PER_DEGREE;
 
     /* Variables that are used to set the arm to a specific position */
-    double armPosition = (int)ARM_COLLAPSED_INTO_ROBOT;
+    double armPosition = ARM_COLLAPSED_INTO_ROBOT;
     double armPositionFudgeFactor;
 
     final double VIPERSLIDE_TICKS_PER_MM = (111132.0 / 289.0) / 120.0;
@@ -171,7 +171,7 @@ public class GoBildaRi3D2425 extends LinearOpMode {
         viperSlideMotor.setTargetPosition(0);
         viperSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         viperSlideMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        claw = new Claw(hardwareMap);
+        Claw claw = new Claw(hardwareMap);
         claw.zero();
         /* Send telemetry message to signify robot waiting */
         telemetry.addLine("Robot Ready.");
@@ -185,9 +185,9 @@ public class GoBildaRi3D2425 extends LinearOpMode {
 
         {
             drive.driveRobotCentric(
-                -exponentialRate(driverOp.getLeftX(), EXPO_RATE),
-                -exponentialRate(driverOp.getLeftY(), EXPO_RATE),
-                -exponentialRate(driverOp.getRightX(), EXPO_RATE),
+                -exponentialRate(driverOp.getLeftX()),
+                -exponentialRate(driverOp.getLeftY()),
+                -exponentialRate(driverOp.getRightX()),
                 false
             );
             subDriverOp.readButtons();
@@ -257,6 +257,18 @@ public class GoBildaRi3D2425 extends LinearOpMode {
                 armPosition = ARM_SCORE_SPECIMEN_HIGH_CHAMBER;
                 viperSlidePosition = VIPERSLIDE_HIGH_CHAMBER;
                 claw.prepareToHangHighSpecimen();
+            }
+
+            else if (gamepad2.dpad_up){
+
+                armPosition = ARM_PICKUP_HANGING_SPECIMEN;
+                claw.prepareToPickUpWallSpecimen();
+            }
+
+            else if (gamepad2.dpad_down){
+
+                armPosition = ARM_PICKUP_FIELD_SPECIMEN;
+                claw.prepareToPickUpFieldSpecimen();
             }
 
             else if (gamepad1.dpad_up){
@@ -390,7 +402,7 @@ public class GoBildaRi3D2425 extends LinearOpMode {
 
         }
     }
-    private double exponentialRate(double oldValue, double exponent) {
-        return Math.signum(oldValue) * Math.pow(Math.abs(oldValue), exponent);
+    private double exponentialRate(double oldValue) {
+        return Math.signum(oldValue) * Math.pow(Math.abs(oldValue), 1.4);
     }
 }
