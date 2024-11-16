@@ -41,8 +41,4 @@ public class ServoSubassembly {
         currentAngle = degrees;
         servo.setPosition(Range.scale(degrees, -SERVO_DEGREES / 2, SERVO_DEGREES / 2, 0, 1));
     }
-
-    public double getCurrentAngle() {
-        return currentAngle;
-    }
 }
