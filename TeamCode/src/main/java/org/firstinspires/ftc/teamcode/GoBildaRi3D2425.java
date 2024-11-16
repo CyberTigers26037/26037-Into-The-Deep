@@ -34,6 +34,22 @@ import org.firstinspires.ftc.teamcode.subassembly.ViperSlideArm;
 @SuppressWarnings("unused")
 @TeleOp(name="goBILDA Robot in 3 Days 24-25", group="Robot")
 public class GoBildaRi3D2425 extends LinearOpMode {
+    /*
+    Control hub
+        Motors
+            Port 0 : frontLeftMotor
+            Port 1 : backLeftMotor
+            Port 2 : backRightMotor
+            Port 3 : frontRightMotor
+     Expansion hub
+        Servos
+            Port 1 : Pincher
+            Port 2 : Wrist
+            Port 3 : Elbow
+        Motors
+            Port 0 : armMotor
+            Port 1 : viperSlideMotor
+     */
     @Override
     public void runOpMode() {
         /* Define and Initialize Motors */
