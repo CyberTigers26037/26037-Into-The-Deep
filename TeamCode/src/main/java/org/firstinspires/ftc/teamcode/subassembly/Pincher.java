@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.subassembly;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -45,6 +46,9 @@ public class Pincher extends ServoSubassembly {
 
         setServoToAngle(0);
         isOpen = true;
+    }
+    public double getCurrentAngle() {
+        return currentAngle;
     }
     public void outputTelemetry(Telemetry telemetry) {
         telemetry.addData("Pincher Angle", currentAngle);

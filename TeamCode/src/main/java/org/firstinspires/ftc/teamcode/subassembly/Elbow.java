@@ -28,14 +28,14 @@ public class Elbow extends ServoSubassembly {
     }
 
     public void prepareToPickupVerticalSample() {
-        setServoToAngle(-12);
+        setServoToAngle(-17);
     }
 
     public void prepareToHangHighSpecimen() {
-        setServoToAngle(-50);
+        setServoToAngle(-42);
     }
 
-    public void fieldPickUpElbow() {setServoToAngle(-45);}
+    public void fieldPickUpElbow() {setServoToAngle(-52);}
 
     public void zero() {setServoToAngle(0);}
     public void adjustAngle(double degrees){

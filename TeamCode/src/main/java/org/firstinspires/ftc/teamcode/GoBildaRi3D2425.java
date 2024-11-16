@@ -96,12 +96,12 @@ public class GoBildaRi3D2425 extends LinearOpMode {
     as far from the starting position, decrease it. */
 
     final double ARM_COLLAPSED_INTO_ROBOT  = 0;
-    final double ARM_COLLECT               = 8 * ARM_TICKS_PER_DEGREE;
-    final double ARM_CLEAR_BARRIER         = 15 * ARM_TICKS_PER_DEGREE;
-    final double ARM_SCORE_SPECIMEN_LOW_CHAMBER        = 32 * ARM_TICKS_PER_DEGREE;
-    final double ARM_SCORE_SPECIMEN_HIGH_CHAMBER       = 70 * ARM_TICKS_PER_DEGREE;
-    final double ARM_PICKUP_HANGING_SPECIMEN = 32 * ARM_TICKS_PER_DEGREE;
-    final double ARM_PICKUP_FIELD_SPECIMEN =  30 * ARM_TICKS_PER_DEGREE; //TODO
+    final double ARM_COLLECT               = 5 * ARM_TICKS_PER_DEGREE;
+    final double ARM_CLEAR_BARRIER         = 13 * ARM_TICKS_PER_DEGREE;
+    final double ARM_SCORE_SPECIMEN_LOW_CHAMBER        = 35 * ARM_TICKS_PER_DEGREE;
+    final double ARM_SCORE_SPECIMEN_HIGH_CHAMBER       = 80 * ARM_TICKS_PER_DEGREE;
+    final double ARM_PICKUP_HANGING_SPECIMEN = 22 * ARM_TICKS_PER_DEGREE;
+    final double ARM_PICKUP_FIELD_SPECIMEN =  4 * ARM_TICKS_PER_DEGREE; //TODO
     final double ARM_SCORE_SAMPLE_IN_LOW   = 82 * ARM_TICKS_PER_DEGREE;
     final double ARM_SCORE_SAMPLE_IN_HIGH  = 100 * ARM_TICKS_PER_DEGREE; //TODO original position was 90
     final double ARM_ATTACH_HANGING_HOOK   = 110 * ARM_TICKS_PER_DEGREE;
@@ -124,10 +124,13 @@ public class GoBildaRi3D2425 extends LinearOpMode {
 
     final double VIPERSLIDE_SCORING_IN_LOW_BASKET = 120 * VIPERSLIDE_TICKS_PER_MM; //TODO
 
-    final double VIPERSLIDE_HIGH_CHAMBER = 0 * VIPERSLIDE_TICKS_PER_MM; //TODO
+    final double VIPERSLIDE_HIGH_CHAMBER = 67 * VIPERSLIDE_TICKS_PER_MM; //TODO
 
     final double VIPERSLIDE_LOW_CHAMBER = 0 * VIPERSLIDE_TICKS_PER_MM; //TODO
 
+    final double VIPERSLIDE_PICKUP_SAMPLE = 102 * VIPERSLIDE_TICKS_PER_MM;
+
+    final double VIPERSLIDE_FIELD_SPECIMEN = 97 * VIPERSLIDE_TICKS_PER_MM;
 
     double viperSlidePosition = VIPERSLIDE_COLLAPSED;
 
@@ -228,7 +231,7 @@ public class GoBildaRi3D2425 extends LinearOpMode {
             else if (gamepad2.x) {
                 /* This is the vertical claw pick-up/collecting arm position */
                 armPosition = ARM_COLLECT;
-                viperSlidePosition = VIPERSLIDE_COLLAPSED;
+                viperSlidePosition = VIPERSLIDE_PICKUP_SAMPLE;
                 claw.prepareToPickupVerticalSample();
             }
             else if (gamepad2.y){
@@ -268,6 +271,7 @@ public class GoBildaRi3D2425 extends LinearOpMode {
             else if (gamepad2.dpad_down){
 
                 armPosition = ARM_PICKUP_FIELD_SPECIMEN;
+                viperSlidePosition = VIPERSLIDE_FIELD_SPECIMEN;
                 claw.prepareToPickUpFieldSpecimen();
             }
 
