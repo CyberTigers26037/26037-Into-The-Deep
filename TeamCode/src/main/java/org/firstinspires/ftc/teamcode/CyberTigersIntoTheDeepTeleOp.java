@@ -32,8 +32,8 @@ import org.firstinspires.ftc.teamcode.subassembly.Claw;
 import org.firstinspires.ftc.teamcode.subassembly.ViperSlideArm;
 
 @SuppressWarnings("unused")
-@TeleOp(name="goBILDA Robot in 3 Days 24-25", group="Robot")
-public class GoBildaRi3D2425 extends LinearOpMode {
+@TeleOp(name="Cyber Tigers Into the Deep TeleOp", group="Robot")
+public class CyberTigersIntoTheDeepTeleOp extends LinearOpMode {
     /*
     Control hub
         Motors
