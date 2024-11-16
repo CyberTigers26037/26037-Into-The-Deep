@@ -10,6 +10,7 @@ public class MeepMeepTestingSpecimens {
     private static final double TILE_HEIGHT = 23.5;
     private static final double ROBOT_HEIGHT = 18;
     private static final double SAMPLE_HEIGHT = 3.5;
+    // I know I should use it but i don't know how to lol
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(600);
 
