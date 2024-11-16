@@ -8,6 +8,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Elbow extends ServoSubassembly {
     private static final double MIN_SAFE_DEGREES = -90;
     private static final double MAX_SAFE_DEGREES = 0;
+
     public Elbow(HardwareMap hwMap) {
         super (MIN_SAFE_DEGREES, MAX_SAFE_DEGREES, hwMap.get(Servo.class, "Elbow"));
     }
@@ -15,6 +16,7 @@ public class Elbow extends ServoSubassembly {
     public void straight() {
         setServoToAngle(-90);
     }
+
     public void down() {
         setServoToAngle(0);
     }
@@ -35,10 +37,15 @@ public class Elbow extends ServoSubassembly {
         setServoToAngle(-42);
     }
 
-    public void fieldPickUpElbow() {setServoToAngle(-52);}
+    public void fieldPickUpElbow() {
+        setServoToAngle(-52);
+    }
 
-    public void zero() {setServoToAngle(0);}
-    public void adjustAngle(double degrees){
+    public void zero() {
+        setServoToAngle(0);
+    }
+
+    public void adjustAngle(double degrees) {
         setServoToAngle(currentAngle+degrees);
     }
 

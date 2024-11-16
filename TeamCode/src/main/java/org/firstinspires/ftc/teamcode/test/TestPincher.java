@@ -7,41 +7,31 @@ import org.firstinspires.ftc.teamcode.subassembly.Pincher;
 @SuppressWarnings("unused")
 @TeleOp
 public class TestPincher extends OpMode {
-
     private Pincher pincher;
 
     @Override
     public void init() {
-
         pincher = new Pincher(hardwareMap);
-
     }
 
     @Override
     public void loop() {
-
-        if (gamepad1.x) {
-
+        if (gamepad2.x) {
             pincher.zero();
         }
 
-        if (gamepad1.a) {
-
+        if (gamepad2.a) {
             pincher.open();
         }
 
-        if (gamepad1.b) {
-
+        if (gamepad2.b) {
             pincher.close();
         }
 
-        pincher.adjustAngle(-gamepad1.left_trigger * 0.1);
+        pincher.adjustAngle(-gamepad2.left_trigger * 0.1);
+        pincher.adjustAngle(gamepad2.right_trigger * 0.1);
 
-        pincher.adjustAngle(gamepad1.right_trigger * 0.1);
-
-
-        telemetry.addData("Pincher Servo Angle: ", pincher.getCurrentAngle());
+        pincher.outputTelemetry(telemetry);
         telemetry.update();
-
     }
 }

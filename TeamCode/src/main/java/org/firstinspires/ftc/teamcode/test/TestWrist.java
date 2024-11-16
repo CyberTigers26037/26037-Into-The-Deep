@@ -10,6 +10,7 @@ import org.firstinspires.ftc.teamcode.subassembly.Wrist;
 @TeleOp
 public class TestWrist extends OpMode {
     private Wrist wrist;
+
     @Override
     public void init() {
         wrist = new Wrist(hardwareMap);
@@ -17,19 +18,22 @@ public class TestWrist extends OpMode {
 
     @Override
     public void loop() {
-        if(gamepad2.x){
+        if (gamepad2.x) {
             wrist.zero();
         }
-        if(gamepad2.y){
+        if (gamepad2.y) {
             wrist.left90();
         }
-        if(gamepad2.b){
+        if (gamepad2.b) {
             wrist.right90();
         }
-        if(gamepad2.a)
+        if (gamepad2.a) {
             wrist.straight();
+        }
+
         wrist.adjustAngle(-gamepad2.left_stick_x);
 
         wrist.outputTelemetry(telemetry);
+        telemetry.update();
     }
 }

@@ -15,7 +15,7 @@ public class ServoSubassembly {
     protected final Servo servo;
     protected double currentAngle;
 
-    protected ServoSubassembly(double minSafeDegrees, double maxSafeDegrees, Servo servo){
+    protected ServoSubassembly(double minSafeDegrees, double maxSafeDegrees, Servo servo) {
         this.minSafeDegrees = minSafeDegrees;
         this.maxSafeDegrees = maxSafeDegrees;
         this.servo = servo;
@@ -26,8 +26,8 @@ public class ServoSubassembly {
         }
     }
 
-    private void setServoRange(){
-        if(servo.getController() instanceof ServoControllerEx){
+    private void setServoRange() {
+        if(servo.getController() instanceof ServoControllerEx) {
             ServoControllerEx controller = (ServoControllerEx) servo.getController();
             controller.setServoPwmRange(
                     servo.getPortNumber(),
@@ -36,7 +36,7 @@ public class ServoSubassembly {
         }
     }
 
-    protected void setServoToAngle(double degrees){
+    protected void setServoToAngle(double degrees) {
         degrees = Range.clip(degrees, minSafeDegrees, maxSafeDegrees);
         currentAngle = degrees;
         servo.setPosition(Range.scale(degrees, -SERVO_DEGREES / 2, SERVO_DEGREES / 2, 0, 1));

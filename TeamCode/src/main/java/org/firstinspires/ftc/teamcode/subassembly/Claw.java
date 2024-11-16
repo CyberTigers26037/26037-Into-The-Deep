@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Claw {
-
     private final Elbow elbow;
     private final Pincher pincher;
     private final Wrist wrist;
@@ -13,7 +12,6 @@ public class Claw {
         elbow = new Elbow(hwMap);
         wrist = new Wrist(hwMap);
         pincher = new Pincher(hwMap);
-
     }
 
     public void zero() {
@@ -26,20 +24,21 @@ public class Claw {
         elbow.prepareToPickupVerticalSample();
         wrist.straight();
         pincher.open();
-
     }
+
     public void prepareToPickupHorizontalSample() {
         elbow.down();
         wrist.right90();
         pincher.open();
-
     }
-    public void prepareToPickUpFieldSpecimen(){
+
+    public void prepareToPickUpFieldSpecimen() {
         elbow.fieldPickUpElbow();
         wrist.straight();
         pincher.open();
     }
-    public void prepareToPickUpWallSpecimen(){
+
+    public void prepareToPickUpWallSpecimen() {
         elbow.straight();
         wrist.straight();
         pincher.open();
@@ -77,15 +76,18 @@ public class Claw {
         pincher.close();
     }
 
-    public void adjustWristAngle(double degrees){
+    public void adjustWristAngle(double degrees) {
         wrist.adjustAngle(degrees);
     }
-    public void adjustElbowAngle(double degrees){
+
+    public void adjustElbowAngle(double degrees) {
         elbow.adjustAngle(degrees);
     }
-    public void toggleWristAngle(){
+
+    public void toggleWristAngle() {
         wrist.toggleAngle();
     }
+
     public void outputTelemetry(Telemetry telemetry) {
         elbow.outputTelemetry(telemetry);
         wrist.outputTelemetry(telemetry);
