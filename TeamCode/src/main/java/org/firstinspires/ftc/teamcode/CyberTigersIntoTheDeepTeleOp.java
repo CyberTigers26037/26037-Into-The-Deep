@@ -82,7 +82,7 @@ public class CyberTigersIntoTheDeepTeleOp extends LinearOpMode {
             );
             subDriverOp.readButtons();
 
-            viperSlideArm.setArmPositionFudgeFactor(gamepad2.right_trigger + (-gamepad2.left_trigger));
+            viperSlideArm.setArmPositionFudgeFactor(gamepad2.right_trigger + (-gamepad2.left_trigger) + gamepad1.right_trigger + (-gamepad1.left_trigger));
 
             if (gamepad2.a) {
                 viperSlideArm.prepareToDropSampleLowBasket();

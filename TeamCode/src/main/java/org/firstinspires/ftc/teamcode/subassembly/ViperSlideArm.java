@@ -49,7 +49,7 @@ public class ViperSlideArm {
     final double ARM_SCORE_SAMPLE_IN_LOW         =  82 * ARM_TICKS_PER_DEGREE;
     final double ARM_SCORE_SAMPLE_IN_HIGH        = 100 * ARM_TICKS_PER_DEGREE;
     final double ARM_ATTACH_HANGING_HOOK         = 110 * ARM_TICKS_PER_DEGREE;
-    final double ARM_WINCH_ROBOT                 =  10 * ARM_TICKS_PER_DEGREE;
+    final double ARM_WINCH_ROBOT                 =   0 * ARM_TICKS_PER_DEGREE;
     final double ARM_MINIMUM                     =   0;
     final double ARM_MAXIMUM                     = 110 * ARM_TICKS_PER_DEGREE;
 
@@ -99,6 +99,7 @@ public class ViperSlideArm {
     }
 
     public void setArmPositionFudgeFactor(double fudgeFactor) {
+        fudgeFactor = Range.clip(fudgeFactor,-1,1);
         armPositionFudgeFactor = FUDGE_FACTOR * fudgeFactor;
     }
 

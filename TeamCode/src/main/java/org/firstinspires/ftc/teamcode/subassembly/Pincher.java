@@ -5,8 +5,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Pincher extends ServoSubassembly {
-    private static final double MIN_SAFE_DEGREES = -90;
-    private static final double MAX_SAFE_DEGREES = -30;
+    private static final double MIN_SAFE_DEGREES = -68;
+    private static final double MAX_SAFE_DEGREES = -15;
     private boolean isOpen;
 
     public Pincher (HardwareMap hwMap) {
