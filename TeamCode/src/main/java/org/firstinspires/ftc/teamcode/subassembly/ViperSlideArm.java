@@ -199,9 +199,8 @@ public class ViperSlideArm {
         our armViperSlideComp, which adjusts the arm height for different viper slide extensions.
         We also set the target velocity (speed) the motor runs at, and use setMode to run it.*/
         armMotor.setTargetPosition((int) (armPosition + armPositionFudgeFactor + armViperSlideComp));
-
-        ((DcMotorEx) armMotor).setVelocity(2100);
         armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        ((DcMotorEx) armMotor).setVelocity(2100);
 
         /*here we check to see if the viper slide is trying to go higher than the maximum extension.
          *if it is, we set the variable to the max.
@@ -215,9 +214,14 @@ public class ViperSlideArm {
         }
 
         viperSlideMotor.setTargetPosition((int) (viperSlidePosition));
-
-        ((DcMotorEx) viperSlideMotor).setVelocity(2100);
         viperSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        ((DcMotorEx) viperSlideMotor).setVelocity(2100);
+    }
+
+    public boolean isBusy(){
+
+        return viperSlideMotor.isBusy() || armMotor.isBusy();
+
     }
 
     public void outputTelemetry(Telemetry telemetry) {
