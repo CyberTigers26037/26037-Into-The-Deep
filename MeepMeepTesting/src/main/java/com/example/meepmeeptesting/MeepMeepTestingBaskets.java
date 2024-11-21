@@ -20,11 +20,11 @@ public class MeepMeepTestingBaskets {
                 .build();
 
         double robotStartingPositionY = 3*TILE_HEIGHT-ROBOT_HEIGHT/2;
-        double robotStartingPositionX = TILE_WIDTH*1.5;
+        double robotStartingPositionX = TILE_WIDTH*1.5 - 3;
         double robotSamplePickupLocationY = 40;
         double robotThirdSamplePickupLocationY = 25.25;
-        double robotBasketDeliveryLocationX = 50;
-        double robotBasketDeliveryLocationY = 50;
+        double robotBasketDeliveryLocationX = 58;
+        double robotBasketDeliveryLocationY = 56.5;
         double robotFirstSampleLocationX = 48;
         double robotSecondSampleLocationX = 58;
         double robotThirdSampleLocationX = 56;
@@ -35,7 +35,7 @@ public class MeepMeepTestingBaskets {
         myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(robotStartingPositionX, robotStartingPositionY, Math.toRadians(0)))
                 // Goes to basket and drops off first sample
                 .setTangent(Math.toRadians(315))
-                .splineToLinearHeading(new Pose2d(robotBasketDeliveryLocationX,robotBasketDeliveryLocationY,Math.toRadians(45)),Math.toRadians(315))
+                .splineToLinearHeading(new Pose2d(robotBasketDeliveryLocationX,robotBasketDeliveryLocationY,Math.toRadians(45)),Math.toRadians(360))
                 .waitSeconds(1)
                 // Picks up first sample off of the field
                 .setTangent(Math.toRadians(230))
