@@ -9,6 +9,7 @@ public class MeepMeepTestingSpecimens {
     private static final double TILE_WIDTH = 23.5;
     private static final double TILE_HEIGHT = 23.5;
     private static final double ROBOT_HEIGHT = 18;
+    private static final double ROBOT_WIDTH = 18;
     private static final double SAMPLE_HEIGHT = 3.5;
     // I know I should use it but i don't know how to lol
     public static void main(String[] args) {
@@ -20,7 +21,7 @@ public class MeepMeepTestingSpecimens {
                 .build();
 
         double robotStartingPositionY = 3*TILE_HEIGHT-ROBOT_HEIGHT/2;
-        double robotStartingPositionX = -TILE_WIDTH*0.5;
+        double robotStartingPositionX = -ROBOT_WIDTH/2;
         double robotSamplePickupLocationY = 40;
         double robotFirstTeamSampleLocationX = -48;
         double robotSecondTeamSampleLocationX = -58;
