@@ -107,6 +107,10 @@ public class ViperSlideArm {
         armPosition = ARM_SCORE_SAMPLE_IN_LOW;
         viperSlidePosition = VIPERSLIDE_SCORING_IN_LOW_BASKET;
     }
+    public void retractViperSlide() {
+        viperSlidePosition = VIPERSLIDE_COLLAPSED;
+
+    }
 
     public void setArmClearBarrier() {
         /* This is about 20° up from the collecting position to clear the barrier

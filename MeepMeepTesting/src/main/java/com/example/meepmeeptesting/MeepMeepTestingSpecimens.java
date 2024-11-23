@@ -23,8 +23,8 @@ public class MeepMeepTestingSpecimens {
         double robotStartingPositionY = 3*TILE_HEIGHT-ROBOT_HEIGHT/2;
         double robotStartingPositionX = -ROBOT_WIDTH/2;
         double robotSamplePickupLocationY = 40;
-        double robotFirstTeamSampleLocationX = -48;
-        double robotSecondTeamSampleLocationX = -58;
+        double robotFirstTeamSampleLocationX = -50;
+        double robotSecondTeamSampleLocationX = -60;
         double robotThirdTeamSampleLocationX = -54;
         double robotSpecimenDropX = -57;
         double robotSpecimenDropY = 50;
@@ -40,17 +40,19 @@ public class MeepMeepTestingSpecimens {
                 .waitSeconds(1)
                 // Picks up first team sample off of the field
                 .setTangent(Math.toRadians(180))
-                .splineToLinearHeading(new Pose2d(robotFirstTeamSampleLocationX,robotSamplePickupLocationY,Math.toRadians(270)), 135)
+                .splineToLinearHeading(new Pose2d(robotFirstTeamSampleLocationX,robotSamplePickupLocationY,Math.toRadians(270)),Math.toRadians(220))
                 .waitSeconds(1)
                 // Drops off first sample into the observation zone
                 .setTangent(Math.toRadians(90))
                 .splineToLinearHeading(new Pose2d(robotSpecimenDropX, robotSpecimenDropY, Math.toRadians(90)), Math.toRadians(130))
                 .waitSeconds(1)
-                // Picks up second sample into the basket
+                // Picks up second sample
+                        .turn(Math.toRadians(-90))
                 .setTangent(Math.toRadians(270))
-                .splineToLinearHeading(new Pose2d(robotSecondTeamSampleLocationX,robotSamplePickupLocationY,Math.toRadians(270)), 180)
+                .splineToLinearHeading(new Pose2d(robotSecondTeamSampleLocationX,robotSamplePickupLocationY,Math.toRadians(270)),Math.toRadians(270))
                 .waitSeconds(1)
-                // Drops off second sample into the observation zone
+                // Drops off second sample into the observation zone4
+                        .turn(Math.toRadians(90))
                 .setTangent(Math.toRadians(90))
                 .splineToLinearHeading(new Pose2d(robotSpecimenDropX, robotSpecimenDropY, Math.toRadians(90)), Math.toRadians(130))
                 .waitSeconds(1)
