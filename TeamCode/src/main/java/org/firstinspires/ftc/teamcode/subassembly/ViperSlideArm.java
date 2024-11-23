@@ -121,6 +121,10 @@ public class ViperSlideArm {
         armPosition = ARM_COLLECT;
         viperSlidePosition = VIPERSLIDE_PICKUP_SAMPLE;
     }
+    public void retractSlide(){
+        viperSlidePosition = VIPERSLIDE_COLLAPSED;
+
+    }
 
     public void prepareToDropSampleHighBasket() {
         /* This is the correct height to score the sample in the HIGH BASKET*/

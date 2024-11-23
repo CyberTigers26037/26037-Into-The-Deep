@@ -72,6 +72,11 @@ public class Claw {
         pincher.open();
     }
 
+    public void elbowStraight(){
+        elbow.straight();
+
+    }
+
     public void pickupSample() {
         pincher.close();
     }
