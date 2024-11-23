@@ -32,6 +32,11 @@ public class AutonomousSpecimens {
         claw.prepareToHangHighSpecimen();
         viperSlideArm.execute();
     }
+    private void prepareToPickUpVerticalSample() {
+        viperSlideArm.prepareToPickupVerticalSample();
+        claw.prepareToPickupVerticalSample();
+        viperSlideArm.execute();
+    }
     private void hangSpecimenHighChamber(){
         viperSlideArm.adjustArm(-19);
         waitForViperSlideNotBusy();
@@ -66,6 +71,12 @@ public class AutonomousSpecimens {
                 .splineToLinearHeading(new Pose2d(robotObservationZoneX,robotObservationY,Math.toRadians(270)),Math.toRadians(270))
                 .build());
         hangSpecimenHighChamber();
+        // Pick up sample
+        // claw.pickupSample();
+        // prepareToPickUpVerticalSample();
+        // waitForViperSlideNotBusy();
+        // Actions.runBlocking(drive.actionBuilder(drive.pose));
+
 
 
     }
