@@ -47,7 +47,7 @@ public class ViperSlideArm {
     final double ARM_PICKUP_HANGING_SPECIMEN     =  22 * ARM_TICKS_PER_DEGREE;
     final double ARM_PICKUP_FIELD_SPECIMEN       =   4 * ARM_TICKS_PER_DEGREE;
     final double ARM_SCORE_SAMPLE_IN_LOW         =  82 * ARM_TICKS_PER_DEGREE;
-    final double ARM_SCORE_SAMPLE_IN_HIGH        = 100 * ARM_TICKS_PER_DEGREE;
+    final double ARM_SCORE_SAMPLE_IN_HIGH        = 97.5 * ARM_TICKS_PER_DEGREE;
     final double ARM_ATTACH_HANGING_HOOK         = 110 * ARM_TICKS_PER_DEGREE;
     final double ARM_WINCH_ROBOT                 =   0 * ARM_TICKS_PER_DEGREE;
     final double ARM_MINIMUM                     =   0;
@@ -124,6 +124,26 @@ public class ViperSlideArm {
         /* This is the vertical claw pick-up/collecting arm position */
         armPosition = ARM_COLLECT;
         viperSlidePosition = VIPERSLIDE_PICKUP_SAMPLE;
+    }
+
+    public void prepareToPickUpVerticalSampleAuto(){
+        armPosition = ARM_COLLECT - 5;
+        viperSlidePosition = VIPERSLIDE_PICKUP_SAMPLE;
+
+    }
+    public void prepareToPickupHorizontalSample(){
+
+        armPosition = ARM_COLLECT;
+        viperSlidePosition = VIPERSLIDE_PICKUP_SAMPLE + 130;
+    }
+    public void pickUpHorizontalSample(){
+        armPosition = ARM_COLLECT - 5;
+        viperSlidePosition = VIPERSLIDE_PICKUP_SAMPLE + 270;
+
+    }
+    public void prepareToPickUpHorizontalPregame(){
+        armPosition = ARM_CLEAR_BARRIER;
+        viperSlidePosition = VIPERSLIDE_COLLAPSED;
     }
     public void retractSlide(){
         viperSlidePosition = VIPERSLIDE_COLLAPSED;
