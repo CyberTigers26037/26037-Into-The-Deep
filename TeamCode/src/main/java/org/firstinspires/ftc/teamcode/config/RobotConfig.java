@@ -187,9 +187,9 @@ public class RobotConfig {
         lateralVelGain = 0.0;
         headingVelGain = 0.0;
 
-        par0YTicks = -1482.288027000346;
-        par1YTicks = 1291.951314151336;
-        perpXTicks = -2274.184381449579;
+        //par0YTicks = -1482.288027000346;
+        //par1YTicks = 1291.951314151336;
+        //perpXTicks = -2274.184381449579;
 
     }
 

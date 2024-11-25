@@ -64,6 +64,7 @@ public class ViperSlideArm {
 
     final double VIPERSLIDE_TICKS_PER_MM = (111132.0 / 289.0) / 120.0;
     final double VIPERSLIDE_COLLAPSED              =   0 * VIPERSLIDE_TICKS_PER_MM;
+    final double VIPERSLIDE_EXTENDED               = 150 * VIPERSLIDE_TICKS_PER_MM;
     final double VIPERSLIDE_SCORING_IN_HIGH_BASKET = 460 * VIPERSLIDE_TICKS_PER_MM;
     final double VIPERSLIDE_SCORING_IN_LOW_BASKET  = 120 * VIPERSLIDE_TICKS_PER_MM;
     final double VIPERSLIDE_HIGH_CHAMBER           =  67 * VIPERSLIDE_TICKS_PER_MM;
@@ -111,6 +112,9 @@ public class ViperSlideArm {
         viperSlidePosition = VIPERSLIDE_COLLAPSED;
 
     }
+    public void extendViperSlide() {
+        viperSlidePosition = VIPERSLIDE_EXTENDED;
+    }
 
     public void setArmClearBarrier() {
         /* This is about 20° up from the collecting position to clear the barrier
@@ -124,10 +128,6 @@ public class ViperSlideArm {
         /* This is the vertical claw pick-up/collecting arm position */
         armPosition = ARM_COLLECT;
         viperSlidePosition = VIPERSLIDE_PICKUP_SAMPLE;
-    }
-    public void retractSlide(){
-        viperSlidePosition = VIPERSLIDE_COLLAPSED;
-
     }
 
     public void prepareToDropSampleHighBasket() {

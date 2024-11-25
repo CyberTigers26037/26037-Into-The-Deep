@@ -47,12 +47,12 @@ public class MeepMeepTestingSpecimens {
                 .splineToLinearHeading(new Pose2d(robotSpecimenDropX, robotSpecimenDropY, Math.toRadians(90)), Math.toRadians(130))
                 .waitSeconds(1)
                 // Picks up second sample
-                        .turn(Math.toRadians(-90))
+                .turn(Math.toRadians(-90))
                 .setTangent(Math.toRadians(270))
                 .splineToLinearHeading(new Pose2d(robotSecondTeamSampleLocationX,robotSamplePickupLocationY,Math.toRadians(270)),Math.toRadians(270))
                 .waitSeconds(1)
                 // Drops off second sample into the observation zone4
-                        .turn(Math.toRadians(90))
+                .turn(Math.toRadians(90))
                 .setTangent(Math.toRadians(90))
                 .splineToLinearHeading(new Pose2d(robotSpecimenDropX, robotSpecimenDropY, Math.toRadians(90)), Math.toRadians(130))
                 .waitSeconds(1)

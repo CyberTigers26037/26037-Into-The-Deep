@@ -35,7 +35,7 @@ public class AutonomousBaskets {
 
     private void retractArm(){
         claw.elbowStraight();
-        viperSlideArm.retractSlide();
+        viperSlideArm.retractViperSlide();
         viperSlideArm.execute();
     }
     private void prepareToPickUpVerticalSample(){
