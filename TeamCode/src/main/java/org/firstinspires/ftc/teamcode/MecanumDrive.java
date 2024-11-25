@@ -41,6 +41,7 @@ import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
+import org.firstinspires.ftc.teamcode.config.RobotConfig;
 import org.firstinspires.ftc.teamcode.messages.DriveCommandMessage;
 import org.firstinspires.ftc.teamcode.messages.MecanumCommandMessage;
 import org.firstinspires.ftc.teamcode.messages.MecanumLocalizerInputsMessage;
@@ -61,14 +62,14 @@ public final class MecanumDrive {
                 RevHubOrientationOnRobot.UsbFacingDirection.LEFT;
 
         // drive model parameters
-        public double inPerTick = 0.00294479;
-        public double lateralInPerTick = 0.0021816593024624738;
-        public double trackWidthTicks = 5191.979563103292;
+        public double inPerTick = RobotConfig.getInPerTick();
+        public double lateralInPerTick = RobotConfig.getLateralInPerTick();
+        public double trackWidthTicks = RobotConfig.getTrackWidthTicks();
 
         // feedforward parameters (in tick units)
-        public double kS = 1.020971104258798;
-        public double kV = 0.0005820210887890002;
-        public double kA = 0.0002;
+        public double kS = RobotConfig.getKs();
+        public double kV = RobotConfig.getKv();
+        public double kA = RobotConfig.getKa();
 
         // path profile parameters (in inches)
         public double maxWheelVel = 50;
@@ -80,13 +81,13 @@ public final class MecanumDrive {
         public double maxAngAccel = Math.PI;
 
         // path controller gains
-        public double axialGain = 1.0;
-        public double lateralGain = 1.0;
-        public double headingGain = 1.0; // shared with turn
+        public double axialGain = RobotConfig.getAxialGain();
+        public double lateralGain = RobotConfig.getLateralGain();
+        public double headingGain = RobotConfig.getHeadingGain(); // shared with turn
 
-        public double axialVelGain = 0.0;
-        public double lateralVelGain = 0.0;
-        public double headingVelGain = 0.0; // shared with turn
+        public double axialVelGain = RobotConfig.getAxialVelGain();
+        public double lateralVelGain = RobotConfig.getLateralVelGain();
+        public double headingVelGain = RobotConfig.getHeadingVelGain(); // shared with turn
     }
 
     public static Params PARAMS = new Params();

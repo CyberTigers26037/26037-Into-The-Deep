@@ -15,14 +15,15 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.config.RobotConfig;
 import org.firstinspires.ftc.teamcode.messages.ThreeDeadWheelInputsMessage;
 
 @Config
 public final class ThreeDeadWheelLocalizer implements Localizer {
     public static class Params {
-        public double par0YTicks = -1500.1021466083985; // y position of the first parallel encoder (in tick units)
-        public double par1YTicks = 1272.2998829608118; // y position of the second parallel encoder (in tick units)
-        public double perpXTicks = -2331.2327839370423; // x position of the perpendicular encoder (in tick units)
+        public double par0YTicks = RobotConfig.getPar0YTicks(); // y position of the first parallel encoder (in tick units)
+        public double par1YTicks = RobotConfig.getPar1YTicks(); // y position of the second parallel encoder (in tick units)
+        public double perpXTicks = RobotConfig.getPerpXTicks(); // x position of the perpendicular encoder (in tick units)
     }
 
     public static Params PARAMS = new Params();

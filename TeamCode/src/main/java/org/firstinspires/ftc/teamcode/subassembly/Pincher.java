@@ -3,10 +3,11 @@ package org.firstinspires.ftc.teamcode.subassembly;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.config.RobotConfig;
 
 public class Pincher extends ServoSubassembly {
-    private static final double MIN_SAFE_DEGREES = -68;
-    private static final double MAX_SAFE_DEGREES = -15;
+    private static final double MIN_SAFE_DEGREES = RobotConfig.getPincherMinSafeDegrees();
+    private static final double MAX_SAFE_DEGREES = RobotConfig.getPincherMaxSafeDegrees();
     private boolean isOpen;
 
     public Pincher (HardwareMap hwMap) {
