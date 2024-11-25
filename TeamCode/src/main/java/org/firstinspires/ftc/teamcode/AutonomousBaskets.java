@@ -95,7 +95,7 @@ public class AutonomousBaskets {
         double robotThirdSamplePickupLocationY = 26.4;
         double robotBasketDeliveryOneLocationX = 59.6;
         double robotBasketDeliveryOneLocationY = 53.5;
-        double robotBasketDeliveryTwoLocationX = 58; // crash free for the second
+        double robotBasketDeliveryTwoLocationX = 58;
         double robotBasketDeliveryLocationTwoY = 58.4;
         double robotBasketDeliveryThreeLocationX = 59.8;
         double robotSecondBasketDeliveryLocationY= 57.5;
