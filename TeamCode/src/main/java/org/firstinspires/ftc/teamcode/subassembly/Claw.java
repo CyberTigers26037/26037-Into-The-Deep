@@ -27,7 +27,7 @@ public class Claw {
     }
 
     public void prepareToPickupHorizontalSample() {
-        elbow.down();
+        elbow.horizontalPickup();
         wrist.right90();
         pincher.open();
     }

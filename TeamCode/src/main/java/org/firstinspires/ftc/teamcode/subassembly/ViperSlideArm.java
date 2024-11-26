@@ -47,7 +47,7 @@ public class ViperSlideArm {
     final double ARM_PICKUP_HANGING_SPECIMEN     =  22 * ARM_TICKS_PER_DEGREE;
     final double ARM_PICKUP_FIELD_SPECIMEN       =   4 * ARM_TICKS_PER_DEGREE;
     final double ARM_SCORE_SAMPLE_IN_LOW         =  82 * ARM_TICKS_PER_DEGREE;
-    final double ARM_SCORE_SAMPLE_IN_HIGH        = 100 * ARM_TICKS_PER_DEGREE;
+    final double ARM_SCORE_SAMPLE_IN_HIGH        = 97.5 * ARM_TICKS_PER_DEGREE;
     final double ARM_ATTACH_HANGING_HOOK         = 110 * ARM_TICKS_PER_DEGREE;
     final double ARM_WINCH_ROBOT                 =   0 * ARM_TICKS_PER_DEGREE;
     final double ARM_MINIMUM                     =   0;
@@ -64,7 +64,6 @@ public class ViperSlideArm {
 
     final double VIPERSLIDE_TICKS_PER_MM = (111132.0 / 289.0) / 120.0;
     final double VIPERSLIDE_COLLAPSED              =   0 * VIPERSLIDE_TICKS_PER_MM;
-    final double VIPERSLIDE_EXTENDED               = 150 * VIPERSLIDE_TICKS_PER_MM;
     final double VIPERSLIDE_SCORING_IN_HIGH_BASKET = 460 * VIPERSLIDE_TICKS_PER_MM;
     final double VIPERSLIDE_SCORING_IN_LOW_BASKET  = 120 * VIPERSLIDE_TICKS_PER_MM;
     final double VIPERSLIDE_HIGH_CHAMBER           =  67 * VIPERSLIDE_TICKS_PER_MM;
@@ -112,9 +111,6 @@ public class ViperSlideArm {
         viperSlidePosition = VIPERSLIDE_COLLAPSED;
 
     }
-    public void extendViperSlide() {
-        viperSlidePosition = VIPERSLIDE_EXTENDED;
-    }
 
     public void setArmClearBarrier() {
         /* This is about 20° up from the collecting position to clear the barrier
@@ -128,6 +124,30 @@ public class ViperSlideArm {
         /* This is the vertical claw pick-up/collecting arm position */
         armPosition = ARM_COLLECT;
         viperSlidePosition = VIPERSLIDE_PICKUP_SAMPLE;
+    }
+
+    public void prepareToPickUpVerticalSampleAuto(){
+        armPosition = ARM_COLLECT - 5;
+        viperSlidePosition = VIPERSLIDE_PICKUP_SAMPLE;
+
+    }
+    public void prepareToPickupHorizontalSample(){
+
+        armPosition = ARM_COLLECT;
+        viperSlidePosition = VIPERSLIDE_PICKUP_SAMPLE + 130;
+    }
+    public void pickUpHorizontalSample(){
+        armPosition = ARM_COLLECT - 5;
+        viperSlidePosition = VIPERSLIDE_PICKUP_SAMPLE + 270;
+
+    }
+    public void prepareToPickUpHorizontalPregame(){
+        armPosition = ARM_CLEAR_BARRIER;
+        viperSlidePosition = VIPERSLIDE_COLLAPSED;
+    }
+    public void retractSlide(){
+        viperSlidePosition = VIPERSLIDE_COLLAPSED;
+
     }
 
     public void prepareToDropSampleHighBasket() {
