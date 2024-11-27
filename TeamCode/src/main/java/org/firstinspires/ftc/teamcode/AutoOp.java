@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.Device;
 
 @Autonomous(preselectTeleOp = "AutoOp")
 public class AutoOp extends LinearOpMode {
@@ -21,6 +22,7 @@ public class AutoOp extends LinearOpMode {
 
             if (basketDelivery == null) {
                 telemetry.addData("Auto Mode", "A = Baskets, B = Specimens");
+                telemetry.addData("Serial", Device.getSerialNumberOrUnknown());
                 telemetry.update();
                 if (currentA && !previousA) {
                     basketDelivery = true;
