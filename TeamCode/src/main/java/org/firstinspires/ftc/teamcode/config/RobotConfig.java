@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.util.Device;
 public class RobotConfig {
     private static boolean initialized;
     private static final String ROBOT_SERIAL_COACH_ANTHONY = "5838f408422f581c";
-    private static final String ROBOT_SERIAL_COACH_ROB     = "???";
+    private static final String ROBOT_SERIAL_COACH_ROB     = "803b7c0c22973496";
     private static final String ROBOT_SERIAL_MILLENNIUM    = "a542e45d0aef5058";
 
     private static String robotName = "Unknown";
@@ -196,6 +196,7 @@ public class RobotConfig {
     private static void initCoachRobRobot() {
         robotName = "Coach Rob";
 
-        // ?? use Millennium defaults for now.
+        pincherMinSafeDegrees = -62;
+
     }
 }
