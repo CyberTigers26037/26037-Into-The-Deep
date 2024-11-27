@@ -15,14 +15,14 @@ public class RobotConfig {
 
     // RoadRunner Parameters
     private static double inPerTick = 0.00294479;
-    private static double lateralInPerTick = 0.0021816593024624738;
-    private static double trackWidthTicks = 5191.979563103292;
-    private static double kS = 1.020971104258798;
-    private static double kV = 0.0005820210887890002;
-    private static double kA = 0.0002;
+    private static double lateralInPerTick = 0.0021824459145637193;
+    private static double trackWidthTicks = 5358.29246070889;
+    private static double kS = 1.220971104258798;
+    private static double kV = 0.0004320210887890002;
+    private static double kA = 0.00012;
     private static double axialGain = 1.0;
-    private static double lateralGain = 1.0;
-    private static double headingGain = 1.0;
+    private static double lateralGain = 0.5;
+    private static double headingGain = 1.3;
     private static double axialVelGain = 0.0;
     private static double lateralVelGain = 0.0;
     private static double headingVelGain = 0.0;

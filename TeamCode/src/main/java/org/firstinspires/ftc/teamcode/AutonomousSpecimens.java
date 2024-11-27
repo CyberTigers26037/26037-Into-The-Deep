@@ -36,13 +36,15 @@ public class AutonomousSpecimens {
         claw.prepareToPickupVerticalSample();
         viperSlideArm.execute();
     }
+    private void pickupVerticalSampleHigher() {
+        viperSlideArm.prepareToPickupVerticalSample();
+        claw.prepareToPickupVerticalSample();
+        viperSlideArm.adjustArm(4);
+        viperSlideArm.execute();
+    }
     private void prepareToPickupHorizontalSample() {
         viperSlideArm.prepareToPickupVerticalSample();
         claw.prepareToPickupHorizontalSample();
-        viperSlideArm.execute();
-    }
-    private void lowerArmToPickupSample() {
-        viperSlideArm.adjustArm(-2);
         viperSlideArm.execute();
     }
     private void hangSpecimenHighChamber(){
@@ -63,6 +65,11 @@ public class AutonomousSpecimens {
         viperSlideArm.execute();
     }
 
+    private void parkRobotSigma() {
+        viperSlideArm.park();
+        viperSlideArm.execute();
+    }
+
     private void sleep(long millis) {
         try {
             Thread.sleep(millis);
@@ -80,28 +87,28 @@ public class AutonomousSpecimens {
 
         double robotStartingPositionY = 3*TILE_HEIGHT-ROBOT_HEIGHT/2;
         double robotStartingPositionX = -ROBOT_WIDTH/2;
-        double robotFirstSamplePickupLocationY = 34.7;
-        double robotSecondSamplePickupLocationY = 36;
-        double robotThirdSamplePickupLocationY = 26;
-        double robotFirstTeamSampleLocationX = -51;
-        double robotSecondTeamSampleLocationX = -60;
-        double robotThirdTeamSampleLocationX = -64;
+        double robotFirstSamplePickupLocationY = 35;
+        double robotSecondSamplePickupLocationY = 35;
+        double robotThirdSamplePickupLocationY = 21;
+        double robotFirstTeamSampleLocationX = -55;
+        double robotSecondTeamSampleLocationX = -64;
+        double robotThirdTeamSampleLocationX = -62;
         double robotSampleDropX = -57;
         double robotSampleDropY = 51;
-        double robotThirdDropY = 54;
-        double robotThirdSampleLocationY = 26;
+        double robotThirdDropY = 54.5;
         double robotObservationZoneX = -TILE_WIDTH*0.5 + 2;
-        double robotObservationHangSpecimenY = 38;
+        double robotObservationHangSpecimenY = 36;
 
 
         claw.pickupSample();
         prepareToHangSpecimenHighChamber();
-        waitForViperSlideNotBusy();
+        //waitForViperSlideNotBusy();
         // Goes to bar and hangs preloaded sample
         Actions.runBlocking(drive.actionBuilder(new Pose2d(robotStartingPositionX, robotStartingPositionY, Math.toRadians(270)))
                 .setTangent(Math.toRadians(270))
                 .splineToLinearHeading(new Pose2d(robotObservationZoneX,robotObservationHangSpecimenY,Math.toRadians(270)),Math.toRadians(270))
                 .build());
+        waitForViperSlideNotBusy();
         hangSpecimenHighChamber();
         waitForViperSlideNotBusy();
         claw.dropSample();
@@ -118,26 +125,25 @@ public class AutonomousSpecimens {
         claw.pickupSample();
         sleep(100);
         raiseViperSlide();
-        waitForViperSlideNotBusy();
         // Drops off first team sample in observation zone
+        extendViperSlide();
         Actions.runBlocking(drive.actionBuilder(drive.pose)
                 .setTangent(Math.toRadians(90))
                 .splineToLinearHeading(new Pose2d(robotSampleDropX, robotSampleDropY, Math.toRadians(90)), Math.toRadians(130))
                 .build());
-        extendViperSlide();
         waitForViperSlideNotBusy();
         sleep(100);
         claw.dropSample();
         sleep(100);
-        prepareToPickupVerticalSample();
-        waitForViperSlideNotBusy();
+        pickupVerticalSampleHigher();
         // Picks up second team sample
         Actions.runBlocking(drive.actionBuilder(drive.pose)
                 .turn(Math.toRadians(-90))
                 .setTangent(Math.toRadians(270))
                 .splineToLinearHeading(new Pose2d(robotSecondTeamSampleLocationX,robotSecondSamplePickupLocationY,Math.toRadians(270)),Math.toRadians(270))
                 .build());
-        lowerArmToPickupSample();
+        prepareToPickupVerticalSample();
+        waitForViperSlideNotBusy();
         sleep(100);
         claw.pickupSample();
         sleep(100);
@@ -148,6 +154,7 @@ public class AutonomousSpecimens {
                 .setTangent(Math.toRadians(90))
                 .splineToLinearHeading(new Pose2d(robotSampleDropX, robotSampleDropY, Math.toRadians(90)), Math.toRadians(130))
                 .build());
+        waitForViperSlideNotBusy();
         claw.dropSample();
         // Picks up third team sample
         Actions.runBlocking(drive.actionBuilder(drive.pose)
@@ -160,14 +167,14 @@ public class AutonomousSpecimens {
         claw.pickupSample();
         sleep(100);
         raiseViperSlide();
-        // Drops off third team sample
+       // Drops off third team sample
         Actions.runBlocking(drive.actionBuilder(drive.pose)
                 .setTangent(Math.toRadians(90))
                 .splineToLinearHeading(new Pose2d(robotSampleDropX, robotThirdDropY, Math.toRadians(90)), Math.toRadians(130))
                 .build());
+        waitForViperSlideNotBusy();
         claw.dropSample();
-        // Parks robot and resets viperslide
-        retractViperSlide();
-
+        //Parks robot and resets viperslide
+        parkRobotSigma();
     }
 }
