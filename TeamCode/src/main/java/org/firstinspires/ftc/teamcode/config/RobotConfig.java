@@ -171,8 +171,8 @@ public class RobotConfig {
     private static void initCoachAnthonyRobot() {
         robotName = "Coach Anthony";
 
-        pincherMinSafeDegrees = -90;
-        pincherMaxSafeDegrees = -30;
+        pincherMinSafeDegrees = -65;
+        pincherMaxSafeDegrees = -15;
 
         inPerTick = 120.0 / 40744.75;
         lateralInPerTick = 0.002216341570521334;
