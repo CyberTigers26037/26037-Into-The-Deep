@@ -112,6 +112,15 @@ public class ViperSlideArm {
         viperSlidePosition = VIPERSLIDE_COLLAPSED;
 
     }
+    public void retractAll(){
+
+    }
+    public void keepSampleHeld(){
+        viperSlidePosition = VIPERSLIDE_COLLAPSED;
+        armPosition = ARM_SCORE_SAMPLE_IN_HIGH;
+
+
+    }
     public void extendViperSlide() {
         viperSlidePosition = VIPERSLIDE_EXTENDED;
     }
@@ -131,7 +140,7 @@ public class ViperSlideArm {
     }
 
     public void prepareToPickUpVerticalSampleAuto(){
-        armPosition = ARM_COLLECT - 5;
+        armPosition = ARM_COLLECT - 20;
         viperSlidePosition = VIPERSLIDE_PICKUP_SAMPLE;
 
     }
@@ -141,9 +150,9 @@ public class ViperSlideArm {
         armPosition = ARM_COLLECT;
         viperSlidePosition = VIPERSLIDE_PICKUP_SAMPLE + 130;
     }
-    public void pickUpHorizontalSample(){
-        armPosition = ARM_COLLECT - 5;
-        viperSlidePosition = VIPERSLIDE_PICKUP_SAMPLE + 270;
+    public void pickUpHorizontalSampleAuto(){
+        armPosition = ARM_COLLECT + (0.34 * ARM_TICKS_PER_DEGREE);
+        viperSlidePosition = VIPERSLIDE_PICKUP_SAMPLE + 300;
 
     }
     public void prepareToPickUpHorizontalPregame(){
@@ -199,8 +208,12 @@ public class ViperSlideArm {
     public void adjustViperSlidePosition(double slideMm) {
         viperSlidePosition += slideMm * VIPERSLIDE_TICKS_PER_MM;
     }
+    public void execute(){
+        execute(1.0, 1.0);
 
-    public void execute() {
+    }
+
+    public void execute(double armSpeed, double slideSpeed) {
         /*
         This is probably my favorite piece of code on this robot. It's a clever little software
         solution to a problem the robot has.
@@ -229,7 +242,7 @@ public class ViperSlideArm {
         We also set the target velocity (speed) the motor runs at, and use setMode to run it.*/
         armMotor.setTargetPosition((int) (armPosition + armPositionFudgeFactor + armViperSlideComp));
         armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        ((DcMotorEx) armMotor).setVelocity(2100);
+        ((DcMotorEx) armMotor).setVelocity(2100 * armSpeed);
 
         /*here we check to see if the viper slide is trying to go higher than the maximum extension.
          *if it is, we set the variable to the max.
@@ -244,7 +257,7 @@ public class ViperSlideArm {
 
         viperSlideMotor.setTargetPosition((int) (viperSlidePosition));
         viperSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        ((DcMotorEx) viperSlideMotor).setVelocity(2100);
+        ((DcMotorEx) viperSlideMotor).setVelocity(2100 * slideSpeed);
     }
 
     public boolean isBusy(){
