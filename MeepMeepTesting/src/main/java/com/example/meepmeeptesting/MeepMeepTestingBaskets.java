@@ -28,8 +28,8 @@ public class MeepMeepTestingBaskets {
         double robotFirstSampleLocationX = 48;
         double robotSecondSampleLocationX = 58;
         double robotThirdSampleLocationX = 56;
-        double observationZoneLocationX = -34;
-        double observationZoneLocationY = 58;
+        double observationZoneLocationX = 34;
+        double observationZoneLocationY = 10;
 
 
         myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(robotStartingPositionX, robotStartingPositionY, Math.toRadians(0)))
@@ -62,8 +62,8 @@ public class MeepMeepTestingBaskets {
                 .splineToLinearHeading(new Pose2d(robotBasketDeliveryLocationX, robotBasketDeliveryLocationY, Math.toRadians(45)), Math.toRadians(100))
                 .waitSeconds(1)
                 // Parks robot into observation zone (spins for some reason must fix once comes back)
-                        .setTangent(Math.toRadians(180))
-                        .splineToLinearHeading(new Pose2d(observationZoneLocationX, observationZoneLocationY, Math.toRadians(0)), Math.toRadians(180))
+                        .setTangent(Math.toRadians(235))
+                        .splineToLinearHeading(new Pose2d(observationZoneLocationX, observationZoneLocationY, Math.toRadians(180)), Math.toRadians(180))
                                 .build());
         meepMeep.setBackground(MeepMeep.Background.FIELD_INTO_THE_DEEP_JUICE_DARK)
                 .setDarkMode(true)

@@ -140,7 +140,7 @@ public class ViperSlideArm {
     }
 
     public void prepareToPickUpVerticalSampleAuto(){
-        armPosition = ARM_COLLECT - 20;
+        armPosition = ARM_COLLECT + (2 * ARM_TICKS_PER_DEGREE);
         viperSlidePosition = VIPERSLIDE_PICKUP_SAMPLE;
 
     }
@@ -151,8 +151,8 @@ public class ViperSlideArm {
         viperSlidePosition = VIPERSLIDE_PICKUP_SAMPLE + 130;
     }
     public void pickUpHorizontalSampleAuto(){
-        armPosition = ARM_COLLECT + (0.34 * ARM_TICKS_PER_DEGREE);
-        viperSlidePosition = VIPERSLIDE_PICKUP_SAMPLE + 300;
+        armPosition = ARM_COLLECT + (0.32 * ARM_TICKS_PER_DEGREE);
+        viperSlidePosition = VIPERSLIDE_PICKUP_SAMPLE + 380;
 
     }
     public void prepareToPickUpHorizontalPregame(){

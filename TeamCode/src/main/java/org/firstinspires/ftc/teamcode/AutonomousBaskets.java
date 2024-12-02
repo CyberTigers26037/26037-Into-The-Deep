@@ -101,19 +101,22 @@ private void keepSampleHeld(){
 
         double robotStartingPositionY = 3*TILE_HEIGHT-ROBOT_HEIGHT/2;
         double robotStartingPositionX = TILE_WIDTH*1.5;
-        double robotSecondSamplePickupLocationY = 38.2;
-        double robotFirstSamplePickupLocationY = 37;
-        double robotThirdSamplePickupLocationY = 21.5;
+        double robotSecondSamplePickupLocationY = 38.4;
+        double robotFirstSamplePickupLocationY = 37.7;
+        double robotThirdSamplePickupLocationY = 22.9;
         double robotBasketDeliveryOneLocationX = 62.5;
-        double robotBasketDeliveryOneLocationY = 53.6;
+        double robotBasketDeliveryOneLocationY = 54;
         double robotBasketDeliveryTwoLocationX = 58;
-        double robotBasketDeliveryLocationTwoY = 58.4;
-        double robotBasketDeliveryThreeLocationX = 58.6;
-        double robotSecondBasketDeliveryLocationY= 57.5;
+        double robotBasketDeliveryLocationTwoY = 60;
+        double robotBasketDeliveryLocationThreeX = 57.6;
+        double robotBasketDeliveryLocationThreeY = 60;
+        double robotBasketDeliveryThreeLocationX = 57.5;
+        double robotSecondBasketDeliveryLocationY= 60;
         double robotFirstSampleLocationX = 49.5;
         double robotSecondSampleLocationX = 61.5;
-        double robotThirdSampleLocationX = 52.7;
-
+        double robotThirdSampleLocationX = 50.8;
+        double submersibleZoneX = 34;
+        double submersibleZoneY = 10;
 
         // Goes to basket and drops off preloaded sample
         claw.pickupSample();
@@ -140,7 +143,7 @@ private void keepSampleHeld(){
         sleep(1000);
         claw.pickupSample();
         sleep(200);
-        prepareToDropSampleInHighBasket(0.8, 0.4);
+        prepareToDropSampleInHighBasket(0.8, 0.28);
         Actions.runBlocking(drive.actionBuilder(drive.pose)
                 .setTangent(Math.toRadians(45))
                 .splineToLinearHeading(new Pose2d(robotBasketDeliveryThreeLocationX,robotSecondBasketDeliveryLocationY,Math.toRadians(45)),Math.toRadians(45))
@@ -158,7 +161,7 @@ private void keepSampleHeld(){
        sleep(1000);
         claw.pickupSample();
         sleep(150);
-        prepareToDropSampleInHighBasket(0.8, 0.4);
+        prepareToDropSampleInHighBasket(0.8, 0.28);
         Actions.runBlocking(drive.actionBuilder(drive.pose)
                 .setTangent(Math.toRadians(180))
                 .splineToLinearHeading(new Pose2d(robotBasketDeliveryTwoLocationX,robotBasketDeliveryLocationTwoY,Math.toRadians(45)),Math.toRadians(45))
@@ -182,7 +185,7 @@ private void keepSampleHeld(){
        keepSampleHeld();
         Actions.runBlocking(drive.actionBuilder(drive.pose)
                 .setTangent(Math.toRadians(100))
-                .splineToLinearHeading(new Pose2d(robotBasketDeliveryTwoLocationX,robotBasketDeliveryLocationTwoY,Math.toRadians(45)),Math.toRadians(100))
+                .splineToLinearHeading(new Pose2d(robotBasketDeliveryLocationThreeX,robotBasketDeliveryLocationThreeY,Math.toRadians(45)),Math.toRadians(100))
                 .build());
         prepareToDropSampleInHighBasket(2,2);
         waitForViperSlideNotBusy();
@@ -191,7 +194,10 @@ private void keepSampleHeld(){
         retractArm();
         waitForViperSlideNotBusy();
      green();
-
+     Actions.runBlocking(drive.actionBuilder(drive.pose)
+   .setTangent(Math.toRadians(235))
+                .splineToLinearHeading(new Pose2d(submersibleZoneX, submersibleZoneY, Math.toRadians(180)), Math.toRadians(180))
+                .build());
 
 
 
