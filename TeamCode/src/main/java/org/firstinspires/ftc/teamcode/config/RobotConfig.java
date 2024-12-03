@@ -31,6 +31,7 @@ public class RobotConfig {
     private static double par1YTicks = 1272.2998829608118;
     private static double perpXTicks = -2331.2327839370423;
 
+    @SuppressWarnings("unused")
     public static String getRobotName() {
         init();
 
@@ -187,16 +188,32 @@ public class RobotConfig {
         lateralVelGain = 0.0;
         headingVelGain = 0.0;
 
-        //par0YTicks = -1482.288027000346;
-        //par1YTicks = 1291.951314151336;
-        //perpXTicks = -2274.184381449579;
-
+        par0YTicks = -1482.288027000346;
+        par1YTicks = 1291.951314151336;
+        perpXTicks = -2274.184381449579;
     }
 
     private static void initCoachRobRobot() {
         robotName = "Coach Rob";
 
-        pincherMinSafeDegrees = -62;
+        inPerTick = 120.0 / 40684.0;
+        kV = 0.0004078444590686122;
+        kS = 1.1645064050089036;
+        kA = 0.00014;
+        lateralInPerTick = 0.002328958872727025;
+        trackWidthTicks = 5140.188964806299;
 
+        axialGain      = 1.0;
+        lateralGain    = 1.0;
+        headingGain    = 2.6;
+        axialVelGain   = 0.0;
+        lateralVelGain = 0.0;
+        headingVelGain = 0.0;
+
+        par0YTicks = -1518.1894955342736;
+        par1YTicks =  1240.6263803752079;
+        perpXTicks = -2266.0179717433575;
+
+        pincherMinSafeDegrees = -62;
     }
 }
