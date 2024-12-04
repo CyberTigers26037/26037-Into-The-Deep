@@ -32,7 +32,7 @@ import org.firstinspires.ftc.teamcode.subassembly.Claw;
 import org.firstinspires.ftc.teamcode.subassembly.ViperSlideArm;
 
 @SuppressWarnings("unused")
-@TeleOp(name="Cyber Tigers Into the Deep TeleOp", group="Robot")
+@TeleOp(name="Cyber Tigers Into the Deep TeleOp")
 public class CyberTigersIntoTheDeepTeleOp extends LinearOpMode {
     /*
     Control hub
@@ -89,6 +89,7 @@ public class CyberTigersIntoTheDeepTeleOp extends LinearOpMode {
                 claw.prepareToDropSampleLowBasket();
             } else if (gamepad2.b) {
                 viperSlideArm.setArmClearBarrier();
+                claw.prepareToPickupVerticalSample();
             } else if (gamepad2.x) {
                 viperSlideArm.prepareToPickupVerticalSample();
                 claw.prepareToPickupVerticalSample();
