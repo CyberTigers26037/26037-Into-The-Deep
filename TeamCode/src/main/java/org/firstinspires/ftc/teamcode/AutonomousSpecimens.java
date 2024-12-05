@@ -67,6 +67,7 @@ public class AutonomousSpecimens {
 
     private void parkRobotSigma() {
         viperSlideArm.park();
+        claw.zero();
         viperSlideArm.execute();
     }
 
@@ -88,10 +89,10 @@ public class AutonomousSpecimens {
         double robotStartingPositionY = 3*TILE_HEIGHT-ROBOT_HEIGHT/2;
         double robotStartingPositionX = -ROBOT_WIDTH/2;
         double robotFirstSamplePickupLocationY = 35;
-        double robotSecondSamplePickupLocationY = 35;
+        double robotSecondSamplePickupLocationY = 36;
         double robotThirdSamplePickupLocationY = 21;
         double robotFirstTeamSampleLocationX = -55;
-        double robotSecondTeamSampleLocationX = -64;
+        double robotSecondTeamSampleLocationX = -63;
         double robotThirdTeamSampleLocationX = -62;
         double robotSampleDropX = -57;
         double robotSampleDropY = 51;
@@ -174,7 +175,7 @@ public class AutonomousSpecimens {
                 .build());
         waitForViperSlideNotBusy();
         claw.dropSample();
-        //Parks robot and resets viperslide
+        //Parks robot and resets viperslide and claw
         parkRobotSigma();
     }
 }

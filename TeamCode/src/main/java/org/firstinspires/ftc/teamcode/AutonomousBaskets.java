@@ -51,7 +51,7 @@ private void keepSampleHeld(){
         viperSlideArm.execute();
     }
     private void green(){
-        claw.elbowStraight();
+        claw.zero();
         viperSlideArm.park();
         viperSlideArm.execute();
     }
@@ -101,8 +101,8 @@ private void keepSampleHeld(){
 
         double robotStartingPositionY = 3*TILE_HEIGHT-ROBOT_HEIGHT/2;
         double robotStartingPositionX = TILE_WIDTH*1.5;
-        double robotSecondSamplePickupLocationY = 38.4;
-        double robotFirstSamplePickupLocationY = 37.7;
+        double robotSecondSamplePickupLocationY = 38.5;
+        double robotFirstSamplePickupLocationY = 38;
         double robotThirdSamplePickupLocationY = 22.9;
         double robotBasketDeliveryOneLocationX = 62.5;
         double robotBasketDeliveryOneLocationY = 54;
@@ -120,7 +120,7 @@ private void keepSampleHeld(){
 
         // Goes to basket and drops off preloaded sample
         claw.pickupSample();
-        prepareToDropSampleInHighBasket(2.5, 2.5);
+        prepareToDropSampleInHighBasket(3, 3);
         Actions.runBlocking(drive.actionBuilder(drive.pose)
                         .waitSeconds(.1)
                 .setTangent(Math.toRadians(270))
@@ -140,7 +140,7 @@ private void keepSampleHeld(){
                 .build());
 
         prepareToPickUpVerticalSample(3,3);
-        sleep(1000);
+        sleep(1050);
         claw.pickupSample();
         sleep(200);
         prepareToDropSampleInHighBasket(0.8, 0.28);
@@ -177,9 +177,9 @@ private void keepSampleHeld(){
                 .splineToLinearHeading(new Pose2d(robotThirdSampleLocationX,robotThirdSamplePickupLocationY, Math.toRadians(0)), Math.toRadians(0))
                 .build());
         prepareToPickUpHorizontalBefore(3,3);
-        sleep(1200);
+        sleep(1050);
         pickUpHorizontal();
-        sleep(400);
+        sleep(410);
         claw.pickupSample();
         sleep(100);
        keepSampleHeld();
@@ -194,6 +194,7 @@ private void keepSampleHeld(){
         retractArm();
         waitForViperSlideNotBusy();
      green();
+
      Actions.runBlocking(drive.actionBuilder(drive.pose)
    .setTangent(Math.toRadians(235))
                 .splineToLinearHeading(new Pose2d(submersibleZoneX, submersibleZoneY, Math.toRadians(180)), Math.toRadians(180))
