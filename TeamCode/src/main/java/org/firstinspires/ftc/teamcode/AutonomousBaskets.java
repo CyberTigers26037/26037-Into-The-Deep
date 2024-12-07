@@ -101,8 +101,8 @@ private void keepSampleHeld(){
 
         double robotStartingPositionY = 3*TILE_HEIGHT-ROBOT_HEIGHT/2;
         double robotStartingPositionX = TILE_WIDTH*1.5;
-        double robotSecondSamplePickupLocationY = 38.5;
-        double robotFirstSamplePickupLocationY = 38;
+        double robotSecondSamplePickupLocationY = 38.2;
+        double robotFirstSamplePickupLocationY = 37.5;
         double robotThirdSamplePickupLocationY = 22.9;
         double robotBasketDeliveryOneLocationX = 62.5;
         double robotBasketDeliveryOneLocationY = 54;
@@ -121,8 +121,9 @@ private void keepSampleHeld(){
         // Goes to basket and drops off preloaded sample
         claw.pickupSample();
         prepareToDropSampleInHighBasket(3, 3);
+
         Actions.runBlocking(drive.actionBuilder(drive.pose)
-                        .waitSeconds(.1)
+                        .waitSeconds(.01)
                 .setTangent(Math.toRadians(270))
                 .splineToLinearHeading(new Pose2d(robotBasketDeliveryOneLocationX,robotBasketDeliveryOneLocationY,Math.toRadians(45)),Math.toRadians(45))
                         .build());
@@ -158,7 +159,7 @@ private void keepSampleHeld(){
                 .splineToLinearHeading(new Pose2d(robotSecondSampleLocationX,robotSecondSamplePickupLocationY,Math.toRadians(270)), Math.toRadians(0))
                 .build());
         prepareToPickUpVerticalSample(3,3);
-       sleep(1000);
+       sleep(1050);
         claw.pickupSample();
         sleep(150);
         prepareToDropSampleInHighBasket(0.8, 0.28);
