@@ -39,19 +39,20 @@ public class ViperSlideArm {
     If you'd like it to move further, increase that number. If you'd like it to not move
     as far from the starting position, decrease it. */
 
-    final double ARM_COLLAPSED_INTO_ROBOT        =   0;
-    final double ARM_COLLECT                     =   3 * ARM_TICKS_PER_DEGREE;
-    final double ARM_CLEAR_BARRIER               =  13 * ARM_TICKS_PER_DEGREE;
-    final double ARM_SCORE_SPECIMEN_LOW_CHAMBER  =  35 * ARM_TICKS_PER_DEGREE;
-    final double ARM_SCORE_SPECIMEN_HIGH_CHAMBER =  80 * ARM_TICKS_PER_DEGREE;
-    final double ARM_PICKUP_HANGING_SPECIMEN     =  22 * ARM_TICKS_PER_DEGREE;
-    final double ARM_PICKUP_FIELD_SPECIMEN       =   4 * ARM_TICKS_PER_DEGREE;
-    final double ARM_SCORE_SAMPLE_IN_LOW         =  82 * ARM_TICKS_PER_DEGREE;
-    final double ARM_SCORE_SAMPLE_IN_HIGH        = 97.5 * ARM_TICKS_PER_DEGREE;
-    final double ARM_ATTACH_HANGING_HOOK         = 110 * ARM_TICKS_PER_DEGREE;
-    final double ARM_WINCH_ROBOT                 =   0 * ARM_TICKS_PER_DEGREE;
-    final double ARM_MINIMUM                     =   0;
-    final double ARM_MAXIMUM                     = 110 * ARM_TICKS_PER_DEGREE;
+    final double ARM_COLLAPSED_INTO_ROBOT           =    0;
+    final double ARM_COLLECT                        =    3 * ARM_TICKS_PER_DEGREE;
+    final double ARM_CLEAR_BARRIER                  =   13 * ARM_TICKS_PER_DEGREE;
+    final double ARM_SCORE_SPECIMEN_LOW_CHAMBER     =   35 * ARM_TICKS_PER_DEGREE;
+    final double ARM_SCORE_SPECIMEN_HIGH_CHAMBER    =   80 * ARM_TICKS_PER_DEGREE;
+    final double ARM_PICKUP_HANGING_SPECIMEN        =   22 * ARM_TICKS_PER_DEGREE;
+    final double ARM_PICKUP_FIELD_SPECIMEN          =    4 * ARM_TICKS_PER_DEGREE;
+    final double ARM_SCORE_SAMPLE_IN_LOW            =   82 * ARM_TICKS_PER_DEGREE;
+    final double ARM_SCORE_SAMPLE_IN_HIGH           = 97.5 * ARM_TICKS_PER_DEGREE;
+    final double ARM_ATTACH_HANGING_HOOK            =  110 * ARM_TICKS_PER_DEGREE;
+    final double ARM_WINCH_ROBOT                    =    0 * ARM_TICKS_PER_DEGREE;
+    final double ARM_MINIMUM                        =    0;
+    final double ARM_MAXIMUM                        =  125 * ARM_TICKS_PER_DEGREE;
+    final double ARM_SCORE_SAMPLE_IN_HIGH_BACKWARDS =  125 * ARM_TICKS_PER_DEGREE;
 
     /* A number in degrees that the triggers can adjust the arm position by */
     final double FUDGE_FACTOR = 15 * ARM_TICKS_PER_DEGREE;
@@ -63,14 +64,15 @@ public class ViperSlideArm {
 
 
     final double VIPERSLIDE_TICKS_PER_MM = (111132.0 / 289.0) / 120.0;
-    final double VIPERSLIDE_COLLAPSED              =   0 * VIPERSLIDE_TICKS_PER_MM;
-    final double VIPERSLIDE_EXTENDED              =  180 * VIPERSLIDE_TICKS_PER_MM;
-    final double VIPERSLIDE_SCORING_IN_HIGH_BASKET = 460 * VIPERSLIDE_TICKS_PER_MM;
-    final double VIPERSLIDE_SCORING_IN_LOW_BASKET  = 120 * VIPERSLIDE_TICKS_PER_MM;
-    final double VIPERSLIDE_HIGH_CHAMBER           =  67 * VIPERSLIDE_TICKS_PER_MM;
-    final double VIPERSLIDE_LOW_CHAMBER            =   0 * VIPERSLIDE_TICKS_PER_MM;
-    final double VIPERSLIDE_PICKUP_SAMPLE          = 102 * VIPERSLIDE_TICKS_PER_MM;
-    final double VIPERSLIDE_FIELD_SPECIMEN         =  97 * VIPERSLIDE_TICKS_PER_MM;
+    final double VIPERSLIDE_COLLAPSED                        =   0 * VIPERSLIDE_TICKS_PER_MM;
+    final double VIPERSLIDE_EXTENDED                         = 180 * VIPERSLIDE_TICKS_PER_MM;
+    final double VIPERSLIDE_SCORING_IN_HIGH_BASKET           = 460 * VIPERSLIDE_TICKS_PER_MM;
+    final double VIPERSLIDE_SCORING_IN_LOW_BASKET            = 120 * VIPERSLIDE_TICKS_PER_MM;
+    final double VIPERSLIDE_HIGH_CHAMBER                     =  67 * VIPERSLIDE_TICKS_PER_MM;
+    final double VIPERSLIDE_LOW_CHAMBER                      =   0 * VIPERSLIDE_TICKS_PER_MM;
+    final double VIPERSLIDE_PICKUP_SAMPLE                    = 102 * VIPERSLIDE_TICKS_PER_MM;
+    final double VIPERSLIDE_FIELD_SPECIMEN                   =  97 * VIPERSLIDE_TICKS_PER_MM;
+    final double VIPERSLIDE_SCORING_IN_HIGH_BASKET_BACKWARDS = 460 * VIPERSLIDE_TICKS_PER_MM;
 
     double viperSlidePosition = VIPERSLIDE_COLLAPSED;
 
@@ -100,24 +102,22 @@ public class ViperSlideArm {
     }
 
     public void setArmPositionFudgeFactor(double fudgeFactor) {
-        fudgeFactor = Range.clip(fudgeFactor,-1,1);
+        fudgeFactor            = Range.clip(fudgeFactor,-1,1);
         armPositionFudgeFactor = FUDGE_FACTOR * fudgeFactor;
     }
 
     public void prepareToDropSampleLowBasket() {
-        armPosition = ARM_SCORE_SAMPLE_IN_LOW;
+        armPosition        = ARM_SCORE_SAMPLE_IN_LOW;
         viperSlidePosition = VIPERSLIDE_SCORING_IN_LOW_BASKET;
     }
     public void retractViperSlide() {
         viperSlidePosition = VIPERSLIDE_COLLAPSED;
 
     }
-    public void retractAll(){
 
-    }
     public void keepSampleHeld(){
         viperSlidePosition = VIPERSLIDE_COLLAPSED;
-        armPosition = ARM_SCORE_SAMPLE_IN_HIGH;
+        armPosition        = ARM_SCORE_SAMPLE_IN_HIGH;
 
 
     }
@@ -135,50 +135,56 @@ public class ViperSlideArm {
 
     public void prepareToPickupVerticalSample() {
         /* This is the vertical claw pick-up/collecting arm position */
-        armPosition = ARM_COLLECT;
+        armPosition        = ARM_COLLECT;
         viperSlidePosition = VIPERSLIDE_PICKUP_SAMPLE;
     }
 
     public void prepareToPickUpVerticalSampleAuto(){
-        armPosition = ARM_COLLECT + (2 * ARM_TICKS_PER_DEGREE);
+        armPosition        = ARM_COLLECT + (2 * ARM_TICKS_PER_DEGREE);
         viperSlidePosition = VIPERSLIDE_PICKUP_SAMPLE;
 
     }
 
     public void prepareToPickupHorizontalSample(){
 
-        armPosition = ARM_COLLECT;
+        armPosition        = ARM_COLLECT;
         viperSlidePosition = VIPERSLIDE_PICKUP_SAMPLE + 130;
     }
     public void pickUpHorizontalSampleAuto(){
-        armPosition = ARM_COLLECT + (0.335 * ARM_TICKS_PER_DEGREE);
+        armPosition        = ARM_COLLECT + (0.335 * ARM_TICKS_PER_DEGREE);
         viperSlidePosition = VIPERSLIDE_PICKUP_SAMPLE + 470;
 
     }
     public void prepareToPickUpHorizontalPregame(){
-        armPosition = ARM_CLEAR_BARRIER;
+        armPosition        = ARM_CLEAR_BARRIER;
         viperSlidePosition = VIPERSLIDE_COLLAPSED;
     }
 
     public void prepareToDropSampleHighBasket() {
         /* This is the correct height to score the sample in the HIGH BASKET*/
-        armPosition = ARM_SCORE_SAMPLE_IN_HIGH;
+        armPosition        = ARM_SCORE_SAMPLE_IN_HIGH;
         viperSlidePosition = VIPERSLIDE_SCORING_IN_HIGH_BASKET;
     }
 
+    public void prepareToDropSampleHighBasketBackwards() {
+
+        armPosition        = ARM_SCORE_SAMPLE_IN_HIGH_BACKWARDS;
+        viperSlidePosition = VIPERSLIDE_SCORING_IN_HIGH_BASKET_BACKWARDS;
+    }
+
     public void prepareToHangLowSpecimen() {
-        armPosition = ARM_SCORE_SPECIMEN_LOW_CHAMBER;
+        armPosition        = ARM_SCORE_SPECIMEN_LOW_CHAMBER;
         viperSlidePosition = VIPERSLIDE_LOW_CHAMBER;
     }
 
     public void park() {
-        armPosition = ARM_COLLAPSED_INTO_ROBOT;
+        armPosition        = ARM_COLLAPSED_INTO_ROBOT;
         viperSlidePosition = VIPERSLIDE_COLLAPSED;
     }
 
     public void prepareToHangHighSpecimen() {
         /* This is the correct height to score SPECIMEN on the HIGH CHAMBER */
-        armPosition = ARM_SCORE_SPECIMEN_HIGH_CHAMBER;
+        armPosition        = ARM_SCORE_SPECIMEN_HIGH_CHAMBER;
         viperSlidePosition = VIPERSLIDE_HIGH_CHAMBER;
     }
 
@@ -187,12 +193,12 @@ public class ViperSlideArm {
     }
 
     public void prepareToPickUpFieldSpecimen() {
-        armPosition = ARM_PICKUP_FIELD_SPECIMEN;
+        armPosition        = ARM_PICKUP_FIELD_SPECIMEN;
         viperSlidePosition = VIPERSLIDE_FIELD_SPECIMEN;
     }
 
     public void prepareToHang() {
-        armPosition = ARM_ATTACH_HANGING_HOOK;
+        armPosition        = ARM_ATTACH_HANGING_HOOK;
         viperSlidePosition = VIPERSLIDE_COLLAPSED;
     }
 
@@ -202,7 +208,7 @@ public class ViperSlideArm {
 
     public void adjustArm(double armDegree) {
         armPosition += armDegree * ARM_TICKS_PER_DEGREE;
-        armPosition = Range.clip(armPosition, ARM_MINIMUM, ARM_MAXIMUM);
+        armPosition  = Range.clip(armPosition, ARM_MINIMUM, ARM_MAXIMUM);
     }
 
     public void adjustViperSlidePosition(double slideMm) {

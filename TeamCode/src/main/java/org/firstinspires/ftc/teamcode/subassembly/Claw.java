@@ -15,7 +15,7 @@ public class Claw {
     }
 
     public void zero() {
-        elbow.zero();
+        elbow.down();
         wrist.zero();
         pincher.zero();
     }
@@ -54,6 +54,10 @@ public class Claw {
         wrist.straight();
     }
 
+    public void prepareToDropSampleHighBasketBackwards() {
+        elbow.prepareToDropSampleHighBasketBackwards();
+        wrist.straight();
+    }
     public void prepareToHangLowSpecimen() {
         elbow.straight();
         wrist.straight();
