@@ -13,7 +13,7 @@ public class SampleDetector {
     public enum SampleType {
         NONE, RED, BLUE, YELLOW
     }
-    private RevColorSensorV3 colorSensor;
+    private final RevColorSensorV3 colorSensor;
     private SampleType lastDetectedSample;
     private double lastDetectedDistance;
     private final float[] hsvValues = new float[3];

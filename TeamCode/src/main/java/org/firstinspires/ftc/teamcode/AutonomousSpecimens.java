@@ -13,14 +13,13 @@ public class AutonomousSpecimens {
     private static final double TILE_HEIGHT = 23.5;
     private static final double ROBOT_HEIGHT = 18;
     private static final double ROBOT_WIDTH = 18;
-    private static final double SAMPLE_HEIGHT = 3.5;
-    private MecanumDrive drive;
-    private ViperSlideArm viperSlideArm;
-    private Claw claw;
-    private double robotStartingPositionY = 3*TILE_HEIGHT-ROBOT_HEIGHT/2;
-    private double robotStartingPositionX = -TILE_WIDTH*0.5;
+    private final MecanumDrive drive;
+    private final ViperSlideArm viperSlideArm;
+    private final Claw claw;
 
     public AutonomousSpecimens(HardwareMap hardwareMap) {
+        double robotStartingPositionY = 3 * TILE_HEIGHT - ROBOT_HEIGHT / 2;
+        double robotStartingPositionX = -TILE_WIDTH * 0.5;
         Pose2d beginningPose = new Pose2d(robotStartingPositionX, robotStartingPositionY, Math.toRadians(270));
         drive = new MecanumDrive(hardwareMap,beginningPose);
         viperSlideArm = new ViperSlideArm(hardwareMap);
@@ -70,7 +69,7 @@ public class AutonomousSpecimens {
         viperSlideArm.execute();
         claw.zero();
     }
-
+    @SuppressWarnings("SameParameterValue")
     private void sleep(long millis) {
         try {
             Thread.sleep(millis);
@@ -78,6 +77,7 @@ public class AutonomousSpecimens {
         }
 
     }
+    @SuppressWarnings("StatementWithEmptyBody")
     private void waitForViperSlideNotBusy() {
 
         while (viperSlideArm.isBusy()) {
