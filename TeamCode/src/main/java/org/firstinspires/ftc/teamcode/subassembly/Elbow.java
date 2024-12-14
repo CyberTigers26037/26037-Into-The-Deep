@@ -6,39 +6,39 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Elbow extends ServoSubassembly {
-    private static final double MIN_SAFE_DEGREES = -90;
-    private static final double MAX_SAFE_DEGREES = 0;
+    private static final double MIN_SAFE_DEGREES = -30;
+    private static final double MAX_SAFE_DEGREES = 90;
 
     public Elbow(HardwareMap hwMap) {
         super (MIN_SAFE_DEGREES, MAX_SAFE_DEGREES, hwMap.get(Servo.class, "Elbow"));
     }
 
     public void straight() {
-        setServoToAngle(-90);
-    }
-
-    public void down() {
         setServoToAngle(0);
     }
 
+    public void down() {
+        setServoToAngle(90);
+    }
+
     public void prepareToDropSampleLowBasket() {
-        setServoToAngle(-47);
+        setServoToAngle(43);
     }
 
     public void prepareToDropSampleHighBasket() {
-        setServoToAngle(-33);
+        setServoToAngle(57);
     }
 
     public void prepareToPickupVerticalSample() {
-        setServoToAngle(-17);
+        setServoToAngle(73);
     }
 
     public void prepareToHangHighSpecimen() {
-        setServoToAngle(-37);
+        setServoToAngle(53);
     }
 
     public void fieldPickUpElbow() {
-        setServoToAngle(-52);
+        setServoToAngle(38);
     }
 
 
@@ -47,7 +47,7 @@ public class Elbow extends ServoSubassembly {
         setServoToAngle(0);
     }
     public void horizontalPickup(){
-        setServoToAngle(-29.5);
+        setServoToAngle(60.5);
     }
 
     public void adjustAngle(double degrees) {
