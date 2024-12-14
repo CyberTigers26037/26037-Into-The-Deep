@@ -28,6 +28,8 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+
 import org.firstinspires.ftc.teamcode.subassembly.Claw;
 import org.firstinspires.ftc.teamcode.subassembly.ViperSlideArm;
 
@@ -50,27 +52,29 @@ public class CyberTigersIntoTheDeepTeleOp extends LinearOpMode {
             Port 0 : armMotor
             Port 1 : viperSlideMotor
      */
+    private com.arcrobotics.ftclib.drivebase.MecanumDrive drive;
+    private GamepadEx driverOp;
+
     @Override
     public void runOpMode() {
         /* Define and Initialize Motors */
-        com.arcrobotics.ftclib.drivebase.MecanumDrive drive = new MecanumDrive(
+        drive = new MecanumDrive(
                 new Motor(hardwareMap, "frontLeftMotor",  Motor.GoBILDA.RPM_312),
                 new Motor(hardwareMap, "frontRightMotor", Motor.GoBILDA.RPM_312),
                 new Motor(hardwareMap, "backLeftMotor",   Motor.GoBILDA.RPM_312),
                 new Motor(hardwareMap, "backRightMotor",  Motor.GoBILDA.RPM_312)
         );
-        GamepadEx driverOp = new GamepadEx(gamepad1);
+        driverOp = new GamepadEx(gamepad1);
         GamepadEx subDriverOp = new GamepadEx(gamepad2);
+
+        allowDriverToFixArmAndSlide();
+
+        /* Wait for the game driver to press play */
+        waitForStart();
 
         Claw claw = new Claw(hardwareMap);
         ViperSlideArm viperSlideArm = new ViperSlideArm(hardwareMap);
         claw.zero();
-        /* Send telemetry message to signify robot waiting */
-        telemetry.addLine("Robot Ready.");
-        telemetry.update();
-
-        /* Wait for the game driver to press play */
-        waitForStart();
 
         /* Run until the driver presses stop */
         while (opModeIsActive()) {
@@ -138,5 +142,24 @@ public class CyberTigersIntoTheDeepTeleOp extends LinearOpMode {
             claw.outputTelemetry(telemetry);
             telemetry.update();
         }
+    }
+    //FailSafe jajajajaja done by me?
+    private void allowDriverToFixArmAndSlide() {
+        DcMotor armMotor = hardwareMap.get(DcMotor.class,"armMotor");
+        DcMotor slideMotor = hardwareMap.get(DcMotor.class, "viperSlideMotor");
+        slideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        while (!opModeIsActive()&&!isStopRequested()){
+            armMotor.setPower(-gamepad2.right_stick_y);
+            slideMotor.setPower(gamepad2.left_stick_y * 0.5);
+            drive.driveRobotCentric(
+                    -driverOp.getLeftX(),
+                    -driverOp.getLeftY(),
+                    -driverOp.getRightX(),
+                    true
+            );
+        }
+        armMotor.setPower(0);
+        slideMotor.setPower(0);
     }
 }
