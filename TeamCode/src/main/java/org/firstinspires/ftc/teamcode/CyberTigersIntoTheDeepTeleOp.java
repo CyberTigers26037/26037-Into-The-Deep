@@ -111,7 +111,7 @@ public class CyberTigersIntoTheDeepTeleOp extends LinearOpMode {
                 claw.zero();
 
             } else if(gamepad2.dpad_right && !gamepad2.back) {
-                claw.prepareToDropSampleHighBasketBackwards();
+                claw.prepareToHangHighSpecimenBackwards();
                 viperSlideArm.prepareToHangHighSpecimenBackwards();
             } else if (gamepad2.dpad_right && gamepad2.back) {
                 viperSlideArm.prepareToHangHighSpecimen();
