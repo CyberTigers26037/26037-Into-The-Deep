@@ -53,7 +53,7 @@ public class ViperSlideArm {
     final double ARM_MINIMUM                        =    0;
     final double ARM_MAXIMUM                        =  125 * ARM_TICKS_PER_DEGREE;
     final double ARM_SCORE_SAMPLE_IN_HIGH_BACKWARDS =  125 * ARM_TICKS_PER_DEGREE;
-
+    final double ARM_SCORE_SPECIMEN_HIGH_CHAMBER_BACKWARDS    =   57 * ARM_TICKS_PER_DEGREE;
     /* A number in degrees that the triggers can adjust the arm position by */
     final double FUDGE_FACTOR = 15 * ARM_TICKS_PER_DEGREE;
 
@@ -73,7 +73,7 @@ public class ViperSlideArm {
     final double VIPERSLIDE_PICKUP_SAMPLE                    = 102 * VIPERSLIDE_TICKS_PER_MM;
     final double VIPERSLIDE_FIELD_SPECIMEN                   =  97 * VIPERSLIDE_TICKS_PER_MM;
     final double VIPERSLIDE_SCORING_IN_HIGH_BASKET_BACKWARDS = 460 * VIPERSLIDE_TICKS_PER_MM;
-
+    final double VIPERSLIDE_HIGH_CHAMBER_BACKWARDS           = 110 * VIPERSLIDE_TICKS_PER_MM;
     double viperSlidePosition = VIPERSLIDE_COLLAPSED;
 
     public ViperSlideArm(HardwareMap hardwareMap) {
@@ -175,6 +175,13 @@ public class ViperSlideArm {
     public void prepareToHangLowSpecimen() {
         armPosition        = ARM_SCORE_SPECIMEN_LOW_CHAMBER;
         viperSlidePosition = VIPERSLIDE_LOW_CHAMBER;
+    }
+
+    public void prepareToHangHighSpecimenBackwards(){
+
+        armPosition        = ARM_SCORE_SPECIMEN_HIGH_CHAMBER_BACKWARDS;
+        viperSlidePosition = VIPERSLIDE_HIGH_CHAMBER_BACKWARDS;
+
     }
 
     public void park() {

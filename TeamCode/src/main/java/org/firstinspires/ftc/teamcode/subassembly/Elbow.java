@@ -38,6 +38,10 @@ public class Elbow extends ServoSubassembly {
     public void prepareToHangHighSpecimen() {
         setServoToAngle(53);
     }
+    public void prepareToHangHighSpecimenBackwards(){
+        setServoToAngle(-25);
+
+    }
 
     public void fieldPickUpElbow() {
         setServoToAngle(38);

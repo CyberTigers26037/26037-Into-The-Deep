@@ -67,6 +67,10 @@ public class Claw {
         elbow.prepareToHangHighSpecimen();
         wrist.straight();
     }
+    public void prepareToHangHighSpecimenBackwards(){
+        elbow.prepareToHangHighSpecimenBackwards();
+        wrist.straight();
+    }
 
     public void togglePincher() {
         pincher.toggle();
