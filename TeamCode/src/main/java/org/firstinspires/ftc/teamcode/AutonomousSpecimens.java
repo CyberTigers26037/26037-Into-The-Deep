@@ -69,6 +69,12 @@ public class AutonomousSpecimens {
         viperSlideArm.execute();
         claw.zero();
     }
+
+    private void prepareToHangHighSpecimenBackwards() {
+        viperSlideArm.prepareToHangHighSpecimenBackwards();
+        viperSlideArm.execute();
+        claw.prepareToHangHighSpecimenBackwards();
+    }
     @SuppressWarnings("SameParameterValue")
     private void sleep(long millis) {
         try {
@@ -98,11 +104,11 @@ public class AutonomousSpecimens {
         double robotSampleDropY = 51;
         double robotThirdDropY = 54.5;
         double robotObservationZoneX = -TILE_WIDTH*0.5 + 2;
-        double robotObservationHangSpecimenY = 35.5;
+        double robotObservationHangSpecimenY = 34;
 
 
         claw.pickupSample();
-        prepareToHangSpecimenHighChamber();
+        prepareToHangHighSpecimenBackwards();
         //waitForViperSlideNotBusy();
         // Goes to bar and hangs preloaded sample
         Actions.runBlocking(drive.actionBuilder(new Pose2d(robotStartingPositionX, robotStartingPositionY, Math.toRadians(270)))
@@ -110,11 +116,9 @@ public class AutonomousSpecimens {
                 .splineToLinearHeading(new Pose2d(robotObservationZoneX,robotObservationHangSpecimenY,Math.toRadians(270)),Math.toRadians(270))
                 .build());
         waitForViperSlideNotBusy();
-        hangSpecimenHighChamber();
-        waitForViperSlideNotBusy();
         claw.dropSample();
         // Pick up first team sample
-        retractViperSlide();
+         retractViperSlide();
         waitForViperSlideNotBusy();
         Actions.runBlocking(drive.actionBuilder(drive.pose)
                 .setTangent(Math.toRadians(180))
@@ -126,7 +130,7 @@ public class AutonomousSpecimens {
         claw.pickupSample();
         sleep(100);
         raiseViperSlide();
-        // Drops off first team sample in observation zone
+        /*// Drops off first team sample in observation zone
         extendViperSlide();
         Actions.runBlocking(drive.actionBuilder(drive.pose)
                 .setTangent(Math.toRadians(90))
@@ -177,5 +181,7 @@ public class AutonomousSpecimens {
         claw.dropSample();
         //Parks robot and resets viperslide
         parkRobotSigma();
+
+         */
     }
 }

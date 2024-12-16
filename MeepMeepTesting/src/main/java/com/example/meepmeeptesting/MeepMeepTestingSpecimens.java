@@ -30,7 +30,7 @@ public class MeepMeepTestingSpecimens {
         double robotSpecimenDropY = 50;
         double robotThirdSampleLocationY = 26;
         double robotObservationZoneX = -TILE_WIDTH*0.5 + 2;
-        double robotObservationY = 38;
+        double robotObservationY = 34.5;
 
 
         myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(robotStartingPositionX, robotStartingPositionY, Math.toRadians(270)))
