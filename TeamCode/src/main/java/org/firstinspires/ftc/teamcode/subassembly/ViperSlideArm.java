@@ -42,6 +42,7 @@ public class ViperSlideArm {
     final double ARM_COLLAPSED_INTO_ROBOT           =    0;
     final double ARM_COLLECT                        =    3 * ARM_TICKS_PER_DEGREE;
     final double ARM_CLEAR_BARRIER                  =   13 * ARM_TICKS_PER_DEGREE;
+    final double ARM_CHILL                          =    6 * ARM_TICKS_PER_DEGREE;
     final double ARM_SCORE_SPECIMEN_LOW_CHAMBER     =   35 * ARM_TICKS_PER_DEGREE;
     final double ARM_SCORE_SPECIMEN_HIGH_CHAMBER    =   80 * ARM_TICKS_PER_DEGREE;
     final double ARM_PICKUP_HANGING_SPECIMEN        =   22 * ARM_TICKS_PER_DEGREE;
@@ -131,6 +132,10 @@ public class ViperSlideArm {
         select this "mode", this means that the intake and wrist will continue what
         they were doing before we clicked left bumper. */
         armPosition = ARM_CLEAR_BARRIER;
+    }
+    public void chill(){
+        armPosition =  ARM_CHILL;
+
     }
 
     public void prepareToPickupVerticalSample() {
