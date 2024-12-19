@@ -160,11 +160,13 @@ private void keepSampleHeld(){
         prepareToPickUSampleAuto();
         sleep(300);
         Actions.runBlocking(drive.actionBuilder(drive.pose)
-                        .turnTo(Math.toRadians(301))
+                        .turnTo(Math.toRadians(308))
                                 .build());
         pickupFirst();
         sleep(3000);
         claw.pickupSample();
+        sleep(150);
+        keepSampleHeld();
         /*
         Actions.runBlocking(drive.actionBuilder(drive.pose)
                         .turnTo(Math.toRadians(0))
@@ -178,6 +180,11 @@ private void keepSampleHeld(){
         Actions.runBlocking(drive.actionBuilder(drive.pose)
                         .turnTo(Math.toRadians(400))
                                 .build());
+           pickupFirst();
+        sleep(3000);
+        claw.pickupSample();
+        sleep(150);
+        keepSampleHeld();
          */
 
 
