@@ -55,6 +55,7 @@ public class ViperSlideArm {
     final double ARM_MINIMUM                        =    0;
     final double ARM_MAXIMUM                        =  125 * ARM_TICKS_PER_DEGREE;
     final double ARM_SCORE_SAMPLE_IN_HIGH_BACKWARDS =  125 * ARM_TICKS_PER_DEGREE;
+    final double ARM_PICKUP_FIRST                   = 17.2 * ARM_TICKS_PER_DEGREE;
     final double ARM_SCORE_SPECIMEN_HIGH_CHAMBER_BACKWARDS    =   57 * ARM_TICKS_PER_DEGREE;
     /* A number in degrees that the triggers can adjust the arm position by */
     final double FUDGE_FACTOR = 15 * ARM_TICKS_PER_DEGREE;
@@ -74,7 +75,7 @@ public class ViperSlideArm {
     final double VIPERSLIDE_LOW_CHAMBER                      =   0 * VIPERSLIDE_TICKS_PER_MM;
     final double VIPERSLIDE_PICKUP_SAMPLE                    = 102 * VIPERSLIDE_TICKS_PER_MM;
     final double VIPERSLIDE_MAX                              = 460 * VIPERSLIDE_TICKS_PER_MM;
-    final double VIPERSLIDE_FIRST_SAMPLE                     = 360 * VIPERSLIDE_TICKS_PER_MM;
+    final double VIPERSLIDE_FIRST_SAMPLE                     = 410 * VIPERSLIDE_TICKS_PER_MM;
     final double VIPERSLIDE_FIELD_SPECIMEN                   =  97 * VIPERSLIDE_TICKS_PER_MM;
     final double VIPERSLIDE_SCORING_IN_HIGH_BASKET_BACKWARDS = 460 * VIPERSLIDE_TICKS_PER_MM;
     final double VIPERSLIDE_HIGH_CHAMBER_BACKWARDS           = 110 * VIPERSLIDE_TICKS_PER_MM;
@@ -163,9 +164,8 @@ public class ViperSlideArm {
         viperSlidePosition = VIPERSLIDE_COLLAPSED;
     }
     public void pickUpVerticalSampleAuto(){
-        armPosition        = ARM_COLLECT + (3 * ARM_TICKS_PER_DEGREE);
+        armPosition        = ARM_PICKUP_FIRST;
         viperSlidePosition = VIPERSLIDE_FIRST_SAMPLE;
-
     }
 
     public void prepareToPickupHorizontalSample(){
