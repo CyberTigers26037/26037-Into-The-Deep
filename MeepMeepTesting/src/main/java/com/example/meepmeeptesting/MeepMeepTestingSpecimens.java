@@ -26,36 +26,37 @@ public class MeepMeepTestingSpecimens {
         double robotFirstTeamSampleLocationX = -50;
         double robotSecondTeamSampleLocationX = -60;
         double robotThirdTeamSampleLocationX = -54;
-        double robotSpecimenDropX = -57;
-        double robotSpecimenDropY = 50;
+        double robotSpecimenDropX        = -57;
+        double robotSpecimenDropY        = 50;
         double robotThirdSampleLocationY = 26;
-        double robotObservationZoneX = -TILE_WIDTH*0.5 + 2;
-        double robotObservationY = 34.5;
+        double robotObservationZoneX     = -TILE_WIDTH*0.5 + 2;
+        double robotObservationY         = 34.5;
+        double robotPivotPickupY         =  38;
+        double robotPivotPickupX         = -32;
+        double sigmaPickUpX              = -52;
+        double sigmaPickUpY              =  57;
 
 
-        myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(robotStartingPositionX, robotStartingPositionY, Math.toRadians(270)))
+                myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(robotStartingPositionX, robotStartingPositionY, Math.toRadians(270)))
                 // Goes to bar and hangs beginning sample sample
                 .setTangent(Math.toRadians(270))
                 .splineToLinearHeading(new Pose2d(robotObservationZoneX,robotObservationY,Math.toRadians(270)),Math.toRadians(270))
                 .waitSeconds(1)
                 // Picks up first team sample off of the field
-                .setTangent(Math.toRadians(180))
-                .splineToLinearHeading(new Pose2d(robotFirstTeamSampleLocationX,robotSamplePickupLocationY,Math.toRadians(270)),Math.toRadians(220))
+                .setTangent(Math.toRadians(90))
+                .splineToLinearHeading(new Pose2d(robotPivotPickupX,robotPivotPickupY,Math.toRadians(220)),Math.toRadians(220))
                 .waitSeconds(1)
                 // Drops off first sample into the observation zone
-                .setTangent(Math.toRadians(90))
-                .splineToLinearHeading(new Pose2d(robotSpecimenDropX, robotSpecimenDropY, Math.toRadians(90)), Math.toRadians(130))
-                .waitSeconds(1)
+
+                .turn(Math.toRadians(-80))
+                .waitSeconds(0)
                 // Picks up second sample
-                .turn(Math.toRadians(-90))
                 .setTangent(Math.toRadians(270))
-                .splineToLinearHeading(new Pose2d(robotSecondTeamSampleLocationX,robotSamplePickupLocationY,Math.toRadians(270)),Math.toRadians(270))
+                .splineToLinearHeading(new Pose2d(robotPivotPickupX,robotPivotPickupY,Math.toRadians(210)),Math.toRadians(270))
                 .waitSeconds(1)
-                // Drops off second sample into the observation zone4
-                .turn(Math.toRadians(90))
-                .setTangent(Math.toRadians(90))
-                .splineToLinearHeading(new Pose2d(robotSpecimenDropX, robotSpecimenDropY, Math.toRadians(90)), Math.toRadians(130))
-                .waitSeconds(1)
+                // Drops off second sample into the observation zone
+                .turn(Math.toRadians(-80))
+                .waitSeconds(0)
                 // Picks up third sample into the basket (this might be wrong bc i changed it to 45 last second )
                 .setTangent(Math.toRadians(270))
                 .splineToLinearHeading(new Pose2d(robotThirdTeamSampleLocationX,robotThirdSampleLocationY,Math.toRadians(180)), 180)
@@ -64,6 +65,9 @@ public class MeepMeepTestingSpecimens {
                 .setTangent(Math.toRadians(90))
                 .splineToLinearHeading(new Pose2d(robotSpecimenDropX, robotSpecimenDropY, Math.toRadians(90)), Math.toRadians(130))
                 .waitSeconds(1)
+                // Hangs second sample
+                .setTangent(Math.toRadians(315))
+                .splineToLinearHeading(new Pose2d(robotObservationZoneX, robotObservationY, Math.toRadians(270)), Math.toRadians(270))
 
                 .build());
         meepMeep.setBackground(MeepMeep.Background.FIELD_INTO_THE_DEEP_JUICE_DARK)

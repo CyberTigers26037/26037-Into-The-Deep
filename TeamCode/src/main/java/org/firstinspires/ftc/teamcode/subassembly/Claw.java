@@ -20,6 +20,15 @@ public class Claw {
         pincher.zero();
     }
 
+    public void pickUpFirstSampleAuto() {
+        elbow.down();
+        wrist.slant();
+        pincher.open();
+    }
+    public void keepPincherOpen(){
+        pincher.open();
+    }
+
     public void prepareToPickupVerticalSample() {
         elbow.prepareToPickupVerticalSample();
         wrist.straight();

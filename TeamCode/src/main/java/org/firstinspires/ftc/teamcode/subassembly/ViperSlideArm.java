@@ -11,7 +11,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 
 public class ViperSlideArm {
     public DcMotor armMotor; //the arm motor
-    public DcMotor viperSlideMotor; //
+    public DcMotor viperSlideMotor;
+    //
 
     /* This constant is the number of encoder ticks for each degree of rotation of the arm.
         To find this, we first need to consider the total gear reduction powering our arm.
@@ -54,6 +55,8 @@ public class ViperSlideArm {
     final double ARM_MINIMUM                        =    0;
     final double ARM_MAXIMUM                        =  125 * ARM_TICKS_PER_DEGREE;
     final double ARM_SCORE_SAMPLE_IN_HIGH_BACKWARDS =  125 * ARM_TICKS_PER_DEGREE;
+    final double ARM_PICK_UP_FIRST_SPECIMEN_AUTO    =   13 * ARM_TICKS_PER_DEGREE;
+    final double ARM_DROP                           =    0 * ARM_TICKS_PER_DEGREE;
     final double ARM_SCORE_SPECIMEN_HIGH_CHAMBER_BACKWARDS    =   57 * ARM_TICKS_PER_DEGREE;
     /* A number in degrees that the triggers can adjust the arm position by */
     final double FUDGE_FACTOR = 15 * ARM_TICKS_PER_DEGREE;
@@ -75,6 +78,8 @@ public class ViperSlideArm {
     final double VIPERSLIDE_FIELD_SPECIMEN                   =  97 * VIPERSLIDE_TICKS_PER_MM;
     final double VIPERSLIDE_SCORING_IN_HIGH_BASKET_BACKWARDS = 460 * VIPERSLIDE_TICKS_PER_MM;
     final double VIPERSLIDE_HIGH_CHAMBER_BACKWARDS           = 110 * VIPERSLIDE_TICKS_PER_MM;
+    final double VIPERSLIDE_PICK_UP_FIRST_SPECIMEN_AUTO      = 460 * VIPERSLIDE_TICKS_PER_MM;
+    final double VIPERSLIDE_EXTEND_VIPER_SLIDE_FURTHUR       = 420 * VIPERSLIDE_TICKS_PER_MM;
     double viperSlidePosition = VIPERSLIDE_COLLAPSED;
 
     public ViperSlideArm(HardwareMap hardwareMap) {
@@ -111,6 +116,11 @@ public class ViperSlideArm {
         armPosition        = ARM_SCORE_SAMPLE_IN_LOW;
         viperSlidePosition = VIPERSLIDE_SCORING_IN_LOW_BASKET;
     }
+
+    public void pickUpFirstSpecimen(){
+        armPosition        = ARM_PICK_UP_FIRST_SPECIMEN_AUTO;
+        viperSlidePosition = VIPERSLIDE_PICK_UP_FIRST_SPECIMEN_AUTO;
+    }
     public void retractViperSlide() {
         viperSlidePosition = VIPERSLIDE_COLLAPSED;
 
@@ -125,7 +135,6 @@ public class ViperSlideArm {
     public void extendViperSlide() {
         viperSlidePosition = VIPERSLIDE_EXTENDED;
     }
-
     public void setArmClearBarrier() {
         /* This is about 20° up from the collecting position to clear the barrier
         Note here that we don't set the wrist position or the intake power when we
@@ -160,11 +169,13 @@ public class ViperSlideArm {
         viperSlidePosition = VIPERSLIDE_PICKUP_SAMPLE + 470;
 
     }
-    public void prepareToPickUpHorizontalPregame(){
+    public void prepareToPickUpHorizontalPregame() {
         armPosition        = ARM_CLEAR_BARRIER;
         viperSlidePosition = VIPERSLIDE_COLLAPSED;
     }
-
+    public void extendViperSlideFurthur() {
+        viperSlidePosition = VIPERSLIDE_EXTEND_VIPER_SLIDE_FURTHUR;
+    }
     public void prepareToDropSampleHighBasket() {
         /* This is the correct height to score the sample in the HIGH BASKET*/
         armPosition        = ARM_SCORE_SAMPLE_IN_HIGH;
@@ -181,6 +192,12 @@ public class ViperSlideArm {
         armPosition        = ARM_SCORE_SPECIMEN_LOW_CHAMBER;
         viperSlidePosition = VIPERSLIDE_LOW_CHAMBER;
     }
+
+    public void dropArm() {
+        armPosition        = ARM_DROP;
+    }
+
+
 
     public void prepareToHangHighSpecimenBackwards(){
 
