@@ -12,6 +12,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 public class ViperSlideArm {
     public DcMotor armMotor; //the arm motor
     public DcMotor viperSlideMotor; //
+    private boolean useArmSlideCompensation = true;
 
     /* This constant is the number of encoder ticks for each degree of rotation of the arm.
         To find this, we first need to consider the total gear reduction powering our arm.
@@ -42,7 +43,7 @@ public class ViperSlideArm {
     final double ARM_COLLAPSED_INTO_ROBOT           =    0;
     final double ARM_COLLECT                        =    3 * ARM_TICKS_PER_DEGREE;
     final double ARM_CLEAR_BARRIER                  =   13 * ARM_TICKS_PER_DEGREE;
-    final double ARM_CHILL                          =    6 * ARM_TICKS_PER_DEGREE;
+    final double ARM_CHILL                          =    10 * ARM_TICKS_PER_DEGREE;
     final double ARM_SCORE_SPECIMEN_LOW_CHAMBER     =   35 * ARM_TICKS_PER_DEGREE;
     final double ARM_SCORE_SPECIMEN_HIGH_CHAMBER    =   80 * ARM_TICKS_PER_DEGREE;
     final double ARM_PICKUP_HANGING_SPECIMEN        =   22 * ARM_TICKS_PER_DEGREE;
@@ -72,6 +73,8 @@ public class ViperSlideArm {
     final double VIPERSLIDE_HIGH_CHAMBER                     =  67 * VIPERSLIDE_TICKS_PER_MM;
     final double VIPERSLIDE_LOW_CHAMBER                      =   0 * VIPERSLIDE_TICKS_PER_MM;
     final double VIPERSLIDE_PICKUP_SAMPLE                    = 102 * VIPERSLIDE_TICKS_PER_MM;
+    final double VIPERSLIDE_MAX                              = 460 * VIPERSLIDE_TICKS_PER_MM;
+    final double VIPERSLIDE_FIRST_SAMPLE                     = 360 * VIPERSLIDE_TICKS_PER_MM;
     final double VIPERSLIDE_FIELD_SPECIMEN                   =  97 * VIPERSLIDE_TICKS_PER_MM;
     final double VIPERSLIDE_SCORING_IN_HIGH_BASKET_BACKWARDS = 460 * VIPERSLIDE_TICKS_PER_MM;
     final double VIPERSLIDE_HIGH_CHAMBER_BACKWARDS           = 110 * VIPERSLIDE_TICKS_PER_MM;
@@ -116,6 +119,11 @@ public class ViperSlideArm {
 
     }
 
+    public void disableArmCompensation(){
+        useArmSlideCompensation = false;
+
+    }
+
     public void keepSampleHeld(){
         viperSlidePosition = VIPERSLIDE_COLLAPSED;
         armPosition        = ARM_SCORE_SAMPLE_IN_HIGH;
@@ -135,6 +143,7 @@ public class ViperSlideArm {
     }
     public void chill(){
         armPosition =  ARM_CHILL;
+        viperSlidePosition = VIPERSLIDE_COLLAPSED;
 
     }
 
@@ -146,7 +155,16 @@ public class ViperSlideArm {
 
     public void prepareToPickUpVerticalSampleAuto(){
         armPosition        = ARM_COLLECT + (2 * ARM_TICKS_PER_DEGREE);
-        viperSlidePosition = VIPERSLIDE_PICKUP_SAMPLE;
+        viperSlidePosition = VIPERSLIDE_COLLAPSED;
+
+    }
+    public void prepareToPickUp(){
+        armPosition        = ARM_COLLECT + (4 * ARM_TICKS_PER_DEGREE);
+        viperSlidePosition = VIPERSLIDE_COLLAPSED;
+    }
+    public void pickUpVerticalSampleAuto(){
+        armPosition        = ARM_COLLECT + (3 * ARM_TICKS_PER_DEGREE);
+        viperSlidePosition = VIPERSLIDE_FIRST_SAMPLE;
 
     }
 
@@ -226,6 +244,12 @@ public class ViperSlideArm {
     public void adjustViperSlidePosition(double slideMm) {
         viperSlidePosition += slideMm * VIPERSLIDE_TICKS_PER_MM;
     }
+    public void armClearBarrierIfBelow(){
+        if (armPosition < ARM_CLEAR_BARRIER) {
+            armPosition = ARM_CLEAR_BARRIER;
+        }
+    }
+
     public void execute(){
         execute(1.0, 1.0);
 
@@ -247,7 +271,7 @@ public class ViperSlideArm {
         to a value.
          */
 
-        if (armPosition < 45 * ARM_TICKS_PER_DEGREE) {
+        if (useArmSlideCompensation && (armPosition < 45 * ARM_TICKS_PER_DEGREE)) {
             armViperSlideComp = (0.25568 * viperSlidePosition);
         }
         else {

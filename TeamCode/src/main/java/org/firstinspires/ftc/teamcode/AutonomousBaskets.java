@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.roadrunner.Pose2d;
-import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -24,6 +23,7 @@ public class AutonomousBaskets {
         Pose2d beginningPose = new Pose2d(robotStartingPositionX, robotStartingPositionY, Math.toRadians(270));
         drive = new MecanumDrive(hardwareMap,beginningPose);
         viperSlideArm = new ViperSlideArm(hardwareMap);
+        viperSlideArm.disableArmCompensation();
         claw = new Claw(hardwareMap);
     }
 
@@ -48,7 +48,7 @@ private void keepSampleHeld(){
     private void chill(){
         viperSlideArm.chill();
         claw.pickupSample();
-
+        viperSlideArm.execute();
     }
 
     private void retractArm(){
@@ -67,6 +67,18 @@ private void keepSampleHeld(){
         viperSlideArm.execute();
 
     }
+    private void prepareToPickUSampleAuto(){
+        viperSlideArm.prepareToPickUp();
+        claw.prepareToPickupVerticalSample();
+        viperSlideArm.execute();
+    }
+    private void pickupFirst(){
+        viperSlideArm.pickUpVerticalSampleAuto();
+        claw.prepareToPickupVerticalSample();
+        viperSlideArm.execute();
+
+    }
+
     private void prepareToPickUpHorizontalSAmple(){
         viperSlideArm.prepareToPickupHorizontalSample();
         claw.prepareToPickupHorizontalSample();
@@ -96,6 +108,7 @@ private void keepSampleHeld(){
         viperSlideArm.prepareToDropSampleHighBasketBackwards();
         claw.prepareToDropSampleHighBasketBackwards();
         viperSlideArm.execute();
+
     }
     private void keepArmUp(){
         viperSlideArm.prepareToDropSampleHighBasket();
@@ -112,11 +125,12 @@ private void keepSampleHeld(){
 
         double robotStartingPositionY = 3*TILE_HEIGHT-ROBOT_HEIGHT/2;
         double robotStartingPositionX = TILE_WIDTH*1.5;
-        double robotSecondSamplePickupLocationY = 37;
+        double robotSecondSamplePickupLocationY = 36;
         double robotFirstSamplePickupLocationY = 36.8;
         double robotThirdSamplePickupLocationY = 22.3;
-        double robotBasketDeliveryOneLocationX = 55;
-        double robotBasketDeliveryOneLocationY = 48;
+        double robotBasketDeliveryFirstSampleLocationX = 55;
+        double robotBasketDeliveryFirstSampleLocationY = 48;
+        double robotBasketDeliverySecondSampleLocationX= 52;
         double robotBasketDeliveryTwoLocationX = 58;
         double robotBasketDeliveryLocationTwoY = 60;
         double robotBasketDeliveryLocationThreeX = 57.6;
@@ -124,65 +138,47 @@ private void keepSampleHeld(){
         double robotBasketDeliveryThreeLocationX = 57.5;
         double robotSecondBasketDeliveryLocationY= 60;
         double robotFirstSampleLocationX = 49.2;
-        double robotSecondSampleLocationX = 61.3;
+        double robotSecondSampleLocationX = 61;
         double robotThirdSampleLocationX = 50.8;
         double submersibleZoneX = 34;
         double submersibleZoneY = 10;
 
 
-
        chill();
 
-                        // Goes to basket and drops off first sample
-        Actions.runBlocking(drive.actionBuilder(drive.pose)
-                        .setTangent(Math.toRadians(270))
-                        .splineToLinearHeading(new Pose2d(robotBasketDeliveryOneLocationX,robotBasketDeliveryOneLocationY,Math.toRadians(230)),Math.toRadians(45))
+       // Goes to basket and drops off first sample
+       /* Actions.runBlocking(drive.actionBuilder(drive.pose)
+                .setTangent(Math.toRadians(270))
+                        .splineToLinearHeading(new Pose2d(robotBasketDeliveryFirstSampleLocationX,robotBasketDeliveryFirstSampleLocationY,Math.toRadians(230)),Math.toRadians(45))
                         .build());
+
+        */
         prepareToDropHighBackwards();
         sleep(2600);
         claw.dropSample();
-        sleep(150);
-        chill();
-        sleep(2600);
+        sleep(400);
+        prepareToPickUSampleAuto();
+        sleep(300);
         Actions.runBlocking(drive.actionBuilder(drive.pose)
-                        // Picks up first sample off of the field
-                        .setTangent(Math.toRadians(230))
-                        .splineToLinearHeading(new Pose2d(robotFirstSampleLocationX,robotFirstSamplePickupLocationY,Math.toRadians(270)), Math.toRadians(270))
-                        .build());
-        prepareToPickUpVerticalSample(3,3);
-        sleep(1100);
+                        .turnTo(Math.toRadians(301))
+                                .build());
+        pickupFirst();
+        sleep(3000);
         claw.pickupSample();
-        sleep(125);
-        chill();
+        /*
         Actions.runBlocking(drive.actionBuilder(drive.pose)
-                        .setTangent(Math.toRadians(45))
-                        .splineToLinearHeading(new Pose2d(robotBasketDeliveryOneLocationX,robotBasketDeliveryOneLocationY,Math.toRadians(230)),Math.toRadians(45))
+                        .turnTo(Math.toRadians(0))
                         .build());
         prepareToDropHighBackwards();
         sleep(2600);
         claw.dropSample();
-        sleep(2600);
-        chill();
-
+        sleep(400);
+          prepareToPickUpSampleAuto();
+        sleep(500);
         Actions.runBlocking(drive.actionBuilder(drive.pose)
-                        .setTangent(Math.toRadians(225))
-                        .splineToLinearHeading(new Pose2d(robotSecondSampleLocationX,robotSecondSamplePickupLocationY,Math.toRadians(270)), Math.toRadians(0))
-                        .build());
-
-    prepareToPickUpVerticalSample(3,3);
-    sleep(1100);
-    claw.pickupSample();
-    sleep(125);
-    chill();
-        Actions.runBlocking(drive.actionBuilder(drive.pose)
-                .setTangent(Math.toRadians(180))
-                .splineToLinearHeading(new Pose2d(robotBasketDeliveryOneLocationX, robotBasketDeliveryOneLocationY, Math.toRadians(230)), Math.toRadians(45))
-                        .build());
-        prepareToDropHighBackwards();
-        sleep(2600);
-        claw.dropSample();
-        sleep(2600);
-        chill();
+                        .turnTo(Math.toRadians(400))
+                                .build());
+         */
 
 
 
@@ -192,7 +188,10 @@ private void keepSampleHeld(){
 
 
 
-                // Goes to basket and drops off preloaded sample
+
+
+
+        // Goes to basket and drops off preloaded sample
         /*
         claw.pickupSample();
         prepareToDropSampleInHighBasket(3, 3);
