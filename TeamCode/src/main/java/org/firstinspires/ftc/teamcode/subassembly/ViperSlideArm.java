@@ -76,7 +76,6 @@ public class ViperSlideArm {
     final double VIPERSLIDE_HIGH_CHAMBER                     =  67 * VIPERSLIDE_TICKS_PER_MM;
     final double VIPERSLIDE_LOW_CHAMBER                      =   0 * VIPERSLIDE_TICKS_PER_MM;
     final double VIPERSLIDE_PICKUP_SAMPLE                    = 102 * VIPERSLIDE_TICKS_PER_MM;
-    final double VIPERSLIDE_MAX                              = 460 * VIPERSLIDE_TICKS_PER_MM;
     final double VIPERSLIDE_FIRST_SAMPLE                     = 410 * VIPERSLIDE_TICKS_PER_MM;
     final double VIPERSLIDE_FIELD_SPECIMEN                   =  97 * VIPERSLIDE_TICKS_PER_MM;
     final double VIPERSLIDE_SCORING_IN_HIGH_BASKET_BACKWARDS = 460 * VIPERSLIDE_TICKS_PER_MM;
