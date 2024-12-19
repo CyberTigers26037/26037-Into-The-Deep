@@ -29,7 +29,7 @@ public class SampleDetector {
         NormalizedRGBA colors = colorSensor.getNormalizedColors();
         Color.colorToHSV(colors.toColor(), hsvValues);
         lastDetectedSample = SampleType.NONE;
-        if (lastDetectedDistance <= 20) {
+        if (lastDetectedDistance <= 10) {
             if (hsvValues[0] >= 220 && hsvValues[0] <= 250) {
                 lastDetectedSample = SampleType.BLUE;
             }
