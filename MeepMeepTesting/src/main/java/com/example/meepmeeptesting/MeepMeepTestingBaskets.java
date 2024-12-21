@@ -30,40 +30,15 @@ public class MeepMeepTestingBaskets {
         double robotThirdSampleLocationX = 56;
         double observationZoneLocationX = 34;
         double observationZoneLocationY = 10;
-        double robotBasketDeliveryOneLocationX = 52;
-        double robotBasketDeliveryOneLocationY = 44;
+        double robotBasketDeliveryOneLocationX = 55;
+        double robotBasketDeliveryOneLocationY = 46.6;
 
-        myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(robotStartingPositionX, robotStartingPositionY, Math.toRadians(270)))
+        myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(robotBasketDeliveryOneLocationX, robotBasketDeliveryOneLocationY, Math.toRadians(270)))
                 // Goes to basket and drops off first sample
-                .setTangent(Math.toRadians(270))
-                .splineToLinearHeading(new Pose2d(robotBasketDeliveryOneLocationX,robotBasketDeliveryOneLocationY,Math.toRadians(220)),Math.toRadians(45))
-                .waitSeconds(1)
-                // Picks up first sample off of the field
-                                .turnTo(Math.toRadians(307))
+                .setTangent(Math.toRadians(297))
+                .splineToLinearHeading(new Pose2d(57,46,Math.toRadians(297)),Math.toRadians(297))
 
-                // Drops off first sample into the basket
-                .setTangent(Math.toRadians(45))
-                .splineToLinearHeading(new Pose2d(robotBasketDeliveryOneLocationX,robotBasketDeliveryOneLocationY,Math.toRadians(230)),Math.toRadians(45))
-                .waitSeconds(1)
-                // Picks up second sample into the basket
-                .setTangent(Math.toRadians(225))
-                .splineToLinearHeading(new Pose2d(robotSecondSampleLocationX,robotSamplePickupLocationY,Math.toRadians(270)), Math.toRadians(0))
-                .waitSeconds(1)
-                // Drops off second sample into the field
-                .setTangent(Math.toRadians(180))
-                .splineToLinearHeading(new Pose2d(robotBasketDeliveryOneLocationX, robotBasketDeliveryOneLocationY, Math.toRadians(230)), Math.toRadians(45))
-                .waitSeconds(1)
-                // Picks up third sample into the field ( this might be wrong bc i changed it to 45 last second )
-                .setTangent(Math.toRadians(270))
-                .splineToLinearHeading(new Pose2d(robotThirdSampleLocationX,robotThirdSamplePickupLocationY, Math.toRadians(0)), Math.toRadians(0))
-                .waitSeconds(1)
-                // Drops off third sample into the basket
-                .setTangent(Math.toRadians(100))
-                .splineToLinearHeading(new Pose2d(robotBasketDeliveryOneLocationX, robotBasketDeliveryOneLocationY, Math.toRadians(230)), Math.toRadians(100))
-                .waitSeconds(1)
-                // Parks robot into observation zone (spins for some reason must fix once comes back)
-                        .setTangent(Math.toRadians(235))
-                        .splineToLinearHeading(new Pose2d(observationZoneLocationX, observationZoneLocationY, Math.toRadians(180)), Math.toRadians(180))
+.waitSeconds(1)
                                 .build());
         meepMeep.setBackground(MeepMeep.Background.FIELD_INTO_THE_DEEP_JUICE_DARK)
                 .setDarkMode(true)
