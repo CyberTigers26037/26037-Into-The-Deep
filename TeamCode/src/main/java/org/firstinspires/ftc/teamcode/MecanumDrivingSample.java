@@ -2,11 +2,11 @@ package org.firstinspires.ftc.teamcode;
 
 import com.arcrobotics.ftclib.drivebase.MecanumDrive;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
-import com.arcrobotics.ftclib.hardware.RevIMU;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+@SuppressWarnings("unused")
 @TeleOp
 public class MecanumDrivingSample extends LinearOpMode {
 
@@ -16,7 +16,7 @@ public class MecanumDrivingSample extends LinearOpMode {
 
 
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void runOpMode() {
         // constructor takes in frontLeft, frontRight, backLeft, backRight motors
         // IN THAT ORDER
         MecanumDrive drive = new MecanumDrive(

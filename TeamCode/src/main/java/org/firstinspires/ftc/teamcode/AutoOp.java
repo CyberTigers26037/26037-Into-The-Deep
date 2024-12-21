@@ -1,9 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.Device;
-
+@SuppressWarnings("unused")
 @Autonomous(preselectTeleOp = "AutoOp")
 public class AutoOp extends LinearOpMode {
 
@@ -13,29 +15,25 @@ public class AutoOp extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        boolean previousA = false;
-        boolean previousB = false;
+        GamepadEx driverOp = new GamepadEx(gamepad1);
 
         while (!initialized) {
-            boolean currentA = gamepad1.a;
-            boolean currentB = gamepad1.b;
+            driverOp.readButtons();
 
             if (basketDelivery == null) {
                 telemetry.addData("Auto Mode", "A = Baskets, B = Specimens");
                 telemetry.addData("Serial", Device.getSerialNumberOrUnknown());
                 telemetry.update();
-                if (currentA && !previousA) {
+                if (driverOp.wasJustPressed(GamepadKeys.Button.A)) {
                     basketDelivery = true;
                 }
-                if (currentB && !previousB) {
+                if (driverOp.wasJustPressed(GamepadKeys.Button.B)) {
                     basketDelivery = false;
                 }
             }
             else {
                 initialized = true;
             }
-            previousA = currentA;
-            previousB = currentB;
         }
         telemetry.addData("Status", "Initialized");
         telemetry.addData("Auto Mode", basketDelivery ? "Baskets" : "Specimen");

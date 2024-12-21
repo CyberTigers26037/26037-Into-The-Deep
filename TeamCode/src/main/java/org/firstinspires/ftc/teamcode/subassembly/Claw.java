@@ -7,17 +7,33 @@ public class Claw {
     private final Elbow elbow;
     private final Pincher pincher;
     private final Wrist wrist;
+    private final SampleDetector sampleDetector;
 
     public Claw(HardwareMap hwMap) {
-        elbow = new Elbow(hwMap);
-        wrist = new Wrist(hwMap);
-        pincher = new Pincher(hwMap);
+        elbow          = new          Elbow(hwMap);
+        wrist          = new          Wrist(hwMap);
+        pincher        = new        Pincher(hwMap);
+        sampleDetector = new SampleDetector(hwMap);
     }
 
     public void zero() {
-        elbow.zero();
+        elbow.down();
         wrist.zero();
         pincher.zero();
+    }
+
+    public void wristStraight() {
+        elbow.down();
+        wrist.zero();
+    }
+
+    public void pickUpFirstSampleAuto() {
+        elbow.down();
+        wrist.slant();
+        pincher.open();
+    }
+    public void keepPincherOpen(){
+        pincher.open();
     }
 
     public void prepareToPickupVerticalSample() {
@@ -54,6 +70,10 @@ public class Claw {
         wrist.straight();
     }
 
+    public void prepareToDropSampleHighBasketBackwards() {
+        elbow.prepareToDropSampleHighBasketBackwards();
+        wrist.straight();
+    }
     public void prepareToHangLowSpecimen() {
         elbow.straight();
         wrist.straight();
@@ -61,6 +81,10 @@ public class Claw {
 
     public void prepareToHangHighSpecimen() {
         elbow.prepareToHangHighSpecimen();
+        wrist.straight();
+    }
+    public void prepareToHangHighSpecimenBackwards(){
+        elbow.prepareToHangHighSpecimenBackwards();
         wrist.straight();
     }
 
@@ -75,6 +99,15 @@ public class Claw {
     public void elbowStraight(){
         elbow.straight();
 
+    }
+
+    public boolean closeIfSampleDeteceted() {
+        SampleDetector.SampleType detecetedSample = sampleDetector.getDetectedSample();
+        if (detecetedSample != SampleDetector.SampleType.NONE){
+            pincher.close();
+            return true;
+        }
+        return false;
     }
 
     public void pickupSample() {
@@ -97,5 +130,6 @@ public class Claw {
         elbow.outputTelemetry(telemetry);
         wrist.outputTelemetry(telemetry);
         pincher.outputTelemetry(telemetry);
+        sampleDetector.outputTelemetry(telemetry);
     }
 }

@@ -28,7 +28,10 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+
 import org.firstinspires.ftc.teamcode.subassembly.Claw;
+import org.firstinspires.ftc.teamcode.subassembly.SampleDetector;
 import org.firstinspires.ftc.teamcode.subassembly.ViperSlideArm;
 
 @SuppressWarnings("unused")
@@ -50,27 +53,32 @@ public class CyberTigersIntoTheDeepTeleOp extends LinearOpMode {
             Port 0 : armMotor
             Port 1 : viperSlideMotor
      */
+    private com.arcrobotics.ftclib.drivebase.MecanumDrive drive;
+    private GamepadEx driverOp;
+    private boolean autoCloseClaw = false;
+    private long autoClosePincherEnableTime;
+    private boolean autoClosePincherTimerEnabled = false;
+
     @Override
     public void runOpMode() {
         /* Define and Initialize Motors */
-        com.arcrobotics.ftclib.drivebase.MecanumDrive drive = new MecanumDrive(
-                new Motor(hardwareMap, "frontLeftMotor",  Motor.GoBILDA.RPM_312),
+        drive = new MecanumDrive(
+                new Motor(hardwareMap, "frontLeftMotor", Motor.GoBILDA.RPM_312),
                 new Motor(hardwareMap, "frontRightMotor", Motor.GoBILDA.RPM_312),
-                new Motor(hardwareMap, "backLeftMotor",   Motor.GoBILDA.RPM_312),
-                new Motor(hardwareMap, "backRightMotor",  Motor.GoBILDA.RPM_312)
+                new Motor(hardwareMap, "backLeftMotor", Motor.GoBILDA.RPM_312),
+                new Motor(hardwareMap, "backRightMotor", Motor.GoBILDA.RPM_312)
         );
-        GamepadEx driverOp = new GamepadEx(gamepad1);
+        driverOp = new GamepadEx(gamepad1);
         GamepadEx subDriverOp = new GamepadEx(gamepad2);
+
+        allowDriverToFixArmAndSlide();
+
+        /* Wait for the game driver to press play */
+        waitForStart();
 
         Claw claw = new Claw(hardwareMap);
         ViperSlideArm viperSlideArm = new ViperSlideArm(hardwareMap);
         claw.zero();
-        /* Send telemetry message to signify robot waiting */
-        telemetry.addLine("Robot Ready.");
-        telemetry.update();
-
-        /* Wait for the game driver to press play */
-        waitForStart();
 
         /* Run until the driver presses stop */
         while (opModeIsActive()) {
@@ -87,37 +95,58 @@ public class CyberTigersIntoTheDeepTeleOp extends LinearOpMode {
             if (gamepad2.a) {
                 viperSlideArm.prepareToDropSampleLowBasket();
                 claw.prepareToDropSampleLowBasket();
+                disableAutoClose();
             } else if (gamepad2.b) {
                 viperSlideArm.setArmClearBarrier();
                 claw.prepareToPickupVerticalSample();
+                enableAutoClose();
             } else if (gamepad2.x) {
                 viperSlideArm.prepareToPickupVerticalSample();
                 claw.prepareToPickupVerticalSample();
-            } else if (gamepad2.y) {
+                enableAutoClose();
+            } else if (gamepad2.y && !gamepad2.back) {
                 viperSlideArm.prepareToDropSampleHighBasket();
                 claw.prepareToDropSampleHighBasket();
+                disableAutoClose();
+            } else if (gamepad2.y && gamepad2.back) {
+                viperSlideArm.prepareToDropSampleHighBasketBackwards();
+                claw.prepareToDropSampleHighBasketBackwards();
+                disableAutoClose();
             } else if (gamepad2.dpad_left) {
                 viperSlideArm.prepareToHangLowSpecimen();
                 claw.prepareToHangLowSpecimen();
+                disableAutoClose();
             } else if (gamepad1.dpad_left) {
                 viperSlideArm.park();
                 claw.zero();
-            } else if (gamepad2.dpad_right) {
+                disableAutoClose();
+            } else if (gamepad2.dpad_right && !gamepad2.back) {
+                claw.prepareToHangHighSpecimenBackwards();
+                viperSlideArm.prepareToHangHighSpecimenBackwards();
+                disableAutoClose();
+            } else if (gamepad2.dpad_right && gamepad2.back) {
                 viperSlideArm.prepareToHangHighSpecimen();
                 claw.prepareToHangHighSpecimen();
+                disableAutoClose();
             } else if (gamepad2.dpad_up) {
                 viperSlideArm.prepareToPickUpWallSpecimen();
                 claw.prepareToPickUpWallSpecimen();
+                enableAutoClose();
             } else if (gamepad2.dpad_down) {
                 viperSlideArm.prepareToPickUpFieldSpecimen();
                 claw.prepareToPickUpFieldSpecimen();
+                enableAutoClose();
             } else if (gamepad1.dpad_up) {
                 viperSlideArm.prepareToHang();
                 claw.zero();
+                disableAutoClose();
             } else if (gamepad1.dpad_down) {
                 viperSlideArm.setArmWinch();
+                disableAutoClose();
             } else if (subDriverOp.wasJustPressed(GamepadKeys.Button.RIGHT_STICK_BUTTON)) {
                 claw.togglePincher();
+                disableAutoClose();
+                reEnableAutoCloseAfter(500);
             } else if (subDriverOp.wasJustPressed(GamepadKeys.Button.LEFT_STICK_BUTTON)) {
                 claw.toggleWristAngle();
             }
@@ -131,6 +160,11 @@ public class CyberTigersIntoTheDeepTeleOp extends LinearOpMode {
             } else if (gamepad2.left_bumper) {
                 viperSlideArm.adjustViperSlidePosition(-10);
             }
+            if (isAutoCloseEnabled()) {
+                if (claw.closeIfSampleDeteceted()) {
+                    viperSlideArm.armClearBarrierIfBelow();
+                }
+            }
 
             viperSlideArm.execute();
 
@@ -138,5 +172,53 @@ public class CyberTigersIntoTheDeepTeleOp extends LinearOpMode {
             claw.outputTelemetry(telemetry);
             telemetry.update();
         }
+
+
+    }
+
+    //FailSafe jajajajaja done by me?
+    private void reEnableAutoCloseAfter(long millis) {
+        autoClosePincherEnableTime = System.currentTimeMillis() + millis;
+        autoClosePincherTimerEnabled = true;
+    }
+
+    private boolean isAutoCloseEnabled() {
+
+        if (autoClosePincherTimerEnabled && (System.currentTimeMillis() > autoClosePincherEnableTime)) {
+            autoCloseClaw = true;
+            autoClosePincherTimerEnabled = false;
+        }
+        return autoCloseClaw;
+    }
+
+    private void enableAutoClose() {
+        autoCloseClaw = true;
+        autoClosePincherTimerEnabled = false;
+
+    }
+
+    private void disableAutoClose() {
+        autoCloseClaw = false;
+        autoClosePincherTimerEnabled = false;
+
+    }
+
+    private void allowDriverToFixArmAndSlide() {
+        DcMotor armMotor = hardwareMap.get(DcMotor.class, "armMotor");
+        DcMotor slideMotor = hardwareMap.get(DcMotor.class, "viperSlideMotor");
+        slideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        while (!opModeIsActive() && !isStopRequested()) {
+            armMotor.setPower(-gamepad2.right_stick_y);
+            slideMotor.setPower(gamepad2.left_stick_y * 0.5);
+            drive.driveRobotCentric(
+                    -driverOp.getLeftX(),
+                    -driverOp.getLeftY(),
+                    -driverOp.getRightX(),
+                    true
+            );
+        }
+        armMotor.setPower(0);
+        slideMotor.setPower(0);
     }
 }
