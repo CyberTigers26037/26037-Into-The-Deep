@@ -31,7 +31,7 @@ public class SampleDetector {
         lastDetectedSample = SampleType.NONE;
         if (lastDetectedDistance <= 10) {
             if (hsvValues[0] >= 220 && hsvValues[0] <= 250) {
-                lastDetectedSample = SampleType.BLUE;
+                //lastDetectedSample = SampleType.BLUE;
             }
             else if (hsvValues[0] >= 10 && hsvValues[0] <= 50) {
                 lastDetectedSample = SampleType.RED;
