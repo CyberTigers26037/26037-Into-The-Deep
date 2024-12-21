@@ -35,7 +35,8 @@ public class MeepMeepTestingSpecimens {
         double robotPivotPickupX         = -32;
         double sigmaPickUpX              = -48;
         double sigmaPickUpY              =  55;
-
+        double hangTheSecondSpecimenX    =   0;
+        double hangTheSecondSpecimenY    =   31;
 
                 myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(robotStartingPositionX, robotStartingPositionY, Math.toRadians(270)))
                 // Goes to bar and hangs beginning sample sample
@@ -48,7 +49,8 @@ public class MeepMeepTestingSpecimens {
                 .waitSeconds(1)
 
                // Drops off first sample into the observation zone
-
+                                .setTangent(Math.toRadians(90))
+                                .splineToLinearHeading(new Pose2d(hangTheSecondSpecimenX,hangTheSecondSpecimenY,Math.toRadians(270)),Math.toRadians(225))
                 .turn(Math.toRadians(-80))
                 .waitSeconds(0)
                 //pick up second specimen
@@ -67,7 +69,7 @@ public class MeepMeepTestingSpecimens {
                 .turn(Math.toRadians(-80))
                 .waitSeconds(0)
                 // Picks up third sample into the basket (this might be wrong bc i changed it to 45 last second )
-                .setTangent(Math.toRadians(270))
+                .setTangent(Math.toRadians(90))
                 .splineToLinearHeading(new Pose2d(robotThirdTeamSampleLocationX,robotThirdSampleLocationY,Math.toRadians(180)), 180)
                 .waitSeconds(1)
                 // Drops off third sample into the observation zone

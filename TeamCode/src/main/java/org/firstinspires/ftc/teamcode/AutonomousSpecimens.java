@@ -159,8 +159,14 @@ public class AutonomousSpecimens {
         double robotObservationHangSpecimenY = 31;
         double robotPivotPickupY         =  44;
         double robotPivotPickupX         = -35.8;
-        double sigmaPickUpX              = -48;
+        double sigmaPickUpX              = -49;
         double sigmaPickUpY              =  52;
+        double hangTheSecondSpecimenX    =  -TILE_WIDTH*0.5 + 2;
+        double hangTheSecondSpecimenY    =   29;
+        double positioningHelperY        =   40;
+        double positioningHelperX        =    0;
+
+
 
         claw.pickupSample();
         prepareToHangHighSpecimenBackwards();
@@ -208,12 +214,24 @@ public class AutonomousSpecimens {
         Actions.runBlocking(drive.actionBuilder(drive.pose)
                         .lineToY(56)
                         .build());
+        sleep(250);
         claw.pickupSample();
+        sleep(100);
         raisedArm();
-        prepareToHangSpecimenHighChamber();
-        Actions.runBlocking(drive.actionBuilder(new Pose2d(robotStartingPositionX, robotStartingPositionY, Math.toRadians(270)))
-                .setTangent(Math.toRadians(270))
-                .splineToLinearHeading(new Pose2d(robotObservationZoneX,robotObservationHangSpecimenY,Math.toRadians(270)),Math.toRadians(270))
+        prepareToHangHighSpecimenBackwards();
+        sleep(200);
+        Actions.runBlocking(drive.actionBuilder(drive.pose)
+                .setTangent(Math.toRadians(180))
+                .splineToLinearHeading(new Pose2d(positioningHelperX,positioningHelperY,Math.toRadians(270)),Math.toRadians(220))
+                .build());
+        sleep(100);
+        /*Actions.runBlocking(drive.actionBuilder(new Pose2d(robotStartingPositionX, robotStartingPositionY, Math.toRadians(270)))
+                .setTangent(Math.toRadians(90))
+                .splineToLinearHeading(new Pose2d(hangTheSecondSpecimenX,hangTheSecondSpecimenY,Math.toRadians(270)),Math.toRadians(270))
+                .build());*/
+        sleep(100);
+        Actions.runBlocking(drive.actionBuilder(drive.pose)
+                .lineToY(29)
                 .build());
         claw.dropSample();
         retractViperSlide();
