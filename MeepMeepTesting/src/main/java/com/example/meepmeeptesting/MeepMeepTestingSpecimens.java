@@ -33,8 +33,8 @@ public class MeepMeepTestingSpecimens {
         double robotObservationY         = 34.5;
         double robotPivotPickupY         =  38;
         double robotPivotPickupX         = -32;
-        double sigmaPickUpX              = -52;
-        double sigmaPickUpY              =  57;
+        double sigmaPickUpX              = -48;
+        double sigmaPickUpY              =  55;
 
 
                 myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(robotStartingPositionX, robotStartingPositionY, Math.toRadians(270)))
@@ -46,10 +46,19 @@ public class MeepMeepTestingSpecimens {
                 .setTangent(Math.toRadians(90))
                 .splineToLinearHeading(new Pose2d(robotPivotPickupX,robotPivotPickupY,Math.toRadians(220)),Math.toRadians(220))
                 .waitSeconds(1)
-                // Drops off first sample into the observation zone
+
+               // Drops off first sample into the observation zone
 
                 .turn(Math.toRadians(-80))
                 .waitSeconds(0)
+                //pick up second specimen
+                .setTangent(Math.toRadians(90))
+                .splineToLinearHeading(new Pose2d(sigmaPickUpX,sigmaPickUpY,Math.toRadians(90)),Math.toRadians(90))
+                                        .lineToY(56)
+                //drop off the specimen
+                .setTangent(Math.toRadians(270))
+                .splineToLinearHeading(new Pose2d(robotObservationZoneX,robotObservationY,Math.toRadians(270)),Math.toRadians(270))
+                .waitSeconds(1)
                 // Picks up second sample
                 .setTangent(Math.toRadians(270))
                 .splineToLinearHeading(new Pose2d(robotPivotPickupX,robotPivotPickupY,Math.toRadians(210)),Math.toRadians(270))

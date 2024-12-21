@@ -33,7 +33,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.teamcode.subassembly.Claw;
 import org.firstinspires.ftc.teamcode.subassembly.SampleDetector;
 import org.firstinspires.ftc.teamcode.subassembly.ViperSlideArm;
-import org.opencv.video.DISOpticalFlow;
 
 @SuppressWarnings("unused")
 @TeleOp(name="Cyber Tigers Into the Deep TeleOp")
@@ -80,7 +79,6 @@ public class CyberTigersIntoTheDeepTeleOp extends LinearOpMode {
         Claw claw = new Claw(hardwareMap);
         ViperSlideArm viperSlideArm = new ViperSlideArm(hardwareMap);
         claw.zero();
-        SampleDetector sampleDetector = new SampleDetector(hardwareMap);
 
         /* Run until the driver presses stop */
         while (opModeIsActive()) {
@@ -163,11 +161,9 @@ public class CyberTigersIntoTheDeepTeleOp extends LinearOpMode {
                 viperSlideArm.adjustViperSlidePosition(-10);
             }
             if (isAutoCloseEnabled()) {
-                if (sampleDetector.getDetectedSample() != SampleDetector.SampleType.NONE) {
-                    claw.pickupSample();
+                if (claw.closeIfSampleDeteceted()) {
                     viperSlideArm.armClearBarrierIfBelow();
                 }
-                sampleDetector.outputTelemetry(telemetry);
             }
 
             viperSlideArm.execute();
@@ -194,22 +190,25 @@ public class CyberTigersIntoTheDeepTeleOp extends LinearOpMode {
         }
         return autoCloseClaw;
     }
-    private void enableAutoClose(){
+
+    private void enableAutoClose() {
         autoCloseClaw = true;
         autoClosePincherTimerEnabled = false;
 
     }
-    private void disableAutoClose(){
+
+    private void disableAutoClose() {
         autoCloseClaw = false;
         autoClosePincherTimerEnabled = false;
 
     }
+
     private void allowDriverToFixArmAndSlide() {
-        DcMotor armMotor = hardwareMap.get(DcMotor.class,"armMotor");
+        DcMotor armMotor = hardwareMap.get(DcMotor.class, "armMotor");
         DcMotor slideMotor = hardwareMap.get(DcMotor.class, "viperSlideMotor");
         slideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        while (!opModeIsActive()&&!isStopRequested()){
+        while (!opModeIsActive() && !isStopRequested()) {
             armMotor.setPower(-gamepad2.right_stick_y);
             slideMotor.setPower(gamepad2.left_stick_y * 0.5);
             drive.driveRobotCentric(
