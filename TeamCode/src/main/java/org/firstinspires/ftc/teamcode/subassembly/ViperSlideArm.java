@@ -59,7 +59,11 @@ public class ViperSlideArm {
     final double ARM_PICKUP                         =   16 * ARM_TICKS_PER_DEGREE;
     final double ARM_PICK_UP_FIRST_SPECIMEN_AUTO    =   13 * ARM_TICKS_PER_DEGREE;
     final double ARM_DROP                           =    0 * ARM_TICKS_PER_DEGREE;
+    final double ARM_RAISE_VIPER_SLIDE_HIGHER       =   16 * ARM_TICKS_PER_DEGREE;
+    final double ARM_DROP_ARM_ISH                   =   10 * ARM_TICKS_PER_DEGREE;
+    final double ARM_RAISED                         =   26 * ARM_TICKS_PER_DEGREE;
     final double ARM_SCORE_SPECIMEN_HIGH_CHAMBER_BACKWARDS    =   57 * ARM_TICKS_PER_DEGREE;
+    final double ARM_PICKUP_SPECIMEN_WALL_HIGHER_FOR_AUTO     =   25 * ARM_TICKS_PER_DEGREE;
     /* A number in degrees that the triggers can adjust the arm position by */
     final double FUDGE_FACTOR = 15 * ARM_TICKS_PER_DEGREE;
 
@@ -83,8 +87,10 @@ public class ViperSlideArm {
     final double VIPERSLIDE_FIELD_SPECIMEN                   =  97 * VIPERSLIDE_TICKS_PER_MM;
     final double VIPERSLIDE_SCORING_IN_HIGH_BASKET_BACKWARDS = 460 * VIPERSLIDE_TICKS_PER_MM;
     final double VIPERSLIDE_HIGH_CHAMBER_BACKWARDS           = 110 * VIPERSLIDE_TICKS_PER_MM;
-    final double VIPERSLIDE_PICK_UP_FIRST_SPECIMEN_AUTO      = 460 * VIPERSLIDE_TICKS_PER_MM;
-    final double VIPERSLIDE_EXTEND_VIPER_SLIDE_FURTHUR       = 420 * VIPERSLIDE_TICKS_PER_MM;
+    final double VIPERSLIDE_PICK_UP_FIRST_SPECIMEN_AUTO      = 465 * VIPERSLIDE_TICKS_PER_MM;
+    final double VIPERSLIDE_EXTEND_VIPER_SLIDE_FURTHUR       = 450 * VIPERSLIDE_TICKS_PER_MM;
+    final double VIPERSLIDE_RAISE_VIPER_SLIDE_HIGHER         = 465 * VIPERSLIDE_TICKS_PER_MM;
+    final double VIPERSLIDE_RETRACT_TUAH                     =   0 * VIPERSLIDE_TICKS_PER_MM;
     double viperSlidePosition = VIPERSLIDE_COLLAPSED;
 
     public ViperSlideArm(HardwareMap hardwareMap) {
@@ -130,10 +136,21 @@ public class ViperSlideArm {
         viperSlidePosition = VIPERSLIDE_COLLAPSED;
 
     }
+    public void prepareToPickUpWallSpecimenLilBitHigher() {
+        armPosition        = ARM_PICKUP_SPECIMEN_WALL_HIGHER_FOR_AUTO;
+    }
 
     public void disableArmCompensation(){
         useArmSlideCompensation = false;
 
+    }
+
+    public void retractTuah(){
+        viperSlidePosition = VIPERSLIDE_RETRACT_TUAH;
+    }
+
+    public void dropArmIsh() {
+        armPosition       = ARM_DROP_ARM_ISH;
     }
 
     public void keepSampleHeld(){
@@ -158,11 +175,20 @@ public class ViperSlideArm {
         viperSlidePosition = VIPERSLIDE_COLLAPSED;
 
     }
+    public void raiseViperSlideHigher(){
+        armPosition = ARM_RAISE_VIPER_SLIDE_HIGHER;
+        viperSlidePosition = VIPERSLIDE_RAISE_VIPER_SLIDE_HIGHER;
+
+    }
 
     public void prepareToPickupVerticalSample() {
         /* This is the vertical claw pick-up/collecting arm position */
         armPosition        = ARM_COLLECT;
         viperSlidePosition = VIPERSLIDE_PICKUP_SAMPLE;
+    }
+
+    public void raiseArm() {
+        armPosition        = ARM_RAISED;
     }
 
     public void prepareToPickUpVerticalSampleAuto(){
