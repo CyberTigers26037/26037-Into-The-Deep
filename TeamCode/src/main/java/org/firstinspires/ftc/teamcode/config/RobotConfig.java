@@ -32,6 +32,7 @@ public class RobotConfig {
     private static double perpXTicks = -2331.2327839370423;
 
     private static boolean hasLighting = false;
+    private static boolean hasWheelieBar = true;
 
     @SuppressWarnings("unused")
     public static String getRobotName() {
@@ -147,6 +148,11 @@ public class RobotConfig {
 
         return hasLighting;
     }
+    public static boolean hasWheelieBar() {
+        init();
+
+        return hasWheelieBar;
+    }
 
     private static void init() {
         if (initialized) return;
@@ -199,6 +205,8 @@ public class RobotConfig {
         par0YTicks = -1482.288027000346;
         par1YTicks = 1291.951314151336;
         perpXTicks = -2274.184381449579;
+
+        hasWheelieBar = false;
     }
 
     private static void initCoachRobRobot() {
@@ -225,5 +233,7 @@ public class RobotConfig {
         pincherMinSafeDegrees = -62;
 
         hasLighting = true;
+
+        hasWheelieBar = false;
     }
 }
