@@ -25,6 +25,7 @@ public class Claw {
     public void wristStraight() {
         elbow.down();
         wrist.zero();
+        pincher.close();
     }
 
     public void pickUpFirstSampleAuto() {
@@ -92,6 +93,7 @@ public class Claw {
     public void prepareToHangHighSpecimenBackwards(){
         elbow.prepareToHangHighSpecimenBackwards();
         wrist.straight();
+        pincher.close();
     }
 
     public void togglePincher() {
