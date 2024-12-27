@@ -27,6 +27,10 @@ public class Wrist extends ServoSubassembly {
         setServoToAngle(-90);
         isStraight = false;
     }
+    public void horizontalAutoBaskets(){
+        setServoToAngle(-32);
+        isStraight = false;
+    }
 
     public void left90() {
         setServoToAngle(90);
