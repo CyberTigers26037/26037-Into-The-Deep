@@ -31,6 +31,8 @@ public class RobotConfig {
     private static double par1YTicks = 1272.2998829608118;
     private static double perpXTicks = -2331.2327839370423;
 
+    private static boolean hasLighting = false;
+
     @SuppressWarnings("unused")
     public static String getRobotName() {
         init();
@@ -140,6 +142,12 @@ public class RobotConfig {
         return headingVelGain;
     }
 
+    public static boolean hasLighting() {
+        init();
+
+        return hasLighting;
+    }
+
     private static void init() {
         if (initialized) return;
 
@@ -215,5 +223,7 @@ public class RobotConfig {
         perpXTicks = -2266.0179717433575;
 
         pincherMinSafeDegrees = -62;
+
+        hasLighting = true;
     }
 }

@@ -61,10 +61,10 @@ private void keepSampleHeld(){
         viperSlideArm.park();
         viperSlideArm.execute();
     }
-    private void prepareToPickUpVerticalSample(double armsSpeed, double slideSpeed){
+    private void prepareToPickUpVerticalSample(double armSpeed, double slideSpeed){
         viperSlideArm.prepareToPickUpVerticalSampleAuto();
         claw.prepareToPickupVerticalSample();
-        viperSlideArm.execute();
+        viperSlideArm.execute(armSpeed, slideSpeed);
 
     }
     private void prepareToPickUSampleAuto(){
@@ -73,10 +73,26 @@ private void keepSampleHeld(){
         viperSlideArm.execute();
     }
     private void pickupFirst(){
-        viperSlideArm.pickUpVerticalSampleAuto();
+        viperSlideArm.prepareToPickUp();
         claw.prepareToPickupVerticalSample();
         viperSlideArm.execute();
 
+    }
+    private void pickUpSample (double armSpeed, double slideSpeed){
+        viperSlideArm.pickUpVerticalSampleAuto();
+        claw.prepareToPickupVerticalSample();
+        viperSlideArm.execute(armSpeed, slideSpeed);
+    }
+    private void pickUpSample2 (double armSpeed, double slideSpeed){
+        viperSlideArm.pickUpVerticalSampleTwoAuto();
+        claw.prepareToPickupVerticalSample();
+        viperSlideArm.execute(armSpeed, slideSpeed);
+
+    }
+    private void pickUpSample3 (double armSpeed, double slideSpeed) {
+        viperSlideArm.pickUpVerticalSampleThreeAuto();
+        claw.prepareToPickupVerticalSample();
+        viperSlideArm.execute(armSpeed, slideSpeed);
     }
 
     private void prepareToPickUpHorizontalSAmple(){
@@ -88,7 +104,7 @@ private void keepSampleHeld(){
     private void prepareToPickUpHorizontalBefore(double armSpeed, double slideSpeed){
         viperSlideArm.prepareToPickUpHorizontalPregame();
         claw.prepareToPickupHorizontalSample();
-        viperSlideArm.execute();
+        viperSlideArm.execute(armSpeed, slideSpeed);
     }
     private void sleep(long millis){
         try {
@@ -104,10 +120,10 @@ private void keepSampleHeld(){
         viperSlideArm.execute();
 
     }
-    private void prepareToDropHighBackwards(){
+    private void prepareToDropHighBackwards(double armSpeed, double slideSpeed){
         viperSlideArm.prepareToDropSampleHighBasketBackwards();
         claw.prepareToDropSampleHighBasketBackwards();
-        viperSlideArm.execute();
+        viperSlideArm.execute(armSpeed, slideSpeed);
 
     }
     private void keepArmUp(){
@@ -121,6 +137,13 @@ private void keepSampleHeld(){
 
     }
 
+    private void waitForViperSlideToBeWithinRange(double slideMm, double armDegrees){
+        while(!viperSlideArm.isSlideAndArmWithinRange(slideMm,armDegrees)){
+
+        }
+
+    }
+
     public void runAutonomous() {
 
         double robotStartingPositionY = 3*TILE_HEIGHT-ROBOT_HEIGHT/2;
@@ -128,45 +151,103 @@ private void keepSampleHeld(){
         double robotSecondSamplePickupLocationY = 36;
         double robotFirstSamplePickupLocationY = 36.8;
         double robotThirdSamplePickupLocationY = 22.3;
-        double robotBasketDeliveryFirstSampleLocationX = 55;
-        double robotBasketDeliveryFirstSampleLocationY = 48;
+        double robotBasketDeliveryFirstSampleLocationX = 53;
+        double robotBasketDeliveryFirstSampleLocationY = 49;
         double robotBasketDeliverySecondSampleLocationX= 52;
         double robotBasketDeliveryTwoLocationX = 58;
-        double robotBasketDeliveryLocationTwoY = 60;
+        double robotBasketDeliveryLocationTwoY = 48;
         double robotBasketDeliveryLocationThreeX = 57.6;
         double robotBasketDeliveryLocationThreeY = 60;
-        double robotBasketDeliveryThreeLocationX = 57.5;
+        double robotBasketDeliveryThreeLocationX = 52;
         double robotSecondBasketDeliveryLocationY= 60;
         double robotFirstSampleLocationX = 49.2;
         double robotSecondSampleLocationX = 61;
         double robotThirdSampleLocationX = 50.8;
-        double submersibleZoneX = 34;
-        double submersibleZoneY = 10;
+        double submersibleZoneX = 33;
+        double submersibleZoneY = 11;
 
 
        chill();
 
        // Goes to basket and drops off first sample
-       /* Actions.runBlocking(drive.actionBuilder(drive.pose)
+        Actions.runBlocking(drive.actionBuilder(drive.pose)
                 .setTangent(Math.toRadians(270))
                         .splineToLinearHeading(new Pose2d(robotBasketDeliveryFirstSampleLocationX,robotBasketDeliveryFirstSampleLocationY,Math.toRadians(230)),Math.toRadians(45))
                         .build());
 
-        */
-        prepareToDropHighBackwards();
-        sleep(2600);
+
+        prepareToDropHighBackwards(0.5,2);
+        waitForViperSlideNotBusy();
+        sleep(100);
         claw.dropSample();
         sleep(400);
-        prepareToPickUSampleAuto();
-        sleep(300);
+        keepSampleHeld();
+        sleep(1000);
         Actions.runBlocking(drive.actionBuilder(drive.pose)
-                        .turnTo(Math.toRadians(308))
+                        .turnTo(Math.toRadians(248.8))
                                 .build());
-        pickupFirst();
-        sleep(3000);
+        pickUpSample(0.7,3);
+        waitForViperSlideToBeWithinRange(5,1);
         claw.pickupSample();
         sleep(150);
         keepSampleHeld();
+        sleep(1000);
+        Actions.runBlocking(drive.actionBuilder(drive.pose)
+                        .turnTo(Math.toRadians(224))
+                        .build());
+        prepareToDropHighBackwards(0.5,1.5);
+        waitForViperSlideToBeWithinRange(10,1);
+        sleep(100);
+        claw.dropSample();
+        sleep(400);
+        keepSampleHeld();
+        Actions.runBlocking(drive.actionBuilder(drive.pose)
+                .turnTo(Math.toRadians(272.3))
+                .build());
+        sleep(200);
+        pickUpSample2(1,3);
+        waitForViperSlideToBeWithinRange(5,0.5);
+        claw.pickupSample();
+        sleep(150);
+        keepSampleHeld();
+        sleep(1000);
+        Actions.runBlocking(drive.actionBuilder(drive.pose)
+                .turnTo(Math.toRadians(224))
+                .build());
+        prepareToDropHighBackwards(0.5,3);
+        waitForViperSlideToBeWithinRange(5,2);
+        sleep(50);
+        claw.dropSample();
+        sleep(400);
+        keepSampleHeld();
+        Actions.runBlocking(drive.actionBuilder(drive.pose)
+                .turnTo(Math.toRadians(289))
+                .setTangent(Math.toRadians(289))
+                .splineToLinearHeading(new Pose2d(58,46,Math.toRadians(289)),Math.toRadians(284.7))
+                .build());
+        pickUpSample3(1,.85);
+        waitForViperSlideNotBusy();
+        sleep(150);
+        claw.pickupSample();
+        sleep(150);
+        keepSampleHeld();
+        sleep(1000);
+        Actions.runBlocking(drive.actionBuilder(drive.pose)
+                .turnTo(Math.toRadians(224))
+                .setTangent(Math.toRadians(224))
+                .splineToLinearHeading(new Pose2d(robotBasketDeliveryThreeLocationX,robotBasketDeliveryLocationTwoY,Math.toRadians(224)),Math.toRadians(200))
+                .build());
+        prepareToDropHighBackwards(0.5,3);
+        waitForViperSlideToBeWithinRange(10,3);
+        claw.dropSample();
+        sleep(400);
+        green();
+        Actions.runBlocking(drive.actionBuilder(drive.pose)
+                .setTangent(Math.toRadians(235))
+                .splineToLinearHeading(new Pose2d(submersibleZoneX, submersibleZoneY, Math.toRadians(180)), Math.toRadians(180))
+                .build());
+
+
         /*
         Actions.runBlocking(drive.actionBuilder(drive.pose)
                         .turnTo(Math.toRadians(0))
@@ -180,8 +261,7 @@ private void keepSampleHeld(){
         Actions.runBlocking(drive.actionBuilder(drive.pose)
                         .turnTo(Math.toRadians(400))
                                 .build());
-           pickupFirst();
-        sleep(3000);
+           pickupFirst();        sleep(3000);
         claw.pickupSample();
         sleep(150);
         keepSampleHeld();

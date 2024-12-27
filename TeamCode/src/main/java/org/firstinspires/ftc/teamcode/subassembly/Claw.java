@@ -73,6 +73,7 @@ public class Claw {
     public void prepareToDropSampleHighBasketBackwards() {
         elbow.prepareToDropSampleHighBasketBackwards();
         wrist.straight();
+        pincher.close();
     }
     public void prepareToHangLowSpecimen() {
         elbow.straight();
