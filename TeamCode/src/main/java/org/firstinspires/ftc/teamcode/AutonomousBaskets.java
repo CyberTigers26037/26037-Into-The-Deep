@@ -163,7 +163,7 @@ private void keepSampleHeld(){
         double robotFirstSampleLocationX = 49.2;
         double robotSecondSampleLocationX = 61;
         double robotThirdSampleLocationX = 50.8;
-        double submersibleZoneX = 33;
+        double submersibleZoneX = 35;
         double submersibleZoneY = 11;
 
 
@@ -176,7 +176,7 @@ private void keepSampleHeld(){
                         .build());
 
 
-        prepareToDropHighBackwards(0.5,2);
+        prepareToDropHighBackwards(0.8,2);
         waitForViperSlideNotBusy();
         sleep(100);
         claw.dropSample();
@@ -184,7 +184,7 @@ private void keepSampleHeld(){
         keepSampleHeld();
         sleep(1000);
         Actions.runBlocking(drive.actionBuilder(drive.pose)
-                        .turnTo(Math.toRadians(248.8))
+                        .turnTo(Math.toRadians(252.8))
                                 .build());
         pickUpSample(0.7,3);
         waitForViperSlideToBeWithinRange(5,1);
@@ -202,7 +202,7 @@ private void keepSampleHeld(){
         sleep(400);
         keepSampleHeld();
         Actions.runBlocking(drive.actionBuilder(drive.pose)
-                .turnTo(Math.toRadians(272.3))
+                .turnTo(Math.toRadians(273.5))
                 .build());
         sleep(200);
         pickUpSample2(1,3);
@@ -221,11 +221,14 @@ private void keepSampleHeld(){
         sleep(400);
         keepSampleHeld();
         Actions.runBlocking(drive.actionBuilder(drive.pose)
-                .turnTo(Math.toRadians(289))
-                .setTangent(Math.toRadians(289))
-                .splineToLinearHeading(new Pose2d(58,46,Math.toRadians(289)),Math.toRadians(284.7))
+                .turnTo(Math.toRadians(290))
+                .setTangent(Math.toRadians(290))
+                .splineToLinearHeading(new Pose2d(57.1,46,Math.toRadians(290)),Math.toRadians(284.7))
                 .build());
-        pickUpSample3(1,.85);
+        pickUpSample3(1,0);
+        waitForViperSlideToBeWithinRange(1000000,30 );
+        claw.preparetoPickUpHorizontalAuto();
+        pickUpSample3(0.3,2);
         waitForViperSlideNotBusy();
         sleep(150);
         claw.pickupSample();
@@ -233,9 +236,9 @@ private void keepSampleHeld(){
         keepSampleHeld();
         sleep(1000);
         Actions.runBlocking(drive.actionBuilder(drive.pose)
-                .turnTo(Math.toRadians(224))
-                .setTangent(Math.toRadians(224))
-                .splineToLinearHeading(new Pose2d(robotBasketDeliveryThreeLocationX,robotBasketDeliveryLocationTwoY,Math.toRadians(224)),Math.toRadians(200))
+                .turnTo(Math.toRadians(221))
+                .setTangent(Math.toRadians(221))
+                .splineToLinearHeading(new Pose2d(robotBasketDeliveryThreeLocationX,robotBasketDeliveryLocationTwoY,Math.toRadians(221)),Math.toRadians(200))
                 .build());
         prepareToDropHighBackwards(0.5,3);
         waitForViperSlideToBeWithinRange(10,3);
