@@ -25,6 +25,7 @@ public class Claw {
     public void wristStraight() {
         elbow.down();
         wrist.zero();
+        pincher.close();
     }
 
     public void pickUpFirstSampleAuto() {
@@ -45,6 +46,11 @@ public class Claw {
     public void prepareToPickupHorizontalSample() {
         elbow.horizontalPickup();
         wrist.right90();
+        pincher.open();
+    }
+    public void preparetoPickUpHorizontalAuto(){
+        elbow.horizontalPickupAutoBaskets();
+        wrist.horizontalAutoBaskets();
         pincher.open();
     }
 
@@ -87,6 +93,7 @@ public class Claw {
     public void prepareToHangHighSpecimenBackwards(){
         elbow.prepareToHangHighSpecimenBackwards();
         wrist.straight();
+        pincher.close();
     }
 
     public void togglePincher() {
