@@ -29,7 +29,7 @@ public class Claw {
     }
 
     public void pickUpFirstSampleAuto() {
-        elbow.down();
+        elbow.nathansDown();
         wrist.slant();
         pincher.open();
     }

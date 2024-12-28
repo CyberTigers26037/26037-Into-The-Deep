@@ -21,6 +21,10 @@ public class Elbow extends ServoSubassembly {
         setServoToAngle(90);
     }
 
+    public void nathansDown() {
+        setServoToAngle(78);
+    }
+
     public void prepareToDropSampleLowBasket() {
         setServoToAngle(43);
     }

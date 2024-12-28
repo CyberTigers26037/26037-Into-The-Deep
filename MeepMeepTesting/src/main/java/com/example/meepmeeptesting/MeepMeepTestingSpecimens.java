@@ -37,6 +37,8 @@ public class MeepMeepTestingSpecimens {
         double sigmaPickUpY              =  55;
         double hangTheSecondSpecimenX    =   0;
         double hangTheSecondSpecimenY    =   31;
+        double thirdSpecimenDropOffX     =    2;
+        double thirdSpecimenDropOffY     =    50;
 
                 myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(-56, robotStartingPositionY, Math.toRadians(90)))
                 // Goes to bar and hangs beginning sample sample

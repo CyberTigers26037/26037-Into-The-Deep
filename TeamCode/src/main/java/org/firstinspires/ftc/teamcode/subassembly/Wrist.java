@@ -19,7 +19,7 @@ public class Wrist extends ServoSubassembly {
     }
 
     public void slant() {
-        setServoToAngle(67);
+        setServoToAngle(50);
         isStraight = false;
     }
 

@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.app.Notification;
+
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -118,9 +120,9 @@ public class AutonomousSpecimens {
         claw.prepareToHangHighSpecimenBackwards();
     }
 
-    private void dropArm() {
+    private void dropArm(double armSpeed, double slideSpeed) {
         viperSlideArm.dropArm();
-        viperSlideArm.execute();
+        viperSlideArm.execute(armSpeed, slideSpeed);
         claw.keepPincherOpen();
     }
 
@@ -163,15 +165,19 @@ public class AutonomousSpecimens {
         double robotSampleDropY = 51;
         double robotThirdDropY = 54.5;
         double robotObservationZoneX = -TILE_WIDTH*0.5 + 2;
-        double robotObservationHangSpecimenY = 31;
-        double robotPivotPickupY         =  44;
-        double robotPivotPickupX         = -35.8;
+        double robotObservationHangSpecimenY = 34.5;
+        double robotPivotPickupY         =  43.4;
+        double robotPivotPickupX         = -35;
         double sigmaPickUpX              = -49;
         double sigmaPickUpY              =  52;
         double hangTheSecondSpecimenX    =  -TILE_WIDTH*0.5 + 2;
         double hangTheSecondSpecimenY    =   29;
         double positioningHelperY        =   50;
         double positioningHelperX        =    0;
+        double thirdSpecimenDropOffX     =    2;
+        double thirdSpecimenDropOffY     =    50;
+        double sigmaSecondPickUpX        = -49;
+        double sigmaSecondPickUpY        =  50;
 
 
 
@@ -188,11 +194,11 @@ public class AutonomousSpecimens {
         //Picks up first sample
         Actions.runBlocking(drive.actionBuilder(drive.pose)
                 .setTangent(Math.toRadians(90))
-                .splineToLinearHeading(new Pose2d(robotPivotPickupX,robotPivotPickupY,Math.toRadians(229)),Math.toRadians(220))
+                .splineToLinearHeading(new Pose2d(robotPivotPickupX,robotPivotPickupY,Math.toRadians(230)),Math.toRadians(220))
                 .build());
         pickUpFirstSpecimen();
         waitForViperSlideNotBusy();
-        dropArm();
+        dropArm(.25,1);
         sleep(500);
         claw.pickupSample();
         sleep(150);
@@ -233,21 +239,37 @@ public class AutonomousSpecimens {
                 .build());
         sleep(100);
         Actions.runBlocking(drive.actionBuilder(drive.pose)
-                .lineToY(31)
+                .lineToY(35.2)
                 .build());
         claw.dropSample();
         retractViperSlide();
         waitForViperSlideNotBusy();
         Actions.runBlocking(drive.actionBuilder(drive.pose)
-                        .setTangent(Math.toRadians(45))
-                .splineToLinearHeading(new Pose2d(sigmaPickUpX,sigmaPickUpY,Math.toRadians(90)),Math.toRadians(45))
+                        .setTangent(Math.toRadians(90))
+                .splineToLinearHeading(new Pose2d(sigmaSecondPickUpX,sigmaSecondPickUpY,Math.toRadians(90)),Math.toRadians(90))
                 .build());
+        prepareToPickUpWallLilBitHigher();
+        Actions.runBlocking(drive.actionBuilder(drive.pose)
+                .lineToY(54.5)
+                .build());
+        sleep(250);
+        claw.pickupSample();
+        sleep(200);
+        raisedArm();
+        prepareToHangSecondSpecimen();
+        sleep(200);
+        Actions.runBlocking(drive.actionBuilder(drive.pose)
+        .setTangent(Math.toRadians(315))
+                        .splineToLinearHeading(new Pose2d(thirdSpecimenDropOffX,thirdSpecimenDropOffY,Math.toRadians(270)),Math.toRadians(315))
+                        .build());
 
-
-
-
-
-
+        Actions.runBlocking(drive.actionBuilder(drive.pose)
+                        .lineToY(34)
+                        .build());
+        sleep(100);
+        claw.dropSample();
+        retractViperSlide();
+        waitForViperSlideNotBusy();
 
 
 
