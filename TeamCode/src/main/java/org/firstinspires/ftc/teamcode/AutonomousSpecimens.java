@@ -1,10 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 
-import android.app.Notification;
-
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.subassembly.Claw;
 import org.firstinspires.ftc.teamcode.subassembly.ViperSlideArm;
 
@@ -17,13 +17,16 @@ public class AutonomousSpecimens {
     private final MecanumDrive drive;
     private final ViperSlideArm viperSlideArm;
     private final Claw claw;
+    private final Telemetry telemetry;
 
-    public AutonomousSpecimens(HardwareMap hardwareMap) {
+    public AutonomousSpecimens(HardwareMap hardwareMap, Telemetry telemetry) {
+        this.telemetry = telemetry;
         double robotStartingPositionY = 3 * TILE_HEIGHT - ROBOT_HEIGHT / 2;
         double robotStartingPositionX = -TILE_WIDTH * 0.5;
         Pose2d beginningPose = new Pose2d(robotStartingPositionX, robotStartingPositionY, Math.toRadians(270));
         drive = new MecanumDrive(hardwareMap,beginningPose);
         viperSlideArm = new ViperSlideArm(hardwareMap);
+        viperSlideArm.disableArmCompensation();
         claw = new Claw(hardwareMap);
     }
     private void prepareToHangSpecimenHighChamber(){
@@ -88,7 +91,7 @@ public class AutonomousSpecimens {
     private void raisedArm() {
         viperSlideArm.raiseArm();
         viperSlideArm.execute();
-        claw.pickupSample();
+        claw.wristStraight();
     }
 
     private void parkRobotSkibidiSigma() {
@@ -103,9 +106,9 @@ public class AutonomousSpecimens {
 
     }
 
-    private void pickUpFirstSpecimen() {
+    private void pickUpFirstSpecimen(double armSpeed, double slideSpeed) {
     viperSlideArm.pickUpFirstSpecimen();
-    viperSlideArm.execute();
+    viperSlideArm.execute(armSpeed,slideSpeed);
     claw.pickUpFirstSampleAuto();
     }
 
@@ -129,6 +132,22 @@ public class AutonomousSpecimens {
     private void retractTuah() {
         viperSlideArm.retractTuah();
         viperSlideArm.execute();
+        claw.pickupSample();
+    }
+    private void waitForViperSlideArmToBeWithinRange(double slideMm, double armDegrees){
+        while(true){
+            if (viperSlideArm.isSlideAndArmWithinRange(slideMm, armDegrees)) break;
+        }
+    }
+    private void waitForSlideToBeWithinRange(double slideMm){
+        while(true){
+            if (viperSlideArm.isSlideWithinRange(slideMm)) break;
+        }
+    }
+    private void waitForArmToBeWithinRange(double armDegrees){
+        while(true){
+            if(viperSlideArm.isArmWithinRange(armDegrees)) break;
+        }
     }
     @SuppressWarnings("SameParameterValue")
     private void sleep(long millis) {
@@ -165,67 +184,69 @@ public class AutonomousSpecimens {
         double robotSampleDropY = 51;
         double robotThirdDropY = 54.5;
         double robotObservationZoneX = -TILE_WIDTH*0.5 + 2;
-        double robotObservationHangSpecimenY = 34.5;
-        double robotPivotPickupY         =  43.4;
-        double robotPivotPickupX         = -35;
+        double robotObservationHangSpecimenY = 32;
+        double robotPivotPickupY         =  43.5;
+        double robotPivotPickupX         = -37.5;
         double sigmaPickUpX              = -49;
-        double sigmaPickUpY              =  52;
+        double sigmaPickUpY              =  56;
+        double observationZoneX          = -51;
+        double observationZoneY          = 58;
         double hangTheSecondSpecimenX    =  -TILE_WIDTH*0.5 + 2;
         double hangTheSecondSpecimenY    =   29;
         double positioningHelperY        =   50;
-        double positioningHelperX        =    0;
-        double thirdSpecimenDropOffX     =    2;
+        double positioningHelperX        =    8;
+        double thirdSpecimenDropOffX     =    10;
         double thirdSpecimenDropOffY     =    50;
         double sigmaSecondPickUpX        = -49;
-        double sigmaSecondPickUpY        =  50;
-
+        double sigmaSecondPickUpY        =  51;
 
 
         claw.pickupSample();
         prepareToHangHighSpecimenBackwards();
         // Goes to bar and hangs preloaded sample
         Actions.runBlocking(drive.actionBuilder(new Pose2d(robotStartingPositionX, robotStartingPositionY, Math.toRadians(270)))
-                .setTangent(Math.toRadians(270))
-                .splineToLinearHeading(new Pose2d(robotObservationZoneX,robotObservationHangSpecimenY,Math.toRadians(270)),Math.toRadians(270))
+                .lineToY(robotObservationHangSpecimenY)
                 .build());
         claw.dropSample();
         retractViperSlide();
-        waitForViperSlideNotBusy();
+        waitForViperSlideArmToBeWithinRange(20,2);
         //Picks up first sample
         Actions.runBlocking(drive.actionBuilder(drive.pose)
                 .setTangent(Math.toRadians(90))
-                .splineToLinearHeading(new Pose2d(robotPivotPickupX,robotPivotPickupY,Math.toRadians(230)),Math.toRadians(220))
+                .splineToLinearHeading(new Pose2d(robotPivotPickupX,robotPivotPickupY,Math.toRadians(214)),Math.toRadians(220))
                 .build());
-        pickUpFirstSpecimen();
-        waitForViperSlideNotBusy();
-        dropArm(.25,1);
-        sleep(500);
+        pickUpFirstSpecimen(0.5, 3);
+        waitForViperSlideArmToBeWithinRange(20,3.5);
         claw.pickupSample();
         sleep(150);
-        raiseViperSlideHigher();
-        claw.wristStraight();
-        waitForViperSlideNotBusy();
+        raisedArm();
+        waitForViperSlideArmToBeWithinRange(10,5);
         //drop off first sample in oberservation zone
-        Actions.runBlocking(drive.actionBuilder(drive.pose)
+       /* Actions.runBlocking(drive.actionBuilder(drive.pose)
                 .turn(Math.toRadians(-110))
                 .build());
         sleep(100);
         extendViperSlideFurthur();
-        waitForViperSlideNotBusy();
+        waitForSlideToBeWithinRange(10);
         dropArmIsh();
-        waitForViperSlideNotBusy();
-        sleep(500);
+        waitForArmToBeWithinRange(2);
+        sleep(150);
         claw.dropSample();
         sleep(100);
         retractTuah();
+
+        */
         // second specimen pickup
+        retractTuah();
         Actions.runBlocking(drive.actionBuilder(drive.pose)
                 .setTangent(Math.toRadians(90))
                 .splineToLinearHeading(new Pose2d(sigmaPickUpX,sigmaPickUpY,Math.toRadians(90)),Math.toRadians(90))
                 .build());
+        sleep(100);
+        claw.dropSample();
         prepareToPickUpWallLilBitHigher();
         Actions.runBlocking(drive.actionBuilder(drive.pose)
-                        .lineToY(54.5)
+                        .lineToY(57)
                         .build());
         sleep(250);
         claw.pickupSample();
@@ -239,18 +260,18 @@ public class AutonomousSpecimens {
                 .build());
         sleep(100);
         Actions.runBlocking(drive.actionBuilder(drive.pose)
-                .lineToY(35.2)
+                .lineToY(34)
                 .build());
         claw.dropSample();
         retractViperSlide();
-        waitForViperSlideNotBusy();
+        waitForViperSlideArmToBeWithinRange(10,5);
         Actions.runBlocking(drive.actionBuilder(drive.pose)
                         .setTangent(Math.toRadians(90))
                 .splineToLinearHeading(new Pose2d(sigmaSecondPickUpX,sigmaSecondPickUpY,Math.toRadians(90)),Math.toRadians(90))
                 .build());
         prepareToPickUpWallLilBitHigher();
         Actions.runBlocking(drive.actionBuilder(drive.pose)
-                .lineToY(54.5)
+                .lineToY(57)
                 .build());
         sleep(250);
         claw.pickupSample();
@@ -269,7 +290,15 @@ public class AutonomousSpecimens {
         sleep(100);
         claw.dropSample();
         retractViperSlide();
+        Actions.runBlocking(drive.actionBuilder(drive.pose)
+                .lineToY(38)
+                .build());
+        parkRobotSkibidiSigma();
         waitForViperSlideNotBusy();
+        Actions.runBlocking(drive.actionBuilder(drive.pose)
+                        .setTangent(135)
+                .splineToLinearHeading(new Pose2d(observationZoneX,observationZoneY,Math.toRadians(270)),Math.toRadians(135))
+                .build());
 
 
 

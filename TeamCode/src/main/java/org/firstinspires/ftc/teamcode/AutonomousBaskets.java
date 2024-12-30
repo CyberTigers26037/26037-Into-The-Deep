@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.subassembly.Claw;
 import org.firstinspires.ftc.teamcode.subassembly.ViperSlideArm;
+import org.firstinspires.ftc.teamcode.subassembly.WheelieBar;
 
 public class AutonomousBaskets {
     private static final double TILE_WIDTH = 23.5;
@@ -14,6 +15,7 @@ public class AutonomousBaskets {
     private final MecanumDrive drive;
     private final ViperSlideArm viperSlideArm;
     private final Claw claw;
+    private final WheelieBar wheelieBar;
     private static final double  ROBOT_STARTING_POSITION_Y = 3*TILE_HEIGHT-ROBOT_HEIGHT/2;
     private static final double ROBOT_STARTING_POSITION_X = TILE_WIDTH*1.5 - 3;
 
@@ -23,11 +25,13 @@ public class AutonomousBaskets {
         viperSlideArm = new ViperSlideArm(hardwareMap);
         viperSlideArm.disableArmCompensation();
         claw = new Claw(hardwareMap);
+        wheelieBar = new WheelieBar(hardwareMap);
     }
 
     private void prepareToDriveArmUp(){
         viperSlideArm.prepareToDriveArmUp();
         claw.prepareToDropSampleHighBasket();
+        wheelieBar.close();
         viperSlideArm.execute();
     }
 
@@ -40,6 +44,7 @@ public class AutonomousBaskets {
     private void resetViperSlideArm(){
         claw.zero();
         viperSlideArm.park();
+        wheelieBar.close();
         viperSlideArm.execute();
     }
 
@@ -73,6 +78,7 @@ public class AutonomousBaskets {
     private void prepareToDropHighBackwards(double armSpeed, double slideSpeed){
         viperSlideArm.prepareToDropSampleHighBasketBackwards();
         claw.prepareToDropSampleHighBasketBackwards();
+        wheelieBar.open();
         viperSlideArm.execute(armSpeed, slideSpeed);
     }
 
@@ -114,8 +120,8 @@ public class AutonomousBaskets {
         double thirdSampleLocationY                    =   46;
         double robotBasketDeliveryThirdSampleLocationX =   52;
         double robotBasketDeliveryThirdSampleLocationY =   52;
-        double submersibleZoneX                        =   35;
-        double submersibleZoneY                        =   8;
+        double submersibleZoneX                        =   30;
+        double submersibleZoneY                        =   6;
 
        // Goes to basket and drops off first sample
         prepareToDriveArmDown();
