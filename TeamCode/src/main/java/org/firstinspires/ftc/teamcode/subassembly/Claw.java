@@ -104,11 +104,6 @@ public class Claw {
         pincher.open();
     }
 
-    public void elbowStraight(){
-        elbow.straight();
-
-    }
-
     public boolean closeIfSampleDeteceted() {
         SampleDetector.SampleType detecetedSample = sampleDetector.getDetectedSample();
         if (detecetedSample != SampleDetector.SampleType.NONE){

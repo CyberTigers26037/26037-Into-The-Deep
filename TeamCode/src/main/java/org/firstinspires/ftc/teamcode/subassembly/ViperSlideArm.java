@@ -154,7 +154,7 @@ public class ViperSlideArm {
         armPosition       = ARM_DROP_ARM_ISH;
     }
 
-    public void keepSampleHeld(){
+    public void prepareToDriveArmUp(){
         viperSlidePosition = VIPERSLIDE_COLLAPSED;
         armPosition        = ARM_SCORE_SAMPLE_IN_HIGH;
 
@@ -192,15 +192,7 @@ public class ViperSlideArm {
         armPosition        = ARM_RAISED;
     }
 
-    public void prepareToPickUpVerticalSampleAuto(){
-        armPosition        = ARM_COLLECT + (2 * ARM_TICKS_PER_DEGREE);
-        viperSlidePosition = VIPERSLIDE_COLLAPSED;
 
-    }
-    public void prepareToPickUp(){
-        armPosition        = ARM_PICKUP_PREPARE;
-        viperSlidePosition = VIPERSLIDE_FIRST_SAMPLE;
-    }
     public void pickUpVerticalSampleAuto(){
         armPosition        = ARM_PICKUP;
         viperSlidePosition = VIPERSLIDE_FIRST_SAMPLE;
@@ -214,7 +206,8 @@ public class ViperSlideArm {
         armPosition        = ARM_PICKUP_PREPARE;
         viperSlidePosition = VIPERSLIDE_THIRD_SAMPLE;
     }
-
+/*
+// These methods are used in the old baskets auto
     public void prepareToPickupHorizontalSample(){
 
         armPosition        = ARM_COLLECT;
@@ -229,6 +222,17 @@ public class ViperSlideArm {
         armPosition        = ARM_CLEAR_BARRIER;
         viperSlidePosition = VIPERSLIDE_COLLAPSED;
     }
+    public void prepareToPickUpVerticalSampleAuto(){
+        armPosition        = ARM_COLLECT + (2 * ARM_TICKS_PER_DEGREE);
+        viperSlidePosition = VIPERSLIDE_COLLAPSED;
+
+    }
+    public void prepareToPickUp(){
+        armPosition        = ARM_PICKUP_PREPARE;
+        viperSlidePosition = VIPERSLIDE_FIRST_SAMPLE;
+    }
+
+ */
     public void extendViperSlideFurthur() {
         viperSlidePosition = VIPERSLIDE_EXTEND_VIPER_SLIDE_FURTHUR;
     }
@@ -368,14 +372,22 @@ public class ViperSlideArm {
 
     }
     public boolean isSlideAndArmWithinRange(double slideMm, double armDegrees){
-       double targetArmPosition = armPosition/ARM_TICKS_PER_DEGREE;
-       double actualArmPosition = armMotor.getCurrentPosition()/ARM_TICKS_PER_DEGREE;
-       double targetSlidePosition = viperSlidePosition/VIPERSLIDE_TICKS_PER_MM;
-       double actualSlidePosition = viperSlideMotor.getCurrentPosition()/VIPERSLIDE_TICKS_PER_MM;
-
-       return (Math.abs(actualArmPosition - targetArmPosition) <= armDegrees) &&
-               (Math.abs(actualSlidePosition - targetSlidePosition) <= slideMm);
+        return isArmWithinRange(armDegrees) && isSlideWithinRange(slideMm);
     }
+    public boolean isArmWithinRange(double  armDegrees){
+        double targetArmPosition = armPosition/ARM_TICKS_PER_DEGREE;
+        double actualArmPosition = armMotor.getCurrentPosition()/ARM_TICKS_PER_DEGREE;
+
+        return (Math.abs(actualArmPosition - targetArmPosition) <= armDegrees);
+
+    }
+    public boolean isSlideWithinRange(double slideMm){
+        double targetSlidePosition = viperSlidePosition/VIPERSLIDE_TICKS_PER_MM;
+        double actualSlidePosition = viperSlideMotor.getCurrentPosition()/VIPERSLIDE_TICKS_PER_MM;
+
+        return (Math.abs(actualSlidePosition - targetSlidePosition) <= slideMm);
+    }
+
 
     public void outputTelemetry(Telemetry telemetry) {
         /* Check to see if our arm is over the current limit, and report via telemetry. */
