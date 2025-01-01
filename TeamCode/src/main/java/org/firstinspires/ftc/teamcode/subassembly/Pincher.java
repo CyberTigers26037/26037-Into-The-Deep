@@ -42,10 +42,12 @@ public class Pincher extends ServoSubassembly {
         isOpen = true;
     }
 
-
+    public void outputTelemetrySimple(Telemetry telemetry) {
+        telemetry.addData("Pincher Angle", currentAngle);
+    }
 
     public void outputTelemetry(Telemetry telemetry) {
-        telemetry.addData("Pincher Angle", currentAngle);
+        outputTelemetrySimple(telemetry);
         telemetry.addData("Pincher Open", isOpen);
     }
 }

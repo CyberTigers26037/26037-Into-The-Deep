@@ -68,7 +68,11 @@ public class Elbow extends ServoSubassembly {
         setServoToAngle(currentAngle+degrees);
     }
 
-    public void outputTelemetry(Telemetry telemetry) {
+    public void outputTelemetrySimple(Telemetry telemetry) {
         telemetry.addData("Elbow Angle", currentAngle);
+    }
+
+    public void outputTelemetry(Telemetry telemetry) {
+        outputTelemetrySimple(telemetry);
     }
 }

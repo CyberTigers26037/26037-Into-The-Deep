@@ -388,6 +388,10 @@ public class ViperSlideArm {
         return (Math.abs(actualSlidePosition - targetSlidePosition) <= slideMm);
     }
 
+    public void outputTelemetrySimple(Telemetry telemetry) {
+        telemetry.addData("arm Position (degrees): ", armPosition/ARM_TICKS_PER_DEGREE);
+        telemetry.addData("slide Position (mm) : ", viperSlidePosition/VIPERSLIDE_TICKS_PER_MM);
+    }
 
     public void outputTelemetry(Telemetry telemetry) {
         /* Check to see if our arm is over the current limit, and report via telemetry. */

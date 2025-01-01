@@ -104,13 +104,17 @@ public class Claw {
         pincher.open();
     }
 
-    public boolean closeIfSampleDeteceted() {
-        SampleDetector.SampleType detecetedSample = sampleDetector.getDetectedSample();
-        if (detecetedSample != SampleDetector.SampleType.NONE){
+    public boolean closeIfSampleDetected() {
+        SampleDetector.SampleType detectedSample = sampleDetector.getDetectedSample();
+        if (detectedSample != SampleDetector.SampleType.NONE){
             pincher.close();
             return true;
         }
         return false;
+    }
+
+    public boolean checkIfSampleDetected() {
+        return (sampleDetector.getDetectedSample() != SampleDetector.SampleType.NONE);
     }
 
     public void pickupSample() {
@@ -127,6 +131,13 @@ public class Claw {
 
     public void toggleWristAngle() {
         wrist.toggleAngle();
+    }
+
+    public void outputTelemetrySimple(Telemetry telemetry) {
+        elbow.outputTelemetrySimple(telemetry);
+        wrist.outputTelemetrySimple(telemetry);
+        pincher.outputTelemetrySimple(telemetry);
+        sampleDetector.outputTelemetrySimple(telemetry);
     }
 
     public void outputTelemetry(Telemetry telemetry) {

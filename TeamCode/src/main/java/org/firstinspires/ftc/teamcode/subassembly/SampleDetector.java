@@ -45,6 +45,10 @@ public class SampleDetector {
         return lastDetectedSample;
     }
 
+    public void outputTelemetrySimple(Telemetry telemetry) {
+        telemetry.addData("Detected Sample", lastDetectedSample);
+    }
+
     public void outputTelemetry(Telemetry telemetry) {
         telemetry.addData("Hue", hsvValues[0]);
         telemetry.addData("Distance (MM)", lastDetectedDistance);

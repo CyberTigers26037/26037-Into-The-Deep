@@ -56,8 +56,12 @@ public class Wrist extends ServoSubassembly {
         }
     }
 
-    public void outputTelemetry(Telemetry telemetry) {
+    public void outputTelemetrySimple(Telemetry telemetry) {
         telemetry.addData("Wrist Angle", currentAngle);
+    }
+
+    public void outputTelemetry(Telemetry telemetry) {
+        outputTelemetrySimple(telemetry);
         telemetry.addData("Wrist Straight", isStraight);
     }
 }
