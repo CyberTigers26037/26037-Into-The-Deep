@@ -33,9 +33,6 @@ public class Claw {
         wrist.slant();
         pincher.open();
     }
-    public void keepPincherOpen(){
-        pincher.open();
-    }
 
     public void prepareToPickupVerticalSample() {
         elbow.prepareToPickupVerticalSample();
@@ -113,6 +110,7 @@ public class Claw {
         return false;
     }
 
+    @SuppressWarnings("UnusedReturnValue")
     public boolean checkIfSampleDetected() {
         return (sampleDetector.getDetectedSample() != SampleDetector.SampleType.NONE);
     }

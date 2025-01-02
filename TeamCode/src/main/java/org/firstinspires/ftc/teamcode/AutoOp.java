@@ -6,8 +6,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.Device;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-
 @SuppressWarnings("unused")
 @Autonomous(preselectTeleOp = "AutoOp")
 public class AutoOp extends LinearOpMode {
@@ -43,7 +41,7 @@ public class AutoOp extends LinearOpMode {
         telemetry.update();
 
         AutonomousBaskets opModeBaskets = new AutonomousBaskets(hardwareMap);
-        AutonomousSpecimens opModeSpecimens = new AutonomousSpecimens(hardwareMap, telemetry);
+        AutonomousSpecimens opModeSpecimens = new AutonomousSpecimens(hardwareMap);
 
         waitForStart();
 

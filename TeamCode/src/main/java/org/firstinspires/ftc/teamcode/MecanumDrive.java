@@ -114,6 +114,10 @@ public final class MecanumDrive {
     public final Localizer localizer;
     public Pose2d pose;
 
+    private static final double DEFAULT_EXTRA_CORRECTION_TIME_SECONDS = 1.0;
+
+    private double extraCorrectionTimeSeconds = DEFAULT_EXTRA_CORRECTION_TIME_SECONDS;
+
     private final LinkedList<Pose2d> poseHistory = new LinkedList<>();
 
     private final DownsampledWriter estimatedPoseWriter = new DownsampledWriter("ESTIMATED_POSE", 50_000_000);
@@ -257,6 +261,13 @@ public final class MecanumDrive {
         rightFront.setPower(wheelVels.rightFront.get(0) / maxPowerMag);
     }
 
+    public void setExtraCorrectionTime(double extraCorrectionTimeSeconds) {
+        this.extraCorrectionTimeSeconds = extraCorrectionTimeSeconds;
+    }
+
+    public void setExtraCorrectionTimeDefault() {
+        this.extraCorrectionTimeSeconds = DEFAULT_EXTRA_CORRECTION_TIME_SECONDS;
+    }
     public final class FollowTrajectoryAction implements Action {
         public final TimeTrajectory timeTrajectory;
         private double beginTs = -1;
@@ -299,7 +310,7 @@ public final class MecanumDrive {
                     && robotVelRobot.linearVel.norm() < 0.5
                     && Math.toDegrees(error.heading.toDouble()) < 1.0
                     && robotVelRobot.angVel < 0.5)
-                    || t >= timeTrajectory.duration + 1) {
+                    || t >= timeTrajectory.duration + extraCorrectionTimeSeconds) {
 
                 leftFront.setPower(0);
                 leftBack.setPower(0);

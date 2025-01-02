@@ -40,31 +40,30 @@ public class ViperSlideArm {
     If you'd like it to move further, increase that number. If you'd like it to not move
     as far from the starting position, decrease it. */
 
-    final double ARM_COLLAPSED_INTO_ROBOT           =    0;
-    final double ARM_COLLECT                        =    3 * ARM_TICKS_PER_DEGREE;
-    final double ARM_CLEAR_BARRIER                  =   13 * ARM_TICKS_PER_DEGREE;
-    final double ARM_CHILL                          =   10 * ARM_TICKS_PER_DEGREE;
-    final double ARM_SCORE_SPECIMEN_LOW_CHAMBER     =   35 * ARM_TICKS_PER_DEGREE;
-    final double ARM_SCORE_SPECIMEN_HIGH_CHAMBER    =   80 * ARM_TICKS_PER_DEGREE;
-    final double ARM_PICKUP_HANGING_SPECIMEN        =   22 * ARM_TICKS_PER_DEGREE;
-    final double ARM_PICKUP_FIELD_SPECIMEN          =    4 * ARM_TICKS_PER_DEGREE;
-    final double ARM_SCORE_SAMPLE_IN_LOW            =   82 * ARM_TICKS_PER_DEGREE;
-    final double ARM_SCORE_SAMPLE_IN_HIGH           = 97.5 * ARM_TICKS_PER_DEGREE;
-    final double ARM_ATTACH_HANGING_HOOK            =  110 * ARM_TICKS_PER_DEGREE;
-    final double ARM_WINCH_ROBOT                    =    0 * ARM_TICKS_PER_DEGREE;
-    final double ARM_MINIMUM                        =    0 * ARM_TICKS_PER_DEGREE;
-    final double ARM_MAXIMUM                        =  125 * ARM_TICKS_PER_DEGREE;
-    final double ARM_SCORE_SAMPLE_IN_HIGH_BACKWARDS =  125 * ARM_TICKS_PER_DEGREE;
-    final double ARM_PICKUP_PREPARE                 =   16 * ARM_TICKS_PER_DEGREE;
-    final double ARM_PICKUP                         =   16 * ARM_TICKS_PER_DEGREE;
-    final double ARM_PICK_UP_FIRST_SPECIMEN_AUTO    =   11 * ARM_TICKS_PER_DEGREE;
-    final double ARM_DROP                           =    0 * ARM_TICKS_PER_DEGREE;
-    final double ARM_RAISE_VIPER_SLIDE_HIGHER       =   20 * ARM_TICKS_PER_DEGREE;
-    final double ARM_DROP_ARM_ISH                   =    10 * ARM_TICKS_PER_DEGREE;
-    final double ARM_RAISED                         =   26 * ARM_TICKS_PER_DEGREE;
-    final double ARM_SCORE_SPECIMEN_HIGH_CHAMBER_BACKWARDS    =   57 * ARM_TICKS_PER_DEGREE;
-    final double ARM_SCORE_SECOND_SPECIMEN          =   59 * ARM_TICKS_PER_DEGREE;
-    final double ARM_PICKUP_SPECIMEN_WALL_HIGHER_FOR_AUTO     =   29 * ARM_TICKS_PER_DEGREE;
+    final double ARM_COLLAPSED_INTO_ROBOT                     =    0;
+    final double ARM_SCORE_SECOND_SPECIMEN_A                  =   55 * ARM_TICKS_PER_DEGREE;
+    final double ARM_COLLECT                                  =    3 * ARM_TICKS_PER_DEGREE;
+    final double ARM_CLEAR_BARRIER                            =   13 * ARM_TICKS_PER_DEGREE;
+    final double ARM_CHILL                                    =   10 * ARM_TICKS_PER_DEGREE;
+    final double ARM_SCORE_SPECIMEN_LOW_CHAMBER               =   35 * ARM_TICKS_PER_DEGREE;
+    final double ARM_SCORE_SPECIMEN_HIGH_CHAMBER              =   80 * ARM_TICKS_PER_DEGREE;
+    final double ARM_PICKUP_HANGING_SPECIMEN                  =   22 * ARM_TICKS_PER_DEGREE;
+    final double ARM_PICKUP_FIELD_SPECIMEN                    =    4 * ARM_TICKS_PER_DEGREE;
+    final double ARM_SCORE_SAMPLE_IN_LOW                      =   82 * ARM_TICKS_PER_DEGREE;
+    final double ARM_SCORE_SAMPLE_IN_HIGH                     = 97.5 * ARM_TICKS_PER_DEGREE;
+    final double ARM_ATTACH_HANGING_HOOK                      =  110 * ARM_TICKS_PER_DEGREE;
+    final double ARM_WINCH_ROBOT                              =    0 * ARM_TICKS_PER_DEGREE;
+    final double ARM_MINIMUM                                  =    0 * ARM_TICKS_PER_DEGREE;
+    final double ARM_MAXIMUM                                  =  115 * ARM_TICKS_PER_DEGREE;
+    final double ARM_SCORE_SAMPLE_IN_HIGH_BACKWARDS           =  115 * ARM_TICKS_PER_DEGREE;
+    final double ARM_PICKUP_PREPARE                           =   16 * ARM_TICKS_PER_DEGREE;
+    final double ARM_PICKUP                                   =   16 * ARM_TICKS_PER_DEGREE;
+    final double ARM_PICK_UP_FIRST_SPECIMEN_AUTO              =   11 * ARM_TICKS_PER_DEGREE;
+    final double ARM_RAISE_VIPER_SLIDE_HIGHER                 =   20 * ARM_TICKS_PER_DEGREE;
+    final double ARM_RAISED                                   =   38 * ARM_TICKS_PER_DEGREE;
+    final double ARM_SCORE_SPECIMEN_HIGH_CHAMBER_BACKWARDS    =   54 * ARM_TICKS_PER_DEGREE;
+    final double ARM_SCORE_THIRD_SPECIMEN =   56 * ARM_TICKS_PER_DEGREE;
+    final double ARM_PICKUP_SPECIMEN_WALL_HIGHER_FOR_AUTO     =   28 * ARM_TICKS_PER_DEGREE;
     /* A number in degrees that the triggers can adjust the arm position by */
     final double FUDGE_FACTOR = 15 * ARM_TICKS_PER_DEGREE;
 
@@ -75,23 +74,21 @@ public class ViperSlideArm {
 
 
     final double VIPERSLIDE_TICKS_PER_MM = (111132.0 / 289.0) / 120.0;
-    final double VIPERSLIDE_COLLAPSED                        =   0 * VIPERSLIDE_TICKS_PER_MM;
-    final double VIPERSLIDE_EXTENDED                         = 180 * VIPERSLIDE_TICKS_PER_MM;
-    final double VIPERSLIDE_SCORING_IN_HIGH_BASKET           = 460 * VIPERSLIDE_TICKS_PER_MM;
-    final double VIPERSLIDE_SCORING_IN_LOW_BASKET            = 120 * VIPERSLIDE_TICKS_PER_MM;
-    final double VIPERSLIDE_HIGH_CHAMBER                     =  67 * VIPERSLIDE_TICKS_PER_MM;
-    final double VIPERSLIDE_LOW_CHAMBER                      =   0 * VIPERSLIDE_TICKS_PER_MM;
-    final double VIPERSLIDE_PICKUP_SAMPLE                    = 102 * VIPERSLIDE_TICKS_PER_MM;
-    final double VIPERSLIDE_FIRST_SAMPLE                     = 440 * VIPERSLIDE_TICKS_PER_MM;
-    final double VIPERSLIDE_SECOND_SAMPLE                    = 435 * VIPERSLIDE_TICKS_PER_MM;
-    final double VIPERSLIDE_THIRD_SAMPLE                     = 385 * VIPERSLIDE_TICKS_PER_MM;
-    final double VIPERSLIDE_FIELD_SPECIMEN                   =  97 * VIPERSLIDE_TICKS_PER_MM;
-    final double VIPERSLIDE_SCORING_IN_HIGH_BASKET_BACKWARDS = 460 * VIPERSLIDE_TICKS_PER_MM;
-    final double VIPERSLIDE_HIGH_CHAMBER_BACKWARDS           = 105 * VIPERSLIDE_TICKS_PER_MM;
-    final double VIPERSLIDE_PICK_UP_FIRST_SPECIMEN_AUTO      = 385 * VIPERSLIDE_TICKS_PER_MM;
-    final double VIPERSLIDE_EXTEND_VIPER_SLIDE_FURTHUR       = 445 * VIPERSLIDE_TICKS_PER_MM;
-    final double VIPERSLIDE_RAISE_VIPER_SLIDE_HIGHER         = 460 * VIPERSLIDE_TICKS_PER_MM;
-    final double VIPERSLIDE_RETRACT_TUAH                     =   0 * VIPERSLIDE_TICKS_PER_MM;
+    final double VIPERSLIDE_COLLAPSED                         =   0 * VIPERSLIDE_TICKS_PER_MM;
+    final double VIPERSLIDE_SCORING_IN_HIGH_BASKET            = 460 * VIPERSLIDE_TICKS_PER_MM;
+    final double VIPERSLIDE_SCORING_IN_LOW_BASKET             = 120 * VIPERSLIDE_TICKS_PER_MM;
+    final double VIPERSLIDE_HIGH_CHAMBER                      =  67 * VIPERSLIDE_TICKS_PER_MM;
+    final double VIPERSLIDE_LOW_CHAMBER                       =   0 * VIPERSLIDE_TICKS_PER_MM;
+    final double VIPERSLIDE_PICKUP_SAMPLE                     = 102 * VIPERSLIDE_TICKS_PER_MM;
+    final double VIPERSLIDE_FIRST_SAMPLE                      = 440 * VIPERSLIDE_TICKS_PER_MM;
+    final double VIPERSLIDE_SECOND_SAMPLE                     = 435 * VIPERSLIDE_TICKS_PER_MM;
+    final double VIPERSLIDE_THIRD_SAMPLE                      = 385 * VIPERSLIDE_TICKS_PER_MM;
+    final double VIPERSLIDE_FIELD_SPECIMEN                    =  97 * VIPERSLIDE_TICKS_PER_MM;
+    final double VIPERSLIDE_SCORING_IN_HIGH_BASKET_BACKWARDS  = 460 * VIPERSLIDE_TICKS_PER_MM;
+    final double VIPERSLIDE_HIGH_CHAMBER_BACKWARDS            = 105 * VIPERSLIDE_TICKS_PER_MM;
+    final double VIPERSLIDE_PICK_UP_FIRST_SPECIMEN_AUTO       = 385 * VIPERSLIDE_TICKS_PER_MM;
+    final double VIPERSLIDE_RETRACT_SLIDE_NATHAN              =   0 * VIPERSLIDE_TICKS_PER_MM;
+    final double VIPERSLIDE_HANG_SECOND_SPECIMEN              = 105 * VIPERSLIDE_TICKS_PER_MM;
     double viperSlidePosition = VIPERSLIDE_COLLAPSED;
 
     public ViperSlideArm(HardwareMap hardwareMap) {
@@ -137,12 +134,16 @@ public class ViperSlideArm {
         viperSlidePosition = VIPERSLIDE_COLLAPSED;
 
     }
-    public void retractTuah() {
-        viperSlidePosition = VIPERSLIDE_RETRACT_TUAH;
+    public void retractViperSlideNathan() {
+        viperSlidePosition = VIPERSLIDE_RETRACT_SLIDE_NATHAN;
         armPosition        = ARM_RAISE_VIPER_SLIDE_HIGHER;
     }
     public void prepareToPickUpWallSpecimenLilBitHigher() {
         armPosition        = ARM_PICKUP_SPECIMEN_WALL_HIGHER_FOR_AUTO;
+    }
+    public void prepareToHangHighSpecimenBackwardsForAuto() {
+        armPosition        = ARM_SCORE_SECOND_SPECIMEN_A;
+        viperSlidePosition = VIPERSLIDE_HANG_SECOND_SPECIMEN;
     }
 
     public void disableArmCompensation(){
@@ -150,18 +151,11 @@ public class ViperSlideArm {
 
     }
 
-    public void dropArmIsh() {
-        armPosition       = ARM_DROP_ARM_ISH;
-    }
-
     public void prepareToDriveArmUp(){
         viperSlidePosition = VIPERSLIDE_COLLAPSED;
         armPosition        = ARM_SCORE_SAMPLE_IN_HIGH;
 
 
-    }
-    public void extendViperSlide() {
-        viperSlidePosition = VIPERSLIDE_EXTENDED;
     }
 
     public void setArmClearBarrier() {
@@ -174,11 +168,6 @@ public class ViperSlideArm {
     public void chill(){
         armPosition =  ARM_CHILL;
         viperSlidePosition = VIPERSLIDE_COLLAPSED;
-
-    }
-    public void raiseViperSlideHigher(){
-        armPosition = ARM_RAISE_VIPER_SLIDE_HIGHER;
-        viperSlidePosition = VIPERSLIDE_RAISE_VIPER_SLIDE_HIGHER;
 
     }
 
@@ -233,9 +222,7 @@ public class ViperSlideArm {
     }
 
  */
-    public void extendViperSlideFurthur() {
-        viperSlidePosition = VIPERSLIDE_EXTEND_VIPER_SLIDE_FURTHUR;
-    }
+
     public void prepareToDropSampleHighBasket() {
         /* This is the correct height to score the sample in the HIGH BASKET*/
         armPosition        = ARM_SCORE_SAMPLE_IN_HIGH;
@@ -253,21 +240,15 @@ public class ViperSlideArm {
         viperSlidePosition = VIPERSLIDE_LOW_CHAMBER;
     }
 
-    public void dropArm() {
-        armPosition        = ARM_DROP;
-    }
-
-
-
     public void prepareToHangHighSpecimenBackwards(){
 
         armPosition        = ARM_SCORE_SPECIMEN_HIGH_CHAMBER_BACKWARDS;
         viperSlidePosition = VIPERSLIDE_HIGH_CHAMBER_BACKWARDS;
 
     }
-    public void PrepareToHangSecondSpecimen(){
+    public void PrepareToHangThirdSpecimen(){
 
-        armPosition        = ARM_SCORE_SECOND_SPECIMEN;
+        armPosition        = ARM_SCORE_THIRD_SPECIMEN;
         viperSlidePosition = VIPERSLIDE_HIGH_CHAMBER_BACKWARDS;
 
     }
