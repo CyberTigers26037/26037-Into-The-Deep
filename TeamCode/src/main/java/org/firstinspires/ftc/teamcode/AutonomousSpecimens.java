@@ -167,7 +167,7 @@ public class AutonomousSpecimens {
     @SuppressWarnings("StatementWithEmptyBody")
     private void waitForViperSlideNotBusyAndAutoCloseClawWhenSampleDetected() {
         while (viperSlideArm.isBusy()) {
-        claw.closeIfSampleDeteceted();
+        claw.closeIfSampleDetected();
         }
     }
     public void runAutonomous() {

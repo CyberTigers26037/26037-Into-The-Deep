@@ -46,13 +46,13 @@ public class CyberTigersIntoTheDeepTeleOp extends LinearOpMode {
             Port 2 : backRightMotor
             Port 3 : frontRightMotor
         Servos
-            Port 0 : left_wheelie_servo
+            Port 0 : right_wheelie_servo
      Expansion hub
         Servos
             Port 1 : Pincher
             Port 2 : Wrist
             Port 3 : Elbow
-            Port 5 : right_wheelie_servo
+            Port 5 : left_wheelie_servo
         I2C
             Port 0 : sensor_color_distance
         Motors
@@ -182,7 +182,7 @@ public class CyberTigersIntoTheDeepTeleOp extends LinearOpMode {
                 viperSlideArm.adjustViperSlidePosition(-10);
             }
             if (isAutoCloseEnabled()) {
-                if (claw.closeIfSampleDeteceted()) {
+                if (claw.closeIfSampleDetected()) {
                     viperSlideArm.armClearBarrierIfBelow();
                 }
             }

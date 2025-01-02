@@ -206,7 +206,7 @@ public class RobotConfig {
         par1YTicks = 1291.951314151336;
         perpXTicks = -2274.184381449579;
 
-        hasWheelieBar = false;
+        hasWheelieBar = true;
     }
 
     private static void initCoachRobRobot() {
