@@ -30,10 +30,10 @@ public class SampleDetector {
         Color.colorToHSV(colors.toColor(), hsvValues);
         lastDetectedSample = SampleType.NONE;
         if (lastDetectedDistance <= 10) {
-            if (hsvValues[0] >= 220 && hsvValues[0] <= 250) {
+            if (hsvValues[0] >= 210 && hsvValues[0] <= 250) {
                 lastDetectedSample = SampleType.BLUE;
             }
-            else if (hsvValues[0] >= 300 && hsvValues[0] <= 350) {
+            else if (hsvValues[0] >= 10 && hsvValues[0] <= 40) {
                 lastDetectedSample = SampleType.RED;
             }
             else if (hsvValues[0] >= 65 && hsvValues[0] <= 90) {

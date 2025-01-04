@@ -14,16 +14,16 @@ import org.firstinspires.ftc.teamcode.config.RobotConfig;
 @SuppressWarnings("unused")
 public class LightingSystem implements OpModeManagerNotifier.Notifications {
     private Servo rgbLight;
+    private NumberPlateSwitch numberPlateSwitch;
     private static final double OFF = 0.0;
     private static final double BLUE = 0.611;
+    private static final double RED = 0.279;
     private static LightingSystem instance;
 
     @OnCreateEventLoop
     public static void attachEventLoop(Context context, FtcEventLoop eventLoop) {
-        if (RobotConfig.hasLighting()) {
-            OpModeManagerImpl opModeManager = eventLoop.getOpModeManager();
-            opModeManager.registerListener(LightingSystem.getInstance());
-        }
+        OpModeManagerImpl opModeManager = eventLoop.getOpModeManager();
+        opModeManager.registerListener(LightingSystem.getInstance());
     }
 
     public static LightingSystem getInstance() {
@@ -37,11 +37,17 @@ public class LightingSystem implements OpModeManagerNotifier.Notifications {
     @Override
     public void onOpModePreInit(OpMode opMode) {
         rgbLight = opMode.hardwareMap.get(Servo.class, "rgbLight");
+        numberPlateSwitch = new NumberPlateSwitch(opMode.hardwareMap);
     }
 
     @Override
     public void onOpModePreStart(OpMode opMode) {
-        rgbLight.setPosition(BLUE);
+        if (numberPlateSwitch.isNumberPlateBlue()) {
+            rgbLight.setPosition(BLUE);
+        }
+        else {
+            rgbLight.setPosition(RED);
+        }
     }
 
     @Override
