@@ -14,12 +14,12 @@ public class RobotConfig {
     private static double pincherMaxSafeDegrees = -15;
 
     // RoadRunner Parameters
-    private static double inPerTick = 0.00294479;
-    private static double lateralInPerTick = 0.002088752063713;
-    private static double trackWidthTicks = 5355.401736985699;
-    private static double kS = 0.75339387311371;
-    private static double kV = 0.000382821037909;
-    private static double kA = 0.00019;
+    private static double inPerTick = 0.00294105;
+    private static double lateralInPerTick = 0.0021376946763423097;
+    private static double trackWidthTicks = 5368.8759623215865;
+    private static double kS = 1.0520006797546024;
+    private static double kV = 0.0004413340167920501;
+    private static double kA = 0.00015;
     private static double axialGain = 1.0;
     private static double lateralGain = 0.5;
     private static double headingGain = 1.2;
@@ -27,9 +27,9 @@ public class RobotConfig {
     private static double lateralVelGain = 0.0;
     private static double headingVelGain = 0.0;
 
-    private static double par0YTicks = -1443.235557300304;
-    private static double par1YTicks = 1343.728964149884;
-    private static double perpXTicks = -2236.065621557933;
+    private static double par0YTicks = -1493.1792311132783;
+    private static double par1YTicks = 1285.7674249294002;
+    private static double perpXTicks = -2221.960330454141;
 
     private static boolean hasWheelieBar = true;
 
