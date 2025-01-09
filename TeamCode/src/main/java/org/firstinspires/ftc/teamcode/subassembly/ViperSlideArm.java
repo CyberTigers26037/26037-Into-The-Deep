@@ -64,6 +64,7 @@ public class ViperSlideArm {
     final double ARM_SCORE_SPECIMEN_HIGH_CHAMBER_BACKWARDS    =   54 * ARM_TICKS_PER_DEGREE;
     final double ARM_SCORE_THIRD_SPECIMEN =   56 * ARM_TICKS_PER_DEGREE;
     final double ARM_PICKUP_SPECIMEN_WALL_HIGHER_FOR_AUTO     =   28 * ARM_TICKS_PER_DEGREE;
+    final double ARM_ANGLE_SLIDE_THRESHOLD                    =   45 * ARM_TICKS_PER_DEGREE;
     /* A number in degrees that the triggers can adjust the arm position by */
     final double FUDGE_FACTOR = 15 * ARM_TICKS_PER_DEGREE;
 
@@ -89,6 +90,7 @@ public class ViperSlideArm {
     final double VIPERSLIDE_PICK_UP_FIRST_SPECIMEN_AUTO       = 385 * VIPERSLIDE_TICKS_PER_MM;
     final double VIPERSLIDE_RETRACT_SLIDE_NATHAN              =   0 * VIPERSLIDE_TICKS_PER_MM;
     final double VIPERSLIDE_HANG_SECOND_SPECIMEN              = 105 * VIPERSLIDE_TICKS_PER_MM;
+    final double VIPERSLIDE_MAX_BEFORE_ARM_THRESHOLD          = 445 * VIPERSLIDE_TICKS_PER_MM;
     double viperSlidePosition = VIPERSLIDE_COLLAPSED;
 
     public ViperSlideArm(HardwareMap hardwareMap) {
@@ -340,6 +342,9 @@ public class ViperSlideArm {
         //same as above, we see if the viper slide is trying to go below 0, and if it is, we set it to 0.
         if (viperSlidePosition < 0) {
             viperSlidePosition = 0;
+        }
+        if ((armPosition < ARM_ANGLE_SLIDE_THRESHOLD) && (viperSlidePosition > VIPERSLIDE_MAX_BEFORE_ARM_THRESHOLD)){
+            viperSlidePosition = VIPERSLIDE_MAX_BEFORE_ARM_THRESHOLD;
         }
 
         viperSlideMotor.setTargetPosition((int) (viperSlidePosition));
