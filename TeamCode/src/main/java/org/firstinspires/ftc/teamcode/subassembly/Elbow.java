@@ -29,7 +29,7 @@ public class Elbow extends ServoSubassembly {
         setServoToAngle(43);
     }
 
-    public void prepareToDropSampleHighBasketBackwards(){setServoToAngle(-25); }
+    public void prepareToDropSampleHighBasketBackwards(){setServoToAngle(-30); }
 
     public void prepareToDropSampleHighBasket() {
         setServoToAngle(57);

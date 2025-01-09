@@ -174,7 +174,7 @@ public class CyberTigersIntoTheDeepTeleOp extends LinearOpMode {
             claw.adjustWristAngle(-gamepad2.left_stick_x);
             claw.adjustElbowAngle(gamepad2.left_stick_y);
 
-            viperSlideArm.adjustArm(-gamepad2.right_stick_y * 0.1);
+            viperSlideArm.adjustArm(-gamepad2.right_stick_y * 3);
 
             if (gamepad2.right_bumper) {
                 viperSlideArm.adjustViperSlidePosition(10);

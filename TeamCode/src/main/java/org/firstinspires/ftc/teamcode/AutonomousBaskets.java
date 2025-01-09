@@ -99,7 +99,7 @@ public class AutonomousBaskets {
     }
 
     private void waitForViperSlideToBeReadyToPickupSample(){
-        waitForViperSlideToBeWithinRange(5,1);
+        waitForViperSlideToBeWithinRange(5,2);
     }
 
     private void waitForViperSlideToBeReadyToDropSample(){
@@ -114,40 +114,44 @@ public class AutonomousBaskets {
     }
 
     public void runAutonomous() {
-        double robotBasketDeliveryFirstSampleLocationX =   58;
-        double robotBasketDeliveryFirstSampleLocationY = 49.9;
-        double thirdSampleLocationX                    = 57.8;
-        double thirdSampleLocationY                    =   46;
+        double robotBasketDeliveryFirstSampleLocationX =   59.6;
+        double robotBasketDeliveryFirstSampleLocationY =   51;
+        double thirdSampleLocationX                    = 58.5;
+        double thirdSampleLocationY                    =   45;
         double robotBasketDeliveryThirdSampleLocationX =   52;
-        double robotBasketDeliveryThirdSampleLocationY =   52;
-        double submersibleZoneX                        =   30;
-        double submersibleZoneY                        =   6;
+        double robotBasketDeliveryThirdSampleLocationY =   55;
+        double submersibleZoneX                        =   19;
+        double submersibleZoneY                        =    0;
 
        // Goes to basket and drops off first sample
         prepareToDriveArmDown();
+        drive.setExtraCorrectionTime(0);
         Actions.runBlocking(drive.actionBuilder(drive.pose)
                 .setTangent(Math.toRadians(270))
                 .splineToLinearHeading(new Pose2d(robotBasketDeliveryFirstSampleLocationX,robotBasketDeliveryFirstSampleLocationY,Math.toRadians(230)),Math.toRadians(45))
                 .build());
-        prepareToDropHighBackwards(1,2);
-        waitForViperSlideNotBusy();
+        prepareToDropHighBackwards(2,2);
+        waitForViperSlideToBeWithinRange(2,2);
+        sleep(400);
         claw.dropSample();
         sleep(400);
         prepareToDriveArmUp();
         waitForViperSlideToBeReadyToDrive();
         // Goes to pick up first sample off the field
+        drive.setExtraCorrectionTime(1);
         Actions.runBlocking(drive.actionBuilder(drive.pose)
-                .turnTo(Math.toRadians(253.6))
+                .splineToLinearHeading(new Pose2d(robotBasketDeliveryFirstSampleLocationX,49,Math.toRadians(247)),Math.toRadians(252.3))
                 .build());
-        pickUpSample(0.7,3);
+        pickUpSample(.7,3);
         waitForViperSlideToBeReadyToPickupSample();
         claw.pickupSample();
         sleep(150);
         prepareToDriveArmUp();
         waitForViperSlideToBeReadyToDrive();
         // Drop first sample in
+        drive.setExtraCorrectionTime(0.2);
         Actions.runBlocking(drive.actionBuilder(drive.pose)
-                .turnTo(Math.toRadians(224))
+                .turnTo(Math.toRadians(235))
                 .build());
         prepareToDropHighBackwards(0.5,1.5);
         waitForViperSlideToBeWithinRange(10,1);
@@ -157,10 +161,10 @@ public class AutonomousBaskets {
         prepareToDriveArmUp();
         // Pick up second sample
         Actions.runBlocking(drive.actionBuilder(drive.pose)
-                .turnTo(Math.toRadians(277.3))
+                .turnTo(Math.toRadians(264.8))
                 .build());
         sleep(200);
-        pickUpSample2(1,3);
+        pickUpSample2(0.7,3);
         waitForViperSlideToBeReadyToPickupSample();
         sleep(200);
         claw.pickupSample();
@@ -169,9 +173,9 @@ public class AutonomousBaskets {
         waitForViperSlideToBeReadyToDrive();
         // Drop off second sample
         Actions.runBlocking(drive.actionBuilder(drive.pose)
-                .turnTo(Math.toRadians(224))
+                .turnTo(Math.toRadians(233))
                 .build());
-        prepareToDropHighBackwards(0.5,3);
+        prepareToDropHighBackwards(2,3);
         waitForViperSlideToBeReadyToDropSample();
         sleep(50);
         claw.dropSample();
@@ -194,6 +198,7 @@ public class AutonomousBaskets {
         // Drop third sample off
         prepareToDriveArmUp();
         waitForViperSlideToBeReadyToDrive();
+        drive.setExtraCorrectionTime(1);
         Actions.runBlocking(drive.actionBuilder(drive.pose)
                 .setTangent(Math.toRadians(221))
                 .splineToLinearHeading(new Pose2d(robotBasketDeliveryThirdSampleLocationX,robotBasketDeliveryThirdSampleLocationY,Math.toRadians(221)),Math.toRadians(200))
