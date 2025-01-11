@@ -183,7 +183,7 @@ public class AutonomousBaskets {
         // Pick up the third sample
         prepareToDriveArmUp();
         Actions.runBlocking(drive.actionBuilder(drive.pose)
-                .turnTo(Math.toRadians(293))
+                .turnTo(Math.toRadians(295))
                 .setTangent(Math.toRadians(293))
                 .splineToLinearHeading(new Pose2d(thirdSampleLocationX,thirdSampleLocationY,Math.toRadians(293)),Math.toRadians(284.7))
                 .build());
@@ -214,8 +214,6 @@ public class AutonomousBaskets {
                 .setTangent(Math.toRadians(235))
                 .splineToLinearHeading(new Pose2d(submersibleZoneX, submersibleZoneY, Math.toRadians(180)), Math.toRadians(180))
                 .build());
-
-
         /*
         Backup Auto
 

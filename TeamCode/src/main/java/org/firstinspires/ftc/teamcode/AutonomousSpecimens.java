@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.subassembly.Claw;
@@ -94,22 +95,24 @@ public class AutonomousSpecimens {
     }
 
     public void runAutonomous() {
-        double robotStartingPositionY    = 3*TILE_HEIGHT-ROBOT_HEIGHT/2;
-        double robotStartingPositionX    = -ROBOT_WIDTH/2;
+        double robotStartingPositionY = 3 * TILE_HEIGHT - ROBOT_HEIGHT / 2;
+        double robotStartingPositionX = -ROBOT_WIDTH / 2;
         double robotObservationHangSpecimenY = 30;
-        double robotPivotPickupY         =    43.5;
-        double robotPivotPickupX         =   -37.5;
-        double sigmaPickUpX              =   -49;
-        double sigmaPickUpY              =    56;
-        double observationZoneX          =   -51;
-        double observationZoneY          =    58;
-        double positioningHelperY        =    50;
-        double positioningHelperX        =     8;
-        double thirdSpecimenDropOffX     =    10;
-        double thirdSpecimenDropOffY     =    50;
-        double sigmaSecondPickUpX        =   -49;
-        double sigmaSecondPickUpY        =    51;
+        double robotPivotPickupY = 41;
+        double robotPivotPickupX = -34;
+        double sigmaPickUpX = -49;
+        double sigmaPickUpY = 54;
+        double observationZoneX = -51;
+        double observationZoneY = 58;
+        double positioningHelperY = 50;
+        double positioningHelperX = 8;
+        double thirdSpecimenDropOffX = 10;
+        double thirdSpecimenDropOffY = 50;
+        double sigmaSecondPickUpX = -49;
+        double sigmaSecondPickUpY = 51;
 
+
+        // Nathan Code
         claw.pickupSample();
         prepareToHangHighSpecimenBackwards();
         drive.setExtraCorrectionTime(0);
@@ -134,7 +137,7 @@ public class AutonomousSpecimens {
         //waitForViperSlideArmToBeWithinRange(10,5);
         //drop off first sample in observation zone
         retractViperSlideNathan();
-        drive.setExtraCorrectionTime(0);
+        drive.setExtraCorrectionTime(0)  ;
         Actions.runBlocking(drive.actionBuilder(drive.pose)
             .setTangent(Math.toRadians(90))
             .splineToLinearHeading(new Pose2d(sigmaPickUpX,sigmaPickUpY,Math.toRadians(90)),Math.toRadians(90))
@@ -157,10 +160,12 @@ public class AutonomousSpecimens {
         //goes to hang the second specimen
         prepareToHangHighSpecimenBackwardsForAuto();
         sleep(200);
+        drive.setExtraCorrectionTime(0);
         Actions.runBlocking(drive.actionBuilder(drive.pose)
             .setTangent(Math.toRadians(315))
             .splineToLinearHeading(new Pose2d(positioningHelperX,positioningHelperY,Math.toRadians(270)),Math.toRadians(0))
             .build());
+        drive.setExtraCorrectionTimeDefault();
         sleep(100);
         drive.setExtraCorrectionTime(0);
         Actions.runBlocking(drive.actionBuilder(drive.pose)
@@ -177,10 +182,12 @@ public class AutonomousSpecimens {
         //going to get the third specimen
         waitForViperSlideArmToBeWithinRange(10,5);
         prepareToPickUpWallLilBitHigher();
+        drive.setExtraCorrectionTime(0);
         Actions.runBlocking(drive.actionBuilder(drive.pose)
             .setTangent(Math.toRadians(90))
             .splineToLinearHeading(new Pose2d(sigmaSecondPickUpX,sigmaSecondPickUpY,Math.toRadians(90)),Math.toRadians(90))
             .build());
+        drive.setExtraCorrectionTimeDefault();
         drive.setExtraCorrectionTime(0);
         Actions.runBlocking(drive.actionBuilder(drive.pose)
             .lineToY(57)
@@ -193,11 +200,11 @@ public class AutonomousSpecimens {
         raisedArm();
         prepareToHangThirdSpecimen();
         sleep(200);
+        drive.setExtraCorrectionTime(0);
         Actions.runBlocking(drive.actionBuilder(drive.pose)
             .setTangent(Math.toRadians(315))
             .splineToLinearHeading(new Pose2d(thirdSpecimenDropOffX,thirdSpecimenDropOffY,Math.toRadians(270)),Math.toRadians(315))
             .build());
-        drive.setExtraCorrectionTime(0);
         Actions.runBlocking(drive.actionBuilder(drive.pose)
             .lineToY(32.5)
             .build());
@@ -209,11 +216,59 @@ public class AutonomousSpecimens {
         Actions.runBlocking(drive.actionBuilder(drive.pose)
             .lineToY(50)
             .build());
-        drive.setExtraCorrectionTimeDefault();
         parkRobot();
         Actions.runBlocking(drive.actionBuilder(drive.pose)
             .setTangent(135)
             .splineToLinearHeading(new Pose2d(observationZoneX,observationZoneY,Math.toRadians(270)),Math.toRadians(135))
             .build());
+        drive.setExtraCorrectionTimeDefault();
+
+        /*// Drops off pre-loaded specimen
+        claw.pickupSample();
+        prepareToHangHighSpecimenBackwards();
+        Actions.runBlocking(drive.actionBuilder(drive.pose)
+                .lineToY(robotObservationHangSpecimenY)
+                .build());
+        claw.dropSample();
+        retractViperSlide();
+        drive.setExtraCorrectionTime(0);
+        // Goes to push first field sample in
+       Actions.runBlocking(drive.actionBuilder(drive.pose)
+               .setTangent(Math.toRadians(90))
+               .splineToLinearHeading(new Pose2d(-46,38, Math.toRadians(270)), Math.toRadians(270))
+               .setTangent(Math.toRadians(270))
+               .splineToConstantHeading(new Vector2d(-46,18), Math.toRadians(-90)) // line
+               .setTangent(Math.toRadians(270))
+               .splineToLinearHeading(new Pose2d(-62,18, Math.toRadians(270)), Math.toRadians(90))  // curve
+                .build());
+        drive.setExtraCorrectionTime(0);
+        // Pushes first field sample in then backs up
+      Actions.runBlocking(drive.actionBuilder(drive.pose)
+              .lineToY(48)
+              .lineToY(16)
+              .build());
+        drive.setExtraCorrectionTime(0);
+        // Pushes second field sample in then backs up
+      Actions.runBlocking(drive.actionBuilder(drive.pose)
+               .setTangent(Math.toRadians(270))
+               .splineToLinearHeading(new Pose2d(-64,17, Math.toRadians(270)), Math.toRadians(90))
+               //                                .lineToY(45)
+               .setTangent(Math.toRadians(90))
+               .splineToConstantHeading(new Vector2d(-60,48), Math.toRadians(-90))
+               //                                .lineToY(16)
+               .splineToConstantHeading(new Vector2d(-64,16), Math.toRadians(-90))
+                       .build());
+        // Pushes third field sample in then turns around to grab a human player specimen
+       Actions.runBlocking(drive.actionBuilder(drive.pose)
+                .setTangent(Math.toRadians(270))
+                .splineToLinearHeading(new Pose2d(-65,13, Math.toRadians(90)), Math.toRadians(270))
+                .setTangent(Math.toRadians(270))
+                .splineToLinearHeading(new Pose2d(-65,53, Math.toRadians(270)), Math.toRadians(90))
+                .build());
+        // Goes to drop off human player specimen
+        Actions.runBlocking(drive.actionBuilder(drive.pose)
+                .setTangent(Math.toRadians(-270))
+                .splineToLinearHeading(new Pose2d(-10, 30, Math.toRadians(-90)), Math.toRadians(-90))
+                .build());*/
     }
 }
