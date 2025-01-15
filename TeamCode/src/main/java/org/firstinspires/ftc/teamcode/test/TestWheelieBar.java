@@ -28,6 +28,8 @@ public class TestWheelieBar extends OpMode {
         wheelieBar.adjustAngle(-gamepad2.left_stick_x);
 
         wheelieBar.outputTelemetry(telemetry);
+        telemetry.addLine("X = Open");
+        telemetry.addLine("Y = Close");
         telemetry.update();
 
     }
