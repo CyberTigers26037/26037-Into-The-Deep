@@ -62,6 +62,7 @@ public class ViperSlideArm {
     final double ARM_RAISE_VIPER_SLIDE_HIGHER                 =   20 * ARM_TICKS_PER_DEGREE;
     final double ARM_RAISED                                   =   38 * ARM_TICKS_PER_DEGREE;
     final double ARM_SCORE_SPECIMEN_HIGH_CHAMBER_BACKWARDS    =   54 * ARM_TICKS_PER_DEGREE;
+    final double ARM_SWEEP                                    =   7.8 * ARM_TICKS_PER_DEGREE;
     final double ARM_SCORE_THIRD_SPECIMEN =   56 * ARM_TICKS_PER_DEGREE;
     final double ARM_PICKUP_SPECIMEN_WALL_HIGHER_FOR_AUTO     =   28 * ARM_TICKS_PER_DEGREE;
     final double ARM_ANGLE_SLIDE_THRESHOLD                    =   45 * ARM_TICKS_PER_DEGREE;
@@ -91,6 +92,7 @@ public class ViperSlideArm {
     final double VIPERSLIDE_RETRACT_SLIDE_NATHAN              =   0 * VIPERSLIDE_TICKS_PER_MM;
     final double VIPERSLIDE_HANG_SECOND_SPECIMEN              = 105 * VIPERSLIDE_TICKS_PER_MM;
     final double VIPERSLIDE_MAX_BEFORE_ARM_THRESHOLD          = 445 * VIPERSLIDE_TICKS_PER_MM;
+    final double VIPERSLIDE_SWEEP                             = 430 * VIPERSLIDE_TICKS_PER_MM;
     double viperSlidePosition = VIPERSLIDE_COLLAPSED;
 
     public ViperSlideArm(HardwareMap hardwareMap) {
@@ -141,11 +143,17 @@ public class ViperSlideArm {
         armPosition        = ARM_RAISE_VIPER_SLIDE_HIGHER;
     }
     public void prepareToPickUpWallSpecimenLilBitHigher() {
+        viperSlidePosition = VIPERSLIDE_COLLAPSED;
         armPosition        = ARM_PICKUP_SPECIMEN_WALL_HIGHER_FOR_AUTO;
     }
     public void prepareToHangHighSpecimenBackwardsForAuto() {
         armPosition        = ARM_SCORE_SECOND_SPECIMEN_A;
         viperSlidePosition = VIPERSLIDE_HANG_SECOND_SPECIMEN;
+    }
+
+    public void sweepingArm(){
+        armPosition        = ARM_SWEEP;
+        viperSlidePosition = VIPERSLIDE_SWEEP;
     }
 
     public void disableArmCompensation(){

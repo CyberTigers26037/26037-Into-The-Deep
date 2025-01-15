@@ -31,13 +31,16 @@ public class MeepMeepTestingSpecimens {
                 myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(-10, robotStartingPositionY, Math.toRadians(-90)))
                 // Goes to bar and hangs
                         .lineToY(33)
+                        .setTangent(90)
+                        .splineToLinearHeading(new Pose2d(-34,37, Math.toRadians(220)), Math.toRadians(180))
+                                        .turn(Math.toRadians(-90))
                 // Goes to push first field sample off of the field
-                        .setTangent(Math.toRadians(90))
-                        .splineToLinearHeading(new Pose2d(-47,38, Math.toRadians(270)), Math.toRadians(270))
-                        .setTangent(Math.toRadians(270))
-                        .splineToConstantHeading(new Vector2d(-47,18), Math.toRadians(-90)) // line
-                        .setTangent(Math.toRadians(270))
-                        .splineToLinearHeading(new Pose2d(-60,18, Math.toRadians(270)), Math.toRadians(90))
+                        //.setTangent(Math.toRadians(90))
+                        //.splineToLinearHeading(new Pose2d(-47,38, Math.toRadians(270)), Math.toRadians(270))
+                        //.setTangent(Math.toRadians(270))
+                        //.splineToConstantHeading(new Vector2d(-47,18), Math.toRadians(-90)) // line
+                        //.setTangent(Math.toRadians(270))
+                        //.splineToLinearHeading(new Pose2d(-60,18, Math.toRadians(270)), Math.toRadians(90))
                         // Pushes first field sample in then backs up
                         /*.setTangent(Math.toRadians(90))
                         .splineToConstantHeading(new Vector2d(-60,48), Math.toRadians(270))
@@ -58,7 +61,7 @@ public class MeepMeepTestingSpecimens {
                         // Goes to drop off human player specimen
                         .setTangent(Math.toRadians(-270))
                         .splineToLinearHeading(new Pose2d(-10, 30, Math.toRadians(-90)), Math.toRadians(-90))
-
+*/
 
                       /*old code
                         //.setTangent(Math.toRadians(90))

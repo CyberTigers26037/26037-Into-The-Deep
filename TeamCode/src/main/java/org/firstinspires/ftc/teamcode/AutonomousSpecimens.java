@@ -80,9 +80,20 @@ public class AutonomousSpecimens {
         claw.prepareToHangHighSpecimenBackwards();
     }
 
+    private void sweepingArm() {
+        viperSlideArm.sweepingArm();
+        viperSlideArm.execute();
+        claw.sweep();
+    }
     private void waitForViperSlideArmToBeWithinRange(double slideMm, double armDegrees){
         while(true){
             if (viperSlideArm.isSlideAndArmWithinRange(slideMm, armDegrees)) break;
+        }
+    }
+
+    private void waitForViperSlideNotBusy(){
+        while(true){
+            if (!viperSlideArm.isBusy()) break;
         }
     }
 
@@ -104,12 +115,16 @@ public class AutonomousSpecimens {
         double sigmaPickUpY = 54;
         double observationZoneX = -51;
         double observationZoneY = 58;
+        double fourthDropOffX   = -43;
+        double fourthDropOffY   = 58;
         double positioningHelperY = 50;
         double positioningHelperX = 8;
         double thirdSpecimenDropOffX = 10;
         double thirdSpecimenDropOffY = 50;
         double sigmaSecondPickUpX = -49;
         double sigmaSecondPickUpY = 51;
+        double robotSweepPositionY = 39;
+        double robotSweepPositionX = -37.7;
 
 
         // Nathan Code
@@ -124,8 +139,138 @@ public class AutonomousSpecimens {
         claw.dropSample();
         retractViperSlide();
         waitForViperSlideArmToBeWithinRange(20,2);
-        //Picks up first sample
+        drive.setExtraCorrectionTime(0);
         Actions.runBlocking(drive.actionBuilder(drive.pose)
+                        .setTangent(Math.toRadians(90))
+                        .splineToLinearHeading(new Pose2d(robotSweepPositionX, robotSweepPositionY, Math.toRadians(230)), Math.toRadians(180))
+                        .build());
+        drive.setExtraCorrectionTimeDefault();
+        sweepingArm();
+        waitForViperSlideNotBusy();
+        Actions.runBlocking(drive.actionBuilder(drive.pose)
+                        .turn(Math.toRadians(-160))
+                        .build());
+        Actions.runBlocking(drive.actionBuilder(drive.pose)
+                .turn(Math.toRadians(160))
+                .build());
+        Actions.runBlocking(drive.actionBuilder(drive.pose)
+                        .strafeTo(new Vector2d(-44.2, 40))
+                        .build());
+        Actions.runBlocking(drive.actionBuilder(drive.pose)
+                .turn(Math.toRadians(-160))
+                .build());
+        //pick up second specimen
+        prepareToPickUpWallLilBitHigher();
+        Actions.runBlocking(drive.actionBuilder(drive.pose)
+                .setTangent(Math.toRadians(90))
+                .splineToLinearHeading(new Pose2d(sigmaPickUpX,sigmaPickUpY,Math.toRadians(90)),Math.toRadians(90))
+                .build());
+        Actions.runBlocking(drive.actionBuilder(drive.pose)
+                .lineToY(57)
+                .build());
+        sleep(200);
+        claw.pickupSample();
+        //goes to hang second specimen
+        prepareToHangHighSpecimenBackwardsForAuto();
+        drive.setExtraCorrectionTime(0);
+        Actions.runBlocking(drive.actionBuilder(drive.pose)
+                .setTangent(Math.toRadians(315))
+                .splineToLinearHeading(new Pose2d(positioningHelperX,positioningHelperY,Math.toRadians(270)),Math.toRadians(0))
+                .build());
+        drive.setExtraCorrectionTimeDefault();
+        sleep(100);
+        Actions.runBlocking(drive.actionBuilder(drive.pose)
+                .lineToY(32)
+                .build());
+        drive.setExtraCorrectionTimeDefault();
+        claw.dropSample();
+        retractViperSlide();
+        drive.setExtraCorrectionTime(0);
+        Actions.runBlocking(drive.actionBuilder(drive.pose)
+                .lineToY(48)
+                .build());
+        drive.setExtraCorrectionTimeDefault();
+        //going to get the third specimen
+        waitForViperSlideArmToBeWithinRange(10,5);
+        prepareToPickUpWallLilBitHigher();
+        drive.setExtraCorrectionTime(0);
+        Actions.runBlocking(drive.actionBuilder(drive.pose)
+            .turn(Math.toRadians(-20))
+            .build());
+        Actions.runBlocking(drive.actionBuilder(drive.pose)
+                .setTangent(Math.toRadians(90))
+                .splineToLinearHeading(new Pose2d(sigmaSecondPickUpX,sigmaSecondPickUpY,Math.toRadians(90)),Math.toRadians(90))
+                .build());
+        drive.setExtraCorrectionTimeDefault();
+        drive.setExtraCorrectionTime(0);
+        Actions.runBlocking(drive.actionBuilder(drive.pose)
+                .lineToY(57)
+                .build());
+        drive.setExtraCorrectionTimeDefault();
+        sleep(250);
+        claw.pickupSample();
+        //goes to hang third specimen
+        sleep(200);
+        raisedArm();
+        prepareToHangThirdSpecimen();
+        sleep(200);
+        drive.setExtraCorrectionTime(0);
+        Actions.runBlocking(drive.actionBuilder(drive.pose)
+                .setTangent(Math.toRadians(315))
+                .splineToLinearHeading(new Pose2d(thirdSpecimenDropOffX,thirdSpecimenDropOffY,Math.toRadians(270)),Math.toRadians(315))
+                .build());
+        Actions.runBlocking(drive.actionBuilder(drive.pose)
+                .lineToY(32.5)
+                .build());
+        claw.dropSample();
+        //pick up fourth specimen
+        waitForViperSlideArmToBeWithinRange(10,5);
+        prepareToPickUpWallLilBitHigher();
+        drive.setExtraCorrectionTime(0);
+        Actions.runBlocking(drive.actionBuilder(drive.pose)
+                .turn(Math.toRadians(-20))
+                .build());
+        Actions.runBlocking(drive.actionBuilder(drive.pose)
+                .setTangent(Math.toRadians(90))
+                .splineToLinearHeading(new Pose2d(sigmaSecondPickUpX,sigmaSecondPickUpY,Math.toRadians(90)),Math.toRadians(90))
+                .build());
+        drive.setExtraCorrectionTimeDefault();
+        drive.setExtraCorrectionTime(0);
+        Actions.runBlocking(drive.actionBuilder(drive.pose)
+                .lineToY(57)
+                .build());
+        drive.setExtraCorrectionTimeDefault();
+        sleep(250);
+        claw.pickupSample();
+        //hang fourth
+        sleep(200);
+        raisedArm();
+        prepareToHangThirdSpecimen();
+        sleep(200);
+        drive.setExtraCorrectionTime(0);
+        Actions.runBlocking(drive.actionBuilder(drive.pose)
+                .setTangent(Math.toRadians(315))
+                .splineToLinearHeading(new Pose2d(observationZoneX,observationZoneY,Math.toRadians(270)),Math.toRadians(315))
+                .build());
+        Actions.runBlocking(drive.actionBuilder(drive.pose)
+                .lineToY(32)
+                .build());
+        claw.dropSample();
+        //park robot
+        drive.setExtraCorrectionTime(0);
+        Actions.runBlocking(drive.actionBuilder(drive.pose)
+                .lineToY(50)
+                .build());
+        parkRobot();
+        Actions.runBlocking(drive.actionBuilder(drive.pose)
+                .setTangent(135)
+                .splineToLinearHeading(new Pose2d(observationZoneX,observationZoneY,Math.toRadians(270)),Math.toRadians(135))
+                .build());
+        drive.setExtraCorrectionTimeDefault();
+
+
+        //Picks up first sample
+       /* Actions.runBlocking(drive.actionBuilder(drive.pose)
             .setTangent(Math.toRadians(90))
             .splineToLinearHeading(new Pose2d(robotPivotPickupX,robotPivotPickupY,Math.toRadians(214)),Math.toRadians(220))
             .build());
@@ -133,7 +278,6 @@ public class AutonomousSpecimens {
         waitForViperSlideArmToBeWithinRange(20,3.5);
         claw.pickupSample();
         sleep(150);
-        //raisedArm();
         //waitForViperSlideArmToBeWithinRange(10,5);
         //drop off first sample in observation zone
         retractViperSlideNathan();
@@ -222,6 +366,12 @@ public class AutonomousSpecimens {
             .splineToLinearHeading(new Pose2d(observationZoneX,observationZoneY,Math.toRadians(270)),Math.toRadians(135))
             .build());
         drive.setExtraCorrectionTimeDefault();
+*/
+
+
+
+
+
 
         /*// Drops off pre-loaded specimen
         claw.pickupSample();

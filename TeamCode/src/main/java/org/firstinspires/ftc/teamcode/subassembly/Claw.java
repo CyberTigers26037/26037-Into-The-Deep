@@ -93,6 +93,12 @@ public class Claw {
         pincher.close();
     }
 
+    public void sweep(){
+        elbow.sweep();
+        wrist.zero();
+        pincher.close();
+    }
+
     public void togglePincher() {
         pincher.toggle();
     }
