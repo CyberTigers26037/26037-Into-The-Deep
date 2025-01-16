@@ -31,7 +31,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.subassembly.Claw;
-import org.firstinspires.ftc.teamcode.subassembly.SampleDetector;
 import org.firstinspires.ftc.teamcode.subassembly.ViperSlideArm;
 import org.firstinspires.ftc.teamcode.subassembly.WheelieBar;
 
@@ -52,9 +51,12 @@ public class CyberTigersIntoTheDeepTeleOp extends LinearOpMode {
             Port 1 : Pincher
             Port 2 : Wrist
             Port 3 : Elbow
+            Port 4 : rgbLight
             Port 5 : left_wheelie_servo
         I2C
             Port 0 : sensor_color_distance
+        Digital
+            Port 1 : Number Plate Sensor
         Motors
             Port 0 : armMotor
             Port 1 : viperSlideMotor
