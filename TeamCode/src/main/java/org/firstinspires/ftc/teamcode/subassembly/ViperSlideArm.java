@@ -13,8 +13,10 @@ public class ViperSlideArm {
     public DcMotor armMotor; //the arm motor
     public DcMotor viperSlideMotor;
     private boolean useArmSlideCompensation = true;
+    private double maxArmMotorCurrent = -1;
+    private double maxSlideMotorCurrent = -1;
 
-    /* This constant is the number of encoder ticks for each degree of rotation of the arm.
+/* This constant is the number of encoder ticks for each degree of rotation of the arm.
         To find this, we first need to consider the total gear reduction powering our arm.
         First, we have an external 20t:100t (5:1) reduction created by two spur gears.
         But we also have an internal gear reduction in our motor.
@@ -393,6 +395,17 @@ public class ViperSlideArm {
             telemetry.addLine("MOTOR EXCEEDED CURRENT LIMIT!");
         }
 
+        double armMotorCurrent = ((DcMotorEx) armMotor).getCurrent(CurrentUnit.AMPS);
+        double slideMotorCurrent = ((DcMotorEx) viperSlideMotor).getCurrent(CurrentUnit.AMPS);
+
+        if (armMotorCurrent > maxArmMotorCurrent) {
+            maxArmMotorCurrent = armMotorCurrent;
+        }
+
+        if (slideMotorCurrent > maxSlideMotorCurrent) {
+            maxSlideMotorCurrent = slideMotorCurrent;
+        }
+
         telemetry.addData("arm Target Position: ", armMotor.getTargetPosition());
         telemetry.addData("arm Position (degrees): ", armPosition/ARM_TICKS_PER_DEGREE);
         telemetry.addData("arm Encoder: ", armMotor.getCurrentPosition());
@@ -400,6 +413,9 @@ public class ViperSlideArm {
         telemetry.addData("slide Position (mm) : ", viperSlidePosition/VIPERSLIDE_TICKS_PER_MM);
         telemetry.addData("slide Target Position", viperSlideMotor.getTargetPosition());
         telemetry.addData("slide current position", viperSlideMotor.getCurrentPosition());
-        telemetry.addData("slideMotor Current:",((DcMotorEx) viperSlideMotor).getCurrent(CurrentUnit.AMPS));
+        telemetry.addData("slideMotor Current:",slideMotorCurrent);
+        telemetry.addData("Max slideMotor Current:", maxSlideMotorCurrent);
+        telemetry.addData("armMotor Current:", armMotorCurrent);
+        telemetry.addData("Max armMotor Current:", maxArmMotorCurrent);
     }
 }
