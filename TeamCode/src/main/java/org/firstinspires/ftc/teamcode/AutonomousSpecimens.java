@@ -12,7 +12,7 @@ public class AutonomousSpecimens {
     private static final double TILE_HEIGHT  = 23.5;
     private static final double ROBOT_HEIGHT = 18;
     private static final double ROBOT_WIDTH  = 18;
-    private final MecanumDrive drive;
+    private final PinpointDrive drive;
     private final ViperSlideArm viperSlideArm;
     private final Claw claw;
 
@@ -20,7 +20,7 @@ public class AutonomousSpecimens {
         double robotStartingPositionY = 3 * TILE_HEIGHT - ROBOT_HEIGHT / 2;
         double robotStartingPositionX = -TILE_WIDTH * 0.5;
         Pose2d beginningPose = new Pose2d(robotStartingPositionX, robotStartingPositionY, Math.toRadians(270));
-        drive = new MecanumDrive(hardwareMap,beginningPose);
+        drive = new PinpointDrive(hardwareMap,beginningPose);
         viperSlideArm = new ViperSlideArm(hardwareMap);
         viperSlideArm.disableArmCompensation();
         claw = new Claw(hardwareMap);

@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.config;
 
+import com.acmerobotics.roadrunner.ftc.GoBildaPinpointDriver;
+import com.acmerobotics.roadrunner.ftc.GoBildaPinpointDriverRR;
 import com.qualcomm.robotcore.util.Device;
 
 public class RobotConfig {
@@ -30,6 +32,13 @@ public class RobotConfig {
     private static double par0YTicks = -1493.1792311132783;
     private static double par1YTicks = 1285.7674249294002;
     private static double perpXTicks = -2221.960330454141;
+
+    // Pinpoint Paramters
+    private static double xPinpointOffsetMM = -104;
+    private static double yPinpointOffsetMM = -172;
+    private static double encoderPinpointResolution = GoBildaPinpointDriverRR.goBILDA_SWINGARM_POD;
+    private static GoBildaPinpointDriver.EncoderDirection xPinpointDirection = GoBildaPinpointDriver.EncoderDirection.FORWARD;
+    private static GoBildaPinpointDriver.EncoderDirection yPinpointDirection = GoBildaPinpointDriver.EncoderDirection.FORWARD;
 
     private static boolean hasWheelieBar = true;
 
@@ -140,6 +149,36 @@ public class RobotConfig {
         init();
 
         return headingVelGain;
+    }
+
+    public static double getxPinpointOffsetMM() {
+        init();
+
+        return xPinpointOffsetMM;
+    }
+
+    public static double getyPinpointOffsetMM() {
+        init();
+
+        return yPinpointOffsetMM;
+    }
+
+    public static double getEncoderPinpointResolution() {
+        init();
+
+        return encoderPinpointResolution;
+    }
+
+    public static GoBildaPinpointDriver.EncoderDirection getxPinpointDirection() {
+        init();
+
+        return xPinpointDirection;
+    }
+
+    public static GoBildaPinpointDriver.EncoderDirection getyPinpointDirection() {
+        init();
+
+        return yPinpointDirection;
     }
 
     public static boolean hasWheelieBar() {

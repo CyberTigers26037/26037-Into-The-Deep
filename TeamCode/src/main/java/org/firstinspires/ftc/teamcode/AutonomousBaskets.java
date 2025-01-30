@@ -12,7 +12,7 @@ public class AutonomousBaskets {
     private static final double TILE_WIDTH = 23.5;
     private static final double TILE_HEIGHT = 23.5;
     private static final double ROBOT_HEIGHT = 18;
-    private final MecanumDrive drive;
+    private final PinpointDrive drive;
     private final ViperSlideArm viperSlideArm;
     private final Claw claw;
     private final WheelieBar wheelieBar;
@@ -21,7 +21,7 @@ public class AutonomousBaskets {
 
     public AutonomousBaskets(HardwareMap hardwareMap) {
         Pose2d beginningPose = new Pose2d(ROBOT_STARTING_POSITION_X, ROBOT_STARTING_POSITION_Y, Math.toRadians(270));
-        drive = new MecanumDrive(hardwareMap,beginningPose);
+        drive = new PinpointDrive(hardwareMap,beginningPose);
         viperSlideArm = new ViperSlideArm(hardwareMap);
         viperSlideArm.disableArmCompensation();
         claw = new Claw(hardwareMap);
