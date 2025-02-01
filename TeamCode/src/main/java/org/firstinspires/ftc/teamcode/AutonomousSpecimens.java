@@ -85,6 +85,12 @@ public class AutonomousSpecimens extends AutonomousOpMode {
         viperSlideArm.execute();
         claw.sweep();
     }
+
+    private void sweepArmSecond() {
+        viperSlideArm.sweepSecondThingy();
+        viperSlideArm.execute();
+        claw.sweep();
+    }
     private void waitForViperSlideArmToBeWithinRange(double slideMm, double armDegrees){
         while(true){
             if (viperSlideArm.isSlideAndArmWithinRange(slideMm, armDegrees)) break;
@@ -108,7 +114,7 @@ public class AutonomousSpecimens extends AutonomousOpMode {
     public void runAutonomous() {
         double robotStartingPositionY = 3 * TILE_HEIGHT - ROBOT_HEIGHT / 2;
         double robotStartingPositionX = -ROBOT_WIDTH / 2;
-        double robotObservationHangSpecimenY = 30;
+        double robotObservationHangSpecimenY = 34;
         double robotPivotPickupY = 41;
         double robotPivotPickupX = -34;
         double sigmaPickUpX = -49;
@@ -119,12 +125,14 @@ public class AutonomousSpecimens extends AutonomousOpMode {
         double fourthDropOffY   = 58;
         double positioningHelperY = 50;
         double positioningHelperX = 8;
-        double thirdSpecimenDropOffX = 10;
+        double thirdSpecimenDropOffX = 12;
         double thirdSpecimenDropOffY = 50;
+        double fourthSpecimenDropOffX = 1;
+        double fourthSpecimenDroppOffY = 50;
         double sigmaSecondPickUpX = -49;
         double sigmaSecondPickUpY = 51;
-        double robotSweepPositionY = 39;
-        double robotSweepPositionX = -37.7;
+        double robotSweepPositionY = 40;
+        double robotSweepPositionX = -37;
 
 
         // Nathan Code
@@ -150,11 +158,13 @@ public class AutonomousSpecimens extends AutonomousOpMode {
         Actions.runBlocking(drive.actionBuilder(drive.pose)
                         .turn(Math.toRadians(-160))
                         .build());
+        raisedArm();
         Actions.runBlocking(drive.actionBuilder(drive.pose)
                 .turn(Math.toRadians(160))
                 .build());
+        sweepArmSecond();
         Actions.runBlocking(drive.actionBuilder(drive.pose)
-                        .strafeTo(new Vector2d(-44.2, 40))
+                        .strafeTo(new Vector2d(-44, 41))
                         .build());
         Actions.runBlocking(drive.actionBuilder(drive.pose)
                 .turn(Math.toRadians(-160))
@@ -171,7 +181,7 @@ public class AutonomousSpecimens extends AutonomousOpMode {
         sleep(200);
         claw.pickupSample();
         //goes to hang second specimen
-        prepareToHangHighSpecimenBackwardsForAuto();
+        prepareToHangHighSpecimenBackwards();
         drive.setExtraCorrectionTime(0);
         Actions.runBlocking(drive.actionBuilder(drive.pose)
                 .setTangent(Math.toRadians(315))
@@ -180,7 +190,7 @@ public class AutonomousSpecimens extends AutonomousOpMode {
         drive.setExtraCorrectionTimeDefault();
         sleep(100);
         Actions.runBlocking(drive.actionBuilder(drive.pose)
-                .lineToY(32)
+                .lineToY(31)
                 .build());
         drive.setExtraCorrectionTimeDefault();
         claw.dropSample();
@@ -220,7 +230,7 @@ public class AutonomousSpecimens extends AutonomousOpMode {
                 .splineToLinearHeading(new Pose2d(thirdSpecimenDropOffX,thirdSpecimenDropOffY,Math.toRadians(270)),Math.toRadians(315))
                 .build());
         Actions.runBlocking(drive.actionBuilder(drive.pose)
-                .lineToY(32.5)
+                .lineToY(30)
                 .build());
         claw.dropSample();
         //pick up fourth specimen
@@ -250,10 +260,10 @@ public class AutonomousSpecimens extends AutonomousOpMode {
         drive.setExtraCorrectionTime(0);
         Actions.runBlocking(drive.actionBuilder(drive.pose)
                 .setTangent(Math.toRadians(315))
-                .splineToLinearHeading(new Pose2d(observationZoneX,observationZoneY,Math.toRadians(270)),Math.toRadians(315))
+                .splineToLinearHeading(new Pose2d(fourthSpecimenDropOffX,fourthDropOffY,Math.toRadians(270)),Math.toRadians(315))
                 .build());
         Actions.runBlocking(drive.actionBuilder(drive.pose)
-                .lineToY(32)
+                .lineToY(30)
                 .build());
         claw.dropSample();
         //park robot
