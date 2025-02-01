@@ -38,7 +38,7 @@ public class RobotConfig {
     private static double yPinpointOffsetMM = -172;
     private static double encoderPinpointResolution = GoBildaPinpointDriverRR.goBILDA_SWINGARM_POD;
     private static GoBildaPinpointDriver.EncoderDirection xPinpointDirection = GoBildaPinpointDriver.EncoderDirection.FORWARD;
-    private static GoBildaPinpointDriver.EncoderDirection yPinpointDirection = GoBildaPinpointDriver.EncoderDirection.FORWARD;
+    private static GoBildaPinpointDriver.EncoderDirection yPinpointDirection = GoBildaPinpointDriver.EncoderDirection.REVERSED;
 
     private static boolean hasWheelieBar = true;
 
