@@ -16,12 +16,12 @@ public class RobotConfig {
     private static double pincherMaxSafeDegrees = -15;
 
     // RoadRunner Parameters
-    private static double inPerTick = 0.00294105;
-    private static double lateralInPerTick = 0.0021376946763423097;
-    private static double trackWidthTicks = 5368.8759623215865;
-    private static double kS = 1.0520006797546024;
-    private static double kV = 0.0004413340167920501;
-    private static double kA = 0.00015;
+    private static double inPerTick = 1.0;
+    private static double lateralInPerTick = 0.7163243818864545;
+    private static double trackWidthTicks = 15.414620486088669;
+    private static double kS = 1.2253604027312655;
+    private static double kV = 0.155652890472807;
+    private static double kA = 0.039;
     private static double axialGain = 1.0;
     private static double lateralGain = 0.5;
     private static double headingGain = 1.2;
