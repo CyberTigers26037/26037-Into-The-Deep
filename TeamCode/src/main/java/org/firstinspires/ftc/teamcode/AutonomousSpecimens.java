@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.subassembly.Claw;
 import org.firstinspires.ftc.teamcode.subassembly.ViperSlideArm;
 
-public class AutonomousSpecimens {
+public class AutonomousSpecimens extends AutonomousOpMode {
     private static final double TILE_WIDTH   = 23.5;
     private static final double TILE_HEIGHT  = 23.5;
     private static final double ROBOT_HEIGHT = 18;

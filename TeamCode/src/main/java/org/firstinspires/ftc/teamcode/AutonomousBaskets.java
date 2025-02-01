@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.subassembly.Claw;
 import org.firstinspires.ftc.teamcode.subassembly.ViperSlideArm;
 import org.firstinspires.ftc.teamcode.subassembly.WheelieBar;
 
-public class AutonomousBaskets {
+public class AutonomousBaskets extends AutonomousOpMode {
     private static final double TILE_WIDTH = 23.5;
     private static final double TILE_HEIGHT = 23.5;
     private static final double ROBOT_HEIGHT = 18;
