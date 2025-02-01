@@ -92,7 +92,7 @@ public class CyberTigersIntoTheDeepTeleOp extends LinearOpMode {
 
         /* Run until the driver presses stop */
         while (opModeIsActive()) {
-            double driveSpeed = gamepad1.left_bumper? 0.64:1.0;
+            double driveSpeed = gamepad1.left_bumper? 0.5:1.0;
             drive.driveRobotCentric(
                     -driverOp.getLeftX()  * driveSpeed,
                     -driverOp.getLeftY()  * driveSpeed,
