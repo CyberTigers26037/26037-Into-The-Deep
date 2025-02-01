@@ -92,15 +92,19 @@ public class CyberTigersIntoTheDeepTeleOp extends LinearOpMode {
 
         /* Run until the driver presses stop */
         while (opModeIsActive()) {
+            double driveSpeed = gamepad1.left_bumper? 0.64:1.0;
             drive.driveRobotCentric(
-                    -driverOp.getLeftX(),
-                    -driverOp.getLeftY(),
-                    -driverOp.getRightX(),
+                    -driverOp.getLeftX()  * driveSpeed,
+                    -driverOp.getLeftY()  * driveSpeed,
+                    -driverOp.getRightX() * driveSpeed,
                     true
+
             );
+
             subDriverOp.readButtons();
 
             viperSlideArm.setArmPositionFudgeFactor(gamepad2.right_trigger + (-gamepad2.left_trigger) + gamepad1.right_trigger + (-gamepad1.left_trigger));
+
 
             if (gamepad2.a) {
                 viperSlideArm.prepareToDropSampleLowBasket();
@@ -172,6 +176,7 @@ public class CyberTigersIntoTheDeepTeleOp extends LinearOpMode {
                 reEnableAutoCloseAfter(500);
             } else if (subDriverOp.wasJustPressed(GamepadKeys.Button.LEFT_STICK_BUTTON)) {
                 claw.toggleWristAngle();
+
             }
             claw.adjustWristAngle(-gamepad2.left_stick_x * 4);
             claw.adjustElbowAngle(gamepad2.left_stick_y);
@@ -188,6 +193,11 @@ public class CyberTigersIntoTheDeepTeleOp extends LinearOpMode {
                     viperSlideArm.armClearBarrierIfBelow();
                 }
             }
+
+
+
+
+
 
             viperSlideArm.execute();
 
