@@ -64,7 +64,8 @@ public class ViperSlideArm {
     final double ARM_RAISE_VIPER_SLIDE_HIGHER                 =   20 * ARM_TICKS_PER_DEGREE;
     final double ARM_RAISED                                   =   38 * ARM_TICKS_PER_DEGREE;
     final double ARM_SCORE_SPECIMEN_HIGH_CHAMBER_BACKWARDS    =   54 * ARM_TICKS_PER_DEGREE;
-    final double ARM_SWEEP                                    =   7.8 * ARM_TICKS_PER_DEGREE;
+    final double ARM_SWEEP                                    =   7.9 * ARM_TICKS_PER_DEGREE;
+    final double ARM_SWEEP_SECOND                             =   8.4 * ARM_TICKS_PER_DEGREE;
     final double ARM_SCORE_THIRD_SPECIMEN =   56 * ARM_TICKS_PER_DEGREE;
     final double ARM_PICKUP_SPECIMEN_WALL_HIGHER_FOR_AUTO     =   28 * ARM_TICKS_PER_DEGREE;
     final double ARM_ANGLE_SLIDE_THRESHOLD                    =   45 * ARM_TICKS_PER_DEGREE;
@@ -130,6 +131,11 @@ public class ViperSlideArm {
     public void prepareToDropSampleLowBasket() {
         armPosition        = ARM_SCORE_SAMPLE_IN_LOW;
         viperSlidePosition = VIPERSLIDE_SCORING_IN_LOW_BASKET;
+    }
+
+    public void sweepSecondThingy() {
+        armPosition        = ARM_SWEEP_SECOND;
+        viperSlidePosition = VIPERSLIDE_SWEEP;
     }
 
     public void pickUpFirstSpecimen(){
