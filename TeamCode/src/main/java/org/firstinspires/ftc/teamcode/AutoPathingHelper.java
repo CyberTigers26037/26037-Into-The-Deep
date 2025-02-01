@@ -1,8 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.roadrunner.Pose2d;
-import com.acmerobotics.roadrunner.Time;
-import com.acmerobotics.roadrunner.Twist2dDual;
 import com.arcrobotics.ftclib.drivebase.MecanumDrive;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
@@ -10,7 +8,6 @@ import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.config.RobotConfig;
 import org.firstinspires.ftc.teamcode.subassembly.Claw;
 import org.firstinspires.ftc.teamcode.subassembly.ViperSlideArm;
 
@@ -28,7 +25,7 @@ public class AutoPathingHelper extends OpMode {
     private GamepadEx driverOp;
     private GamepadEx subDriverOp;
 
-    private Localizer localizer;
+    public PinpointLocalizer localizer;
     private Pose2d currentPose;
 
     double robotStartingPositionY = 3 * TILE_HEIGHT - ROBOT_HEIGHT / 2;
@@ -45,7 +42,7 @@ public class AutoPathingHelper extends OpMode {
         );
         driverOp = new GamepadEx(gamepad1);
         subDriverOp = new GamepadEx(gamepad2);
-        localizer = new ThreeDeadWheelLocalizer(hardwareMap, RobotConfig.getInPerTick());
+        localizer = new PinpointLocalizer(hardwareMap, beginningPose);
         currentPose = beginningPose;
 
         claw = new Claw(hardwareMap);
@@ -103,7 +100,7 @@ public class AutoPathingHelper extends OpMode {
     }
 
     private void updatePoseEstimate() {
-        Twist2dDual<Time> twist = localizer.update();
-        currentPose = currentPose.plus(twist.value());
+        localizer.update();
+        currentPose = localizer.getPose();
     }
 }
