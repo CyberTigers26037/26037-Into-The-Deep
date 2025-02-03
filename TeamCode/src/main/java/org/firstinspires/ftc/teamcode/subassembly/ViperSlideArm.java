@@ -101,8 +101,11 @@ public class ViperSlideArm {
     public ViperSlideArm(HardwareMap hardwareMap) {
         viperSlideMotor = hardwareMap.dcMotor.get("viperSlideMotor");
         armMotor        = hardwareMap.get(DcMotor.class, "armMotor"); //the arm motor
+        reset();
+    }
 
-        /* Setting zeroPowerBehavior to BRAKE enables a "brake mode". This causes the motor to slow down
+    public void reset(){
+         /* Setting zeroPowerBehavior to BRAKE enables a "brake mode". This causes the motor to slow down
         much faster when it is coasting. This creates a much more controllable drivetrain. As the robot
         stops much quicker. */
         armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -146,6 +149,7 @@ public class ViperSlideArm {
         viperSlidePosition = VIPERSLIDE_COLLAPSED;
 
     }
+
     public void retractViperSlideNathan() {
         viperSlidePosition = VIPERSLIDE_RETRACT_SLIDE_NATHAN;
         armPosition        = ARM_RAISE_VIPER_SLIDE_HIGHER;

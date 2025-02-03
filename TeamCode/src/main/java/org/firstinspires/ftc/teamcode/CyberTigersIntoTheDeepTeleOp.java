@@ -29,6 +29,7 @@ import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.subassembly.Claw;
 import org.firstinspires.ftc.teamcode.subassembly.ViperSlideArm;
@@ -66,7 +67,7 @@ public class CyberTigersIntoTheDeepTeleOp extends LinearOpMode {
     private boolean autoCloseClaw = false;
     private long autoClosePincherEnableTime;
     private boolean autoClosePincherTimerEnabled = false;
-
+    private boolean fudgeEnabled = true;
     @Override
     public void runOpMode() {
         /* Define and Initialize Motors */
@@ -79,7 +80,7 @@ public class CyberTigersIntoTheDeepTeleOp extends LinearOpMode {
         driverOp = new GamepadEx(gamepad1);
         GamepadEx subDriverOp = new GamepadEx(gamepad2);
 
-        allowDriverToFixArmAndSlide();
+
 
         /* Wait for the game driver to press play */
         waitForStart();
@@ -92,6 +93,11 @@ public class CyberTigersIntoTheDeepTeleOp extends LinearOpMode {
 
         /* Run until the driver presses stop */
         while (opModeIsActive()) {
+            if(gamepad1.start && gamepad1.x){
+               allowDriverToFixArmAndSlide();
+               viperSlideArm.reset();
+            }
+
             double driveSpeed = gamepad1.left_bumper? 0.5:1.0;
             drive.driveRobotCentric(
                     -driverOp.getLeftX()  * driveSpeed,
@@ -102,8 +108,14 @@ public class CyberTigersIntoTheDeepTeleOp extends LinearOpMode {
             );
 
             subDriverOp.readButtons();
-
-            viperSlideArm.setArmPositionFudgeFactor(gamepad2.right_trigger + (-gamepad2.left_trigger) + gamepad1.right_trigger + (-gamepad1.left_trigger));
+            if (fudgeEnabled){
+                viperSlideArm.setArmPositionFudgeFactor(gamepad2.right_trigger + (-gamepad2.left_trigger) + gamepad1.right_trigger + (-gamepad1.left_trigger));
+            }
+            else {
+                if ((gamepad1.left_trigger + gamepad2.left_trigger < 0.1) && (gamepad1.right_trigger + gamepad2.right_trigger < 0.1)){
+                    fudgeEnabled = true;
+                }
+            }
 
 
             if (gamepad2.a) {
@@ -191,6 +203,8 @@ public class CyberTigersIntoTheDeepTeleOp extends LinearOpMode {
             if (isAutoCloseEnabled()) {
                 if (claw.closeIfSampleDetected()) {
                     viperSlideArm.armClearBarrierIfBelow();
+                    viperSlideArm.setArmPositionFudgeFactor(0.0);
+                    fudgeEnabled = false;
                 }
             }
 
@@ -238,11 +252,17 @@ public class CyberTigersIntoTheDeepTeleOp extends LinearOpMode {
     }
 
     private void allowDriverToFixArmAndSlide() {
+        telemetry.clearAll();
+        boolean allowStop = false;
+
         DcMotor armMotor = hardwareMap.get(DcMotor.class, "armMotor");
         DcMotor slideMotor = hardwareMap.get(DcMotor.class, "viperSlideMotor");
         slideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        while (!opModeIsActive() && !isStopRequested()) {
+        slideMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        while (opModeIsActive() && !isStopRequested()) {
             armMotor.setPower(-gamepad2.right_stick_y);
             slideMotor.setPower(gamepad2.left_stick_y * 0.5);
             drive.driveRobotCentric(
@@ -251,6 +271,15 @@ public class CyberTigersIntoTheDeepTeleOp extends LinearOpMode {
                     -driverOp.getRightX(),
                     true
             );
+
+            if (!(gamepad1.start && gamepad1.x)) {
+                allowStop = true;
+            }
+            if(allowStop && gamepad1.start && gamepad1.x){
+                break;
+            }
+            telemetry.addLine("IN FAILSAFE MODE");
+            telemetry.update();
         }
         armMotor.setPower(0);
         slideMotor.setPower(0);
