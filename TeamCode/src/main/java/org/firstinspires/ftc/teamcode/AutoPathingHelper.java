@@ -5,6 +5,7 @@ import com.arcrobotics.ftclib.drivebase.MecanumDrive;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -13,6 +14,7 @@ import org.firstinspires.ftc.teamcode.subassembly.ViperSlideArm;
 
 @SuppressWarnings("unused")
 @TeleOp(name="Autonomous Pathing Helper")
+@Disabled
 public class AutoPathingHelper extends OpMode {
     private static final double TILE_WIDTH = 23.5;
     private static final double TILE_HEIGHT = 23.5;

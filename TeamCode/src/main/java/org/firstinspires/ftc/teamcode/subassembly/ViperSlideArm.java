@@ -339,7 +339,7 @@ public class ViperSlideArm {
          */
 
         if (useArmSlideCompensation && (armPosition < 45 * ARM_TICKS_PER_DEGREE)) {
-            armViperSlideComp = (0.25568 * viperSlidePosition);
+            armViperSlideComp = (0.05 * viperSlidePosition);
         }
         else {
             armViperSlideComp = 0;

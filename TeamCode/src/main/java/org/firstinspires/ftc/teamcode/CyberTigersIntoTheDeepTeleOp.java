@@ -65,6 +65,7 @@ public class CyberTigersIntoTheDeepTeleOp extends LinearOpMode {
     private com.arcrobotics.ftclib.drivebase.MecanumDrive drive;
     private GamepadEx driverOp;
     private boolean autoCloseClaw = false;
+    private boolean autoCloseAllowed = true;
     private long autoClosePincherEnableTime;
     private boolean autoClosePincherTimerEnabled = false;
     private boolean fudgeEnabled = true;
@@ -207,6 +208,13 @@ public class CyberTigersIntoTheDeepTeleOp extends LinearOpMode {
                     fudgeEnabled = false;
                 }
             }
+            if(gamepad1.y){
+                autoCloseAllowed = true;
+            }
+            if(gamepad1.x){
+                autoCloseAllowed = false;
+            }
+
 
 
 
@@ -236,7 +244,7 @@ public class CyberTigersIntoTheDeepTeleOp extends LinearOpMode {
             autoCloseClaw = true;
             autoClosePincherTimerEnabled = false;
         }
-        return autoCloseClaw;
+        return autoCloseClaw && autoCloseAllowed;
     }
 
     private void enableAutoClose() {
