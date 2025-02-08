@@ -26,6 +26,7 @@ public class AutonomousBaskets extends AutonomousOpMode {
         viperSlideArm.disableArmCompensation();
         claw = new Claw(hardwareMap);
         wheelieBar = new WheelieBar(hardwareMap);
+        claw.setPincherOpenToWide();
     }
 
     private void prepareToDriveArmUp(){

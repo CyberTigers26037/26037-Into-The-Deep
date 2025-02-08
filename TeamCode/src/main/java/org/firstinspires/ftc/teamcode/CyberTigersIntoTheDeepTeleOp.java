@@ -238,6 +238,7 @@ public class CyberTigersIntoTheDeepTeleOp extends LinearOpMode {
         autoClosePincherTimerEnabled = true;
     }
 
+
     private boolean isAutoCloseEnabled() {
 
         if (autoClosePincherTimerEnabled && (System.currentTimeMillis() > autoClosePincherEnableTime)) {

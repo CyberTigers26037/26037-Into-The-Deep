@@ -50,6 +50,9 @@ public class Claw {
         wrist.horizontalAutoBaskets();
         pincher.open();
     }
+    public void setPincherOpenToWide(){
+        pincher.setOpenToWide();
+    }
 
     public void prepareToPickUpFieldSpecimen() {
         elbow.fieldPickUpElbow();

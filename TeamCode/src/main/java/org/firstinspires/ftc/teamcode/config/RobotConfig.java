@@ -12,8 +12,10 @@ public class RobotConfig {
 
     private static String robotName = "Unknown";
 
-    private static double pincherMinSafeDegrees = -66;
-    private static double pincherMaxSafeDegrees = 0;
+    private static double pincherMinSafeDegrees      = -66;
+    private static double pincherMaxSafeDegrees      =   0;
+    private static double pincherNormalOpenDegrees   = -15;
+
 
     // RoadRunner Parameters
     private static double inPerTick = 1.0;
@@ -60,6 +62,13 @@ public class RobotConfig {
 
         return pincherMaxSafeDegrees;
     }
+
+    public static double getPincherNormalOpenDegrees(){
+        init();
+
+        return pincherNormalOpenDegrees;
+    }
+
 
     public static double getInPerTick() {
         init();

@@ -8,10 +8,16 @@ import org.firstinspires.ftc.teamcode.config.RobotConfig;
 public class Pincher extends ServoSubassembly {
     private static final double MIN_SAFE_DEGREES = RobotConfig.getPincherMinSafeDegrees();
     private static final double MAX_SAFE_DEGREES = RobotConfig.getPincherMaxSafeDegrees();
+    private double openDegrees                   = RobotConfig.getPincherNormalOpenDegrees();
     private boolean isOpen;
 
     public Pincher (HardwareMap hwMap) {
         super (MIN_SAFE_DEGREES, MAX_SAFE_DEGREES, hwMap.get(Servo.class, "Pincher"));
+    }
+
+    public void setOpenToWide(){
+        openDegrees = MAX_SAFE_DEGREES;
+
     }
 
     public void toggle() {
@@ -24,9 +30,10 @@ public class Pincher extends ServoSubassembly {
     }
 
     public void open() {
-        setServoToAngle(MAX_SAFE_DEGREES);
+        setServoToAngle(openDegrees);
         isOpen = true;
     }
+
 
     public void close() {
         setServoToAngle(MIN_SAFE_DEGREES);
