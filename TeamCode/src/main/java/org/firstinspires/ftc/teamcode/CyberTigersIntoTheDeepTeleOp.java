@@ -160,15 +160,15 @@ public class CyberTigersIntoTheDeepTeleOp extends LinearOpMode {
                 wheelieBar.close();
                 disableAutoClose();
             } else if (gamepad2.dpad_right && gamepad2.back) {
-                viperSlideArm.prepareToHangHighSpecimen();
-                claw.prepareToHangHighSpecimen();
-                wheelieBar.close();
-                disableAutoClose();
-            } else if (gamepad2.dpad_up) {
                 viperSlideArm.prepareToPickUpWallSpecimen();
                 claw.prepareToPickUpWallSpecimen();
                 wheelieBar.close();
                 enableAutoClose();
+            } else if (gamepad2.dpad_up) {
+                viperSlideArm.prepareToHangHighSpecimen();
+                claw.prepareToHangHighSpecimen();
+                wheelieBar.close();
+                disableAutoClose();
             } else if (gamepad2.dpad_down) {
                 viperSlideArm.prepareToPickUpFieldSpecimen();
                 claw.prepareToPickUpFieldSpecimen();
