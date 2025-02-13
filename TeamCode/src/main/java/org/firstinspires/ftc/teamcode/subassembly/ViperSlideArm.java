@@ -27,7 +27,7 @@ public class ViperSlideArm {
         counts per rotation of the arm. We divide that by 360 to get the counts per degree. */
     final double ARM_TICKS_PER_DEGREE =
             28 // number of encoder ticks per rotation of the bare motor
-                    * 226233.0 / 3179.0 // This is the exact gear ratio of the 71.2:1 Yellow Jacket gearbox
+                    * 250047.0 / 4913.0 // This is the exact gear ratio of the 50.9:1 Yellow Jacket gearbox
                     * 100.0 / 20.0 // This is the external gear reduction, a 20T pinion gear that drives a 100T hub-mount gear
                     * 1/360.0; // we want ticks per degree, not per rotation
 
