@@ -83,11 +83,6 @@ public class AutonomousBaskets extends AutonomousOpMode {
         viperSlideArm.execute(armSpeed, slideSpeed);
     }
 
-    private void waitForViperSlideNotBusy(){
-        while(true){
-            if (!viperSlideArm.isBusy()) break;
-        }
-    }
 
     private void waitForViperSlideToBeWithinRange(double slideMm, double armDegrees){
         while(true){
@@ -192,7 +187,7 @@ public class AutonomousBaskets extends AutonomousOpMode {
         drive.setExtraCorrectionTimeDefault();
         pickUpSample3(1,0);
         waitForViperSlideArmToBeInRange(30);
-        claw.preparetoPickUpHorizontalAuto();
+        claw.prepareToPickUpHorizontalAuto();
         pickUpSample3(0.2,3);
         waitForViperSlideToBeReadyToPickupSample();
         sleep(150);
@@ -247,6 +242,13 @@ public class AutonomousBaskets extends AutonomousOpMode {
         claw.elbowStraight();
         viperSlideArm.retractViperSlide();
         viperSlideArm.execute();
+    }
+
+
+    private void waitForViperSlideNotBusy(){
+        while(true){
+            if (!viperSlideArm.isBusy()) break;
+        }
     }
     private void pickUpHorizontal(){
         viperSlideArm.pickUpHorizontalSampleAuto();

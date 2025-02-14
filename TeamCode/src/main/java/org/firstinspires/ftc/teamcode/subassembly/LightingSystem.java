@@ -9,7 +9,6 @@ import com.qualcomm.robotcore.eventloop.opmode.OpModeManagerNotifier;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.ftccommon.external.OnCreateEventLoop;
-import org.firstinspires.ftc.teamcode.config.RobotConfig;
 
 @SuppressWarnings("unused")
 public class LightingSystem implements OpModeManagerNotifier.Notifications {

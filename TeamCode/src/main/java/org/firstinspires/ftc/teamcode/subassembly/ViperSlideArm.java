@@ -58,7 +58,6 @@ public class ViperSlideArm {
     final double ARM_MINIMUM                                  =    0 * ARM_TICKS_PER_DEGREE;
     final double ARM_MAXIMUM                                  =  115 * ARM_TICKS_PER_DEGREE;
     final double ARM_SCORE_SAMPLE_IN_HIGH_BACKWARDS           =  115 * ARM_TICKS_PER_DEGREE;
-    final double ARM_PICKUP_PREPARE                           =   16 * ARM_TICKS_PER_DEGREE;
     final double ARM_PICKUP                                   =   12 * ARM_TICKS_PER_DEGREE;
     final double ARM_PICK_UP_FIRST_SPECIMEN_AUTO              =   11 * ARM_TICKS_PER_DEGREE;
     final double ARM_RAISE_VIPER_SLIDE_HIGHER                 =   20 * ARM_TICKS_PER_DEGREE;
@@ -217,33 +216,8 @@ public class ViperSlideArm {
         armPosition        = ARM_PICKUP;
         viperSlidePosition = VIPERSLIDE_THIRD_SAMPLE;
     }
-/*
-// These methods are used in the old baskets auto
-    public void prepareToPickupHorizontalSample(){
 
-        armPosition        = ARM_COLLECT;
-        viperSlidePosition = VIPERSLIDE_PICKUP_SAMPLE + 130;
-    }
-    public void pickUpHorizontalSampleAuto(){
-        armPosition        = ARM_COLLECT + (0.335 * ARM_TICKS_PER_DEGREE);
-        viperSlidePosition = VIPERSLIDE_PICKUP_SAMPLE + 470;
 
-    }
-    public void prepareToPickUpHorizontalPregame() {
-        armPosition        = ARM_CLEAR_BARRIER;
-        viperSlidePosition = VIPERSLIDE_COLLAPSED;
-    }
-    public void prepareToPickUpVerticalSampleAuto(){
-        armPosition        = ARM_COLLECT + (2 * ARM_TICKS_PER_DEGREE);
-        viperSlidePosition = VIPERSLIDE_COLLAPSED;
-
-    }
-    public void prepareToPickUp(){
-        armPosition        = ARM_PICKUP_PREPARE;
-        viperSlidePosition = VIPERSLIDE_FIRST_SAMPLE;
-    }
-
- */
 
     public void prepareToDropSampleHighBasket() {
         /* This is the correct height to score the sample in the HIGH BASKET*/
@@ -372,11 +346,13 @@ public class ViperSlideArm {
         ((DcMotorEx) viperSlideMotor).setVelocity(2100 * slideSpeed);
     }
 
-    public boolean isBusy(){
+   public boolean isBusy(){
 
         return viperSlideMotor.isBusy() || armMotor.isBusy();
 
     }
+
+
     public boolean isSlideAndArmWithinRange(double slideMm, double armDegrees){
         return isArmWithinRange(armDegrees) && isSlideWithinRange(slideMm);
     }
