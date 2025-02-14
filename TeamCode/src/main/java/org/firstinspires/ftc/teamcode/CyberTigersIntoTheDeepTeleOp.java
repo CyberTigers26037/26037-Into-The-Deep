@@ -184,7 +184,7 @@ public class CyberTigersIntoTheDeepTeleOp extends LinearOpMode {
             } else if (subDriverOp.wasJustPressed(GamepadKeys.Button.RIGHT_STICK_BUTTON)) {
                 claw.togglePincher();
                 disableAutoClose();
-                reEnableAutoCloseAfter();
+                reEnableAutoCloseAfterShortDelay();
             } else if (subDriverOp.wasJustPressed(GamepadKeys.Button.LEFT_STICK_BUTTON)) {
                 claw.toggleWristAngle();
 
@@ -231,7 +231,7 @@ public class CyberTigersIntoTheDeepTeleOp extends LinearOpMode {
     }
 
     //FailSafe jajajajaja done by me?
-    private void reEnableAutoCloseAfter() {
+    private void reEnableAutoCloseAfterShortDelay() {
         autoClosePincherEnableTime = System.currentTimeMillis() + (long) 500;
         autoClosePincherTimerEnabled = true;
     }
