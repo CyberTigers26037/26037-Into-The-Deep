@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.subassembly.Claw;
+import org.firstinspires.ftc.teamcode.subassembly.LimitSwitch;
 import org.firstinspires.ftc.teamcode.subassembly.ViperSlideArm;
 
 @SuppressWarnings("unused")
@@ -23,6 +24,7 @@ public class AutoPathingHelper extends OpMode {
     private MecanumDrive drive;
     private Claw claw;
     private ViperSlideArm viperSlideArm;
+
 
     private GamepadEx driverOp;
     private GamepadEx subDriverOp;
