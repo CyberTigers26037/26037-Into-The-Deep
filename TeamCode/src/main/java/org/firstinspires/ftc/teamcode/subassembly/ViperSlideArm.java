@@ -44,8 +44,8 @@ public class ViperSlideArm {
 
     final double ARM_COLLAPSED_INTO_ROBOT                     =    0;
     final double ARM_SCORE_SECOND_SPECIMEN_A                  =   55 * ARM_TICKS_PER_DEGREE;
-    final double ARM_COLLECT                                  =    9 * ARM_TICKS_PER_DEGREE;
-    final double ARM_CLEAR_BARRIER                            =   13 * ARM_TICKS_PER_DEGREE;
+    final double ARM_COLLECT                                  =   15 * ARM_TICKS_PER_DEGREE;
+    final double ARM_CLEAR_BARRIER                            =   15 * ARM_TICKS_PER_DEGREE;
     final double ARM_CHILL                                    =   10 * ARM_TICKS_PER_DEGREE;
     final double ARM_SCORE_SPECIMEN_LOW_CHAMBER               =   35 * ARM_TICKS_PER_DEGREE;
     final double ARM_SCORE_SPECIMEN_HIGH_CHAMBER              =   80 * ARM_TICKS_PER_DEGREE;
@@ -56,8 +56,8 @@ public class ViperSlideArm {
     final double ARM_ATTACH_HANGING_HOOK                      =  110 * ARM_TICKS_PER_DEGREE;
     final double ARM_WINCH_ROBOT                              =    0 * ARM_TICKS_PER_DEGREE;
     final double ARM_MINIMUM                                  =    0 * ARM_TICKS_PER_DEGREE;
-    final double ARM_MAXIMUM                                  =  115 * ARM_TICKS_PER_DEGREE;
-    final double ARM_SCORE_SAMPLE_IN_HIGH_BACKWARDS           =  115 * ARM_TICKS_PER_DEGREE;
+    final double ARM_MAXIMUM                                  =  116 * ARM_TICKS_PER_DEGREE;
+    final double ARM_SCORE_SAMPLE_IN_HIGH_BACKWARDS           =  116 * ARM_TICKS_PER_DEGREE;
     final double ARM_PICKUP                                   =   12 * ARM_TICKS_PER_DEGREE;
     final double ARM_PICK_UP_FIRST_SPECIMEN_AUTO              =   11 * ARM_TICKS_PER_DEGREE;
     final double ARM_RAISE_VIPER_SLIDE_HIGHER                 =   20 * ARM_TICKS_PER_DEGREE;
@@ -86,7 +86,7 @@ public class ViperSlideArm {
     final double VIPERSLIDE_PICKUP_SAMPLE                     = 102 * VIPERSLIDE_TICKS_PER_MM;
     final double VIPERSLIDE_FIRST_SAMPLE                      = 455 * VIPERSLIDE_TICKS_PER_MM;
     final double VIPERSLIDE_SECOND_SAMPLE                     = 390 * VIPERSLIDE_TICKS_PER_MM;
-    final double VIPERSLIDE_THIRD_SAMPLE                      = 375 * VIPERSLIDE_TICKS_PER_MM;
+    final double VIPERSLIDE_THIRD_SAMPLE                      = 345 * VIPERSLIDE_TICKS_PER_MM;
     final double VIPERSLIDE_FIELD_SPECIMEN                    =  97 * VIPERSLIDE_TICKS_PER_MM;
     final double VIPERSLIDE_SCORING_IN_HIGH_BASKET_BACKWARDS  = 460 * VIPERSLIDE_TICKS_PER_MM;
     final double VIPERSLIDE_HIGH_CHAMBER_BACKWARDS            = 105 * VIPERSLIDE_TICKS_PER_MM;

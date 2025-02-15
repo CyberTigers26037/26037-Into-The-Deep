@@ -195,9 +195,9 @@ public class CyberTigersIntoTheDeepTeleOp extends LinearOpMode {
             viperSlideArm.adjustArm(-gamepad2.right_stick_y * 3);
 
             if (gamepad2.right_bumper) {
-                viperSlideArm.adjustViperSlidePosition(10);
+                viperSlideArm.adjustViperSlidePosition(30);
             } else if (gamepad2.left_bumper) {
-                viperSlideArm.adjustViperSlidePosition(-10);
+                viperSlideArm.adjustViperSlidePosition(-30);
             }
             if (isAutoCloseEnabled()) {
                 if (claw.closeIfSampleDetected()) {
