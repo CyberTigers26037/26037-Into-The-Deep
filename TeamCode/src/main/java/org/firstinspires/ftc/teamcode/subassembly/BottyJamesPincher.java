@@ -2,22 +2,17 @@ package org.firstinspires.ftc.teamcode.subassembly;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.config.RobotConfig;
 
-public class Pincher extends ServoSubassembly {
-    private static final double MIN_SAFE_DEGREES = RobotConfig.getPincherMinSafeDegrees();
-    private static final double MAX_SAFE_DEGREES = RobotConfig.getPincherMaxSafeDegrees();
-    private double openDegrees                   = RobotConfig.getPincherNormalOpenDegrees();
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
+public class BottyJamesPincher extends ServoSubassembly {
+    private static final double MIN_SAFE_DEGREES = -20;
+    private static final double MAX_SAFE_DEGREES = 55;
+    private static final double OPEN_DEGREES     = 5;
     private boolean isOpen;
 
-    public Pincher (HardwareMap hwMap) {
-        super (MIN_SAFE_DEGREES, MAX_SAFE_DEGREES, hwMap.get(Servo.class, "Pincher"), true);
-    }
-
-    public void setOpenToWide(){
-        openDegrees = MAX_SAFE_DEGREES;
-
+    public BottyJamesPincher(HardwareMap hwMap) {
+        super (MIN_SAFE_DEGREES, MAX_SAFE_DEGREES, hwMap.get(Servo.class, "Pincher"), false);
     }
 
     public void toggle() {
@@ -30,7 +25,7 @@ public class Pincher extends ServoSubassembly {
     }
 
     public void open() {
-        setServoToAngle(openDegrees);
+        setServoToAngle(OPEN_DEGREES);
         isOpen = true;
     }
 

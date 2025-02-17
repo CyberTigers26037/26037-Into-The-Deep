@@ -10,7 +10,7 @@ public class Wrist extends ServoSubassembly {
     private boolean isStraight;
 
     public Wrist(HardwareMap hwMap) {
-        super (MIN_SAFE_DEGREES, MAX_SAFE_DEGREES, hwMap.get(Servo.class, "Wrist"));
+        super (MIN_SAFE_DEGREES, MAX_SAFE_DEGREES, hwMap.get(Servo.class, "Wrist"), true);
     }
 
     public void straight() {

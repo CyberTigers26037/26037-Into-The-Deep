@@ -14,6 +14,7 @@ public class BottyJamesLinearActuator {
     private static final double MAX_EXTENSION_TICKS = 180*LINEAR_ACTUATOR_TICKS_PER_MM ;
     private static final double CLOSE_TO_LIMIT_SWITCH_TICKS = 20*LINEAR_ACTUATOR_TICKS_PER_MM;
     private static final double CLOSE_TO_MAX_TICKS = 160*LINEAR_ACTUATOR_TICKS_PER_MM;
+    private double minimumExtensionTicks = 0;
 
     public BottyJamesLinearActuator(HardwareMap hardwareMap){
         linearActuatorMotor = hardwareMap.dcMotor.get("linearActuatorMotor");
@@ -42,10 +43,13 @@ public class BottyJamesLinearActuator {
     public void execute(){
 
         if(limitSwitch.isPressed()&&currentMotorPower<0){
-            currentMotorPower=0;
+            currentMotorPower = 0;
         }
         if (isInitialized){
             if (linearActuatorMotor.getCurrentPosition() > MAX_EXTENSION_TICKS && currentMotorPower > 0) {
+                currentMotorPower = 0;
+            }
+            if (linearActuatorMotor.getCurrentPosition() < minimumExtensionTicks && currentMotorPower < 0) {
                 currentMotorPower = 0;
             }
             if (linearActuatorMotor.getCurrentPosition() < CLOSE_TO_LIMIT_SWITCH_TICKS && currentMotorPower < 0) {
@@ -64,4 +68,7 @@ public class BottyJamesLinearActuator {
         return (int)(linearActuatorMotor.getCurrentPosition()/LINEAR_ACTUATOR_TICKS_PER_MM);
     }
 
+    public void setMinimumExtensionMm(double minimumExtensionMm) {
+        this.minimumExtensionTicks = minimumExtensionMm * LINEAR_ACTUATOR_TICKS_PER_MM;
+    }
 }

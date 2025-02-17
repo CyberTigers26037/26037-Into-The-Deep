@@ -10,7 +10,7 @@ public class Elbow extends ServoSubassembly {
     private static final double MAX_SAFE_DEGREES = 90;
 
     public Elbow(HardwareMap hwMap) {
-        super (MIN_SAFE_DEGREES, MAX_SAFE_DEGREES, hwMap.get(Servo.class, "Elbow"));
+        super (MIN_SAFE_DEGREES, MAX_SAFE_DEGREES, hwMap.get(Servo.class, "Elbow"), true);
     }
 
     public void sweep(){setServoToAngle(-7.6135);}
