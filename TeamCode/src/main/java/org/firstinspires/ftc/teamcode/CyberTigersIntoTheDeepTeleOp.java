@@ -29,8 +29,6 @@ import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-
 import org.firstinspires.ftc.teamcode.subassembly.Claw;
 import org.firstinspires.ftc.teamcode.subassembly.ViperSlideArm;
 import org.firstinspires.ftc.teamcode.subassembly.WheelieBar;
@@ -186,7 +184,7 @@ public class CyberTigersIntoTheDeepTeleOp extends LinearOpMode {
             } else if (subDriverOp.wasJustPressed(GamepadKeys.Button.RIGHT_STICK_BUTTON)) {
                 claw.togglePincher();
                 disableAutoClose();
-                reEnableAutoCloseAfter(500);
+                reEnableAutoCloseAfter();
             } else if (subDriverOp.wasJustPressed(GamepadKeys.Button.LEFT_STICK_BUTTON)) {
                 claw.toggleWristAngle();
 
@@ -197,9 +195,9 @@ public class CyberTigersIntoTheDeepTeleOp extends LinearOpMode {
             viperSlideArm.adjustArm(-gamepad2.right_stick_y * 3);
 
             if (gamepad2.right_bumper) {
-                viperSlideArm.adjustViperSlidePosition(10);
+                viperSlideArm.adjustViperSlidePosition(30);
             } else if (gamepad2.left_bumper) {
-                viperSlideArm.adjustViperSlidePosition(-10);
+                viperSlideArm.adjustViperSlidePosition(-30);
             }
             if (isAutoCloseEnabled()) {
                 if (claw.closeIfSampleDetected()) {
@@ -233,8 +231,8 @@ public class CyberTigersIntoTheDeepTeleOp extends LinearOpMode {
     }
 
     //FailSafe jajajajaja done by me?
-    private void reEnableAutoCloseAfter(long millis) {
-        autoClosePincherEnableTime = System.currentTimeMillis() + millis;
+    private void reEnableAutoCloseAfter() {
+        autoClosePincherEnableTime = System.currentTimeMillis() + (long) 500;
         autoClosePincherTimerEnabled = true;
     }
 

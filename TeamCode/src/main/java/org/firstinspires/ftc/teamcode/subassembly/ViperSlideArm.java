@@ -27,7 +27,7 @@ public class ViperSlideArm {
         counts per rotation of the arm. We divide that by 360 to get the counts per degree. */
     final double ARM_TICKS_PER_DEGREE =
             28 // number of encoder ticks per rotation of the bare motor
-                    * 226233.0 / 3179.0 // This is the exact gear ratio of the 71.2:1 Yellow Jacket gearbox
+                    * 250047.0 / 4913.0 // This is the exact gear ratio of the 50.9:1 Yellow Jacket gearbox
                     * 100.0 / 20.0 // This is the external gear reduction, a 20T pinion gear that drives a 100T hub-mount gear
                     * 1/360.0; // we want ticks per degree, not per rotation
 
@@ -44,8 +44,8 @@ public class ViperSlideArm {
 
     final double ARM_COLLAPSED_INTO_ROBOT                     =    0;
     final double ARM_SCORE_SECOND_SPECIMEN_A                  =   55 * ARM_TICKS_PER_DEGREE;
-    final double ARM_COLLECT                                  =    9 * ARM_TICKS_PER_DEGREE;
-    final double ARM_CLEAR_BARRIER                            =   13 * ARM_TICKS_PER_DEGREE;
+    final double ARM_COLLECT                                  =   15 * ARM_TICKS_PER_DEGREE;
+    final double ARM_CLEAR_BARRIER                            =   15 * ARM_TICKS_PER_DEGREE;
     final double ARM_CHILL                                    =   10 * ARM_TICKS_PER_DEGREE;
     final double ARM_SCORE_SPECIMEN_LOW_CHAMBER               =   35 * ARM_TICKS_PER_DEGREE;
     final double ARM_SCORE_SPECIMEN_HIGH_CHAMBER              =   80 * ARM_TICKS_PER_DEGREE;
@@ -56,9 +56,8 @@ public class ViperSlideArm {
     final double ARM_ATTACH_HANGING_HOOK                      =  110 * ARM_TICKS_PER_DEGREE;
     final double ARM_WINCH_ROBOT                              =    0 * ARM_TICKS_PER_DEGREE;
     final double ARM_MINIMUM                                  =    0 * ARM_TICKS_PER_DEGREE;
-    final double ARM_MAXIMUM                                  =  115 * ARM_TICKS_PER_DEGREE;
-    final double ARM_SCORE_SAMPLE_IN_HIGH_BACKWARDS           =  115 * ARM_TICKS_PER_DEGREE;
-    final double ARM_PICKUP_PREPARE                           =   16 * ARM_TICKS_PER_DEGREE;
+    final double ARM_MAXIMUM                                  =  116 * ARM_TICKS_PER_DEGREE;
+    final double ARM_SCORE_SAMPLE_IN_HIGH_BACKWARDS           =  116 * ARM_TICKS_PER_DEGREE;
     final double ARM_PICKUP                                   =   12 * ARM_TICKS_PER_DEGREE;
     final double ARM_PICK_UP_FIRST_SPECIMEN_AUTO              =   11 * ARM_TICKS_PER_DEGREE;
     final double ARM_RAISE_VIPER_SLIDE_HIGHER                 =   20 * ARM_TICKS_PER_DEGREE;
@@ -87,7 +86,7 @@ public class ViperSlideArm {
     final double VIPERSLIDE_PICKUP_SAMPLE                     = 102 * VIPERSLIDE_TICKS_PER_MM;
     final double VIPERSLIDE_FIRST_SAMPLE                      = 455 * VIPERSLIDE_TICKS_PER_MM;
     final double VIPERSLIDE_SECOND_SAMPLE                     = 390 * VIPERSLIDE_TICKS_PER_MM;
-    final double VIPERSLIDE_THIRD_SAMPLE                      = 375 * VIPERSLIDE_TICKS_PER_MM;
+    final double VIPERSLIDE_THIRD_SAMPLE                      = 345 * VIPERSLIDE_TICKS_PER_MM;
     final double VIPERSLIDE_FIELD_SPECIMEN                    =  97 * VIPERSLIDE_TICKS_PER_MM;
     final double VIPERSLIDE_SCORING_IN_HIGH_BASKET_BACKWARDS  = 460 * VIPERSLIDE_TICKS_PER_MM;
     final double VIPERSLIDE_HIGH_CHAMBER_BACKWARDS            = 130 * VIPERSLIDE_TICKS_PER_MM; // auto
@@ -217,33 +216,8 @@ public class ViperSlideArm {
         armPosition        = ARM_PICKUP;
         viperSlidePosition = VIPERSLIDE_THIRD_SAMPLE;
     }
-/*
-// These methods are used in the old baskets auto
-    public void prepareToPickupHorizontalSample(){
 
-        armPosition        = ARM_COLLECT;
-        viperSlidePosition = VIPERSLIDE_PICKUP_SAMPLE + 130;
-    }
-    public void pickUpHorizontalSampleAuto(){
-        armPosition        = ARM_COLLECT + (0.335 * ARM_TICKS_PER_DEGREE);
-        viperSlidePosition = VIPERSLIDE_PICKUP_SAMPLE + 470;
 
-    }
-    public void prepareToPickUpHorizontalPregame() {
-        armPosition        = ARM_CLEAR_BARRIER;
-        viperSlidePosition = VIPERSLIDE_COLLAPSED;
-    }
-    public void prepareToPickUpVerticalSampleAuto(){
-        armPosition        = ARM_COLLECT + (2 * ARM_TICKS_PER_DEGREE);
-        viperSlidePosition = VIPERSLIDE_COLLAPSED;
-
-    }
-    public void prepareToPickUp(){
-        armPosition        = ARM_PICKUP_PREPARE;
-        viperSlidePosition = VIPERSLIDE_FIRST_SAMPLE;
-    }
-
- */
 
     public void prepareToDropSampleHighBasket() {
         /* This is the correct height to score the sample in the HIGH BASKET*/
@@ -372,11 +346,13 @@ public class ViperSlideArm {
         ((DcMotorEx) viperSlideMotor).setVelocity(2100 * slideSpeed);
     }
 
-    public boolean isBusy(){
+   public boolean isBusy(){
 
         return viperSlideMotor.isBusy() || armMotor.isBusy();
 
     }
+
+
     public boolean isSlideAndArmWithinRange(double slideMm, double armDegrees){
         return isArmWithinRange(armDegrees) && isSlideWithinRange(slideMm);
     }
