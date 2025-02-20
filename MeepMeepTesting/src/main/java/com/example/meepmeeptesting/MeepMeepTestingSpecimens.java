@@ -26,42 +26,49 @@ public class MeepMeepTestingSpecimens {
         double robotObservationZoneX  = -TILE_WIDTH*0.5 + 2;
         double robotObservationY      = 34.5;
         double endHeading = Math.toRadians(270);
+        double robotObservationHangSpecimenY = 32;
 
 
-                myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(-10, robotStartingPositionY, Math.toRadians(-90)))
-                // Goes to bar and hangs
-                        .lineToY(33)
-                        .setTangent(90)
-                        .splineToLinearHeading(new Pose2d(-34,37, Math.toRadians(220)), Math.toRadians(180))
-                                        .turn(Math.toRadians(-90))
-                // Goes to push first field sample off of the field
-                        //.setTangent(Math.toRadians(90))
-                        //.splineToLinearHeading(new Pose2d(-47,38, Math.toRadians(270)), Math.toRadians(270))
-                        //.setTangent(Math.toRadians(270))
-                        //.splineToConstantHeading(new Vector2d(-47,18), Math.toRadians(-90)) // line
-                        //.setTangent(Math.toRadians(270))
-                        //.splineToLinearHeading(new Pose2d(-60,18, Math.toRadians(270)), Math.toRadians(90))
-                        // Pushes first field sample in then backs up
-                        /*.setTangent(Math.toRadians(90))
-                        .splineToConstantHeading(new Vector2d(-60,48), Math.toRadians(270))
-                        .setTangent(Math.toRadians(270))
-                        .splineToConstantHeading(new Vector2d(-60,16), Math.toRadians(270))
-                        // Pushes second field sample in then backs up
-                        /*.setTangent(Math.toRadians(270))
-                        .splineToLinearHeading(new Pose2d(-63,14, Math.toRadians(270)), Math.toRadians(90))
-                        //                                .lineToY(45)
-                        .setTangent(Math.toRadians(90))
-                        .splineToConstantHeading(new Vector2d(-57,48), Math.toRadians(-90))
-                        //                                .lineToY(16)
-                        .splineToConstantHeading(new Vector2d(-63,16), Math.toRadians(-90))*/
-                        // Pushes third field sample in then turns around to grab human player specimen
-                      /*  .setTangent(Math.toRadians(270))
-                        .splineToLinearHeading(new Pose2d(-62,17, Math.toRadians(90)), Math.toRadians(270))
-                        .lineToY(53)
-                        // Goes to drop off human player specimen
-                        .setTangent(Math.toRadians(-270))
-                        .splineToLinearHeading(new Pose2d(-10, 30, Math.toRadians(-90)), Math.toRadians(-90))
-*/
+        myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(-10, robotStartingPositionY, Math.toRadians(-90)))
+                .lineToY(robotObservationHangSpecimenY)
+        // Goes to push first field sample in
+                .setTangent(Math.toRadians(90))
+                .splineToLinearHeading(new Pose2d(-46,38, Math.toRadians(270)), Math.toRadians(270))
+                .splineToConstantHeading(new Vector2d(-46,18), Math.toRadians(270)) // line
+                .splineToSplineHeading(new Pose2d(-62,18, Math.toRadians(90)), Math.toRadians(90))
+               // .splineToLinearHeading(new Pose2d(-62,18, Math.toRadians(270)), Math.toRadians(90))  // Curve to the left
+        // Pushes first field sample in then backs up
+                .splineToSplineHeading(new Pose2d(-62,48, Math.toRadians(90)), Math.toRadians(270))
+                .splineToSplineHeading(new Pose2d(-62,18, Math.toRadians(90)), Math.toRadians(270))
+                .splineToSplineHeading(new Pose2d(-62,18, Math.toRadians(90)), Math.toRadians(90))
+              // .setTangent(Math.toRadians(270))
+                //.splineToConstantHeading(new Vector2d(-62,48), Math.toRadians(270))
+        // Pushes second field sample in then backs up
+                /*.splineToLinearHeading(new Pose2d(-52,50, Math.toRadians(90)), Math.toRadians(90))  // Curve to the left
+
+                // somethin
+                /*.setTangent(Math.toRadians(-180))  // #5spec Turns right (clockwise) before pushing the third sample in
+                .splineToLinearHeading(new Pose2d(-60,20, Math.toRadians(0)), Math.toRadians(-180)) // Turns clockwise to face right
+                // Face upwards to push the third sample in
+                .splineToLinearHeading(new Pose2d(-60, 20, Math.toRadians(90)), Math.toRadians(90)) // Turn upwards
+                .splineToConstantHeading(new Vector2d(-60,20), Math.toRadians(-90))
+                // Line
+                .setTangent(Math.toRadians(270))
+                .splineToConstantHeading(new Vector2d(-60,48), Math.toRadians(-90))
+
+
+                //.splineToConstantHeading(new Vector2d(-60, 20), Math.toRadians(-90))
+                //.splineToLinearHeading(new Pose2d(-60,20, Math.toRadians(90)), Math.toRadians(-180))
+                //.splineToConstantHeading(new Vector2d(-60, 20), Math.toRadians(90))
+
+                //.setTangent(Math.toRadians(270))
+                //.splineToConstantHeading(new Vector2d(-60, 53), Math.toRadians(270))
+                //.splineToLinearHeading(new Pose2d(-65,43, Math.toRadians(270)), Math.toRadians(90))
+
+                // Goes to drop off human player specimen
+                /*.setTangent(Math.toRadians(-270))
+                .splineToLinearHeading(new Pose2d(-10, 30, Math.toRadians(-90)), Math.toRadians(-90))*/
+
 
                       /*old code
                         //.setTangent(Math.toRadians(90))

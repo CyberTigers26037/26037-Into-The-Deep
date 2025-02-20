@@ -114,7 +114,7 @@ public class AutonomousSpecimens extends AutonomousOpMode {
     public void runAutonomous() {
         double robotStartingPositionY = 3 * TILE_HEIGHT - ROBOT_HEIGHT / 2;
         double robotStartingPositionX = -ROBOT_WIDTH / 2;
-        double robotObservationHangSpecimenY = 34;
+        double robotObservationHangSpecimenY = 33;
         double robotPivotPickupY = 41;
         double robotPivotPickupX = -34;
         double sigmaPickUpX = -49;
@@ -135,8 +135,75 @@ public class AutonomousSpecimens extends AutonomousOpMode {
         double robotSweepPositionX = -37;
 
 
-        // Nathan Code
+
+        // #Otylia Drops off pre-loaded specimen
         claw.pickupSample();
+        prepareToHangHighSpecimenBackwards();
+        Actions.runBlocking(drive.actionBuilder(drive.pose)
+                .lineToY(robotObservationHangSpecimenY)
+                .build());
+        claw.dropSample();
+        retractViperSlide();
+        drive.setExtraCorrectionTime(0);
+        // Goes to push first field sample in
+        Actions.runBlocking(drive.actionBuilder(drive.pose)
+               .setTangent(Math.toRadians(90))
+               .splineToLinearHeading(new Pose2d(-46,38, Math.toRadians(270)), Math.toRadians(270))
+               .setTangent(Math.toRadians(270))
+               .splineToConstantHeading(new Vector2d(-46,18), Math.toRadians(270)) // line
+               .setTangent(Math.toRadians(270))
+               .splineToLinearHeading(new Pose2d(-62,18, Math.toRadians(270)), Math.toRadians(90))  // curve
+                .build());
+        drive.setExtraCorrectionTime(0);
+        // Pushes first field sample in then backs up
+        Actions.runBlocking(drive.actionBuilder(drive.pose)
+            .lineToY(48)
+              //.splineToConstantHeading(new Vector2d(-62,48), Math.toRadians(270)) // line
+            .lineToY(16)
+              //.splineToConstantHeading(new Vector2d(-62,16), Math.toRadians(-90)) // line
+              .build());
+        drive.setExtraCorrectionTime(0);
+        // Pushes second field sample in then backs up
+      Actions.runBlocking(drive.actionBuilder(drive.pose)
+              .setTangent(Math.toRadians(270))
+              .splineToLinearHeading(new Pose2d(-62,17, Math.toRadians(270)), Math.toRadians(90)) // line
+              //.setTangent(Math.toRadians(90))
+              .splineToConstantHeading(new Vector2d(-62,48), Math.toRadians(270)) // line
+              .splineToConstantHeading(new Vector2d(-62,20), Math.toRadians(270))
+                       .build());
+        // Pushes third field sample in then turns around to grab a human player specimen
+       Actions.runBlocking(drive.actionBuilder(drive.pose)
+                .setTangent(Math.toRadians(-180))  // Turns right (clockwise) before pushing the third sample in
+                .splineToLinearHeading(new Pose2d(-60,20, Math.toRadians(0)), Math.toRadians(-180)) // Turns clockwise to face right
+              // Face upwards to push the third sample in
+                .splineToLinearHeading(new Pose2d(-60, 20, Math.toRadians(90)), Math.toRadians(90)) // Turn upwards
+                .splineToConstantHeading(new Vector2d(-60,20), Math.toRadians(270))
+              // Line
+                .setTangent(Math.toRadians(270))
+                .splineToConstantHeading(new Vector2d(-60,48), Math.toRadians(270)) // line
+                        .build());
+
+
+                // #5-spec... fail....Pushes third field sample in then turns around to grab a human player specimen
+       /*Actions.runBlocking(drive.actionBuilder(drive.pose)
+               .splineToLinearHeading(new Pose2d(-65,13, Math.toRadians(90)), Math.toRadians(270))
+               .splineToConstantHeading(new Vector2d(-65, 53), Math.toRadians(270))
+               /* .setTangent(Math.toRadians(270))
+                .splineToLinearHeading(new Pose2d(-65,13, Math.toRadians(90)), Math.toRadians(270))
+                .setTangent(Math.toRadians(270))
+                .splineToLinearHeading(new Pose2d(-65,53, Math.toRadians(270)), Math.toRadians(90))*/
+                //.build());
+        // Goes to drop off human player specimen
+        /*Actions.runBlocking(drive.actionBuilder(drive.pose)
+                .setTangent(Math.toRadians(-270))
+                .splineToLinearHeading(new Pose2d(-10, 30, Math.toRadians(-90)), Math.toRadians(-90))
+                .build());*/
+
+
+
+
+        // Nathan Code
+        /*claw.pickupSample();
         prepareToHangHighSpecimenBackwards();
         drive.setExtraCorrectionTime(0);
         // Goes to bar and hangs preloaded sample
@@ -276,7 +343,7 @@ public class AutonomousSpecimens extends AutonomousOpMode {
                 .setTangent(135)
                 .splineToLinearHeading(new Pose2d(observationZoneX,observationZoneY,Math.toRadians(270)),Math.toRadians(135))
                 .build());
-        drive.setExtraCorrectionTimeDefault();
+        drive.setExtraCorrectionTimeDefault();*/
 
 
         //Picks up first sample
@@ -378,57 +445,5 @@ public class AutonomousSpecimens extends AutonomousOpMode {
         drive.setExtraCorrectionTimeDefault();
 */
 
-
-
-
-
-
-        /*// Drops off pre-loaded specimen
-        claw.pickupSample();
-        prepareToHangHighSpecimenBackwards();
-        Actions.runBlocking(drive.actionBuilder(drive.pose)
-                .lineToY(robotObservationHangSpecimenY)
-                .build());
-        claw.dropSample();
-        retractViperSlide();
-        drive.setExtraCorrectionTime(0);
-        // Goes to push first field sample in
-       Actions.runBlocking(drive.actionBuilder(drive.pose)
-               .setTangent(Math.toRadians(90))
-               .splineToLinearHeading(new Pose2d(-46,38, Math.toRadians(270)), Math.toRadians(270))
-               .setTangent(Math.toRadians(270))
-               .splineToConstantHeading(new Vector2d(-46,18), Math.toRadians(-90)) // line
-               .setTangent(Math.toRadians(270))
-               .splineToLinearHeading(new Pose2d(-62,18, Math.toRadians(270)), Math.toRadians(90))  // curve
-                .build());
-        drive.setExtraCorrectionTime(0);
-        // Pushes first field sample in then backs up
-      Actions.runBlocking(drive.actionBuilder(drive.pose)
-              .lineToY(48)
-              .lineToY(16)
-              .build());
-        drive.setExtraCorrectionTime(0);
-        // Pushes second field sample in then backs up
-      Actions.runBlocking(drive.actionBuilder(drive.pose)
-               .setTangent(Math.toRadians(270))
-               .splineToLinearHeading(new Pose2d(-64,17, Math.toRadians(270)), Math.toRadians(90))
-               //                                .lineToY(45)
-               .setTangent(Math.toRadians(90))
-               .splineToConstantHeading(new Vector2d(-60,48), Math.toRadians(-90))
-               //                                .lineToY(16)
-               .splineToConstantHeading(new Vector2d(-64,16), Math.toRadians(-90))
-                       .build());
-        // Pushes third field sample in then turns around to grab a human player specimen
-       Actions.runBlocking(drive.actionBuilder(drive.pose)
-                .setTangent(Math.toRadians(270))
-                .splineToLinearHeading(new Pose2d(-65,13, Math.toRadians(90)), Math.toRadians(270))
-                .setTangent(Math.toRadians(270))
-                .splineToLinearHeading(new Pose2d(-65,53, Math.toRadians(270)), Math.toRadians(90))
-                .build());
-        // Goes to drop off human player specimen
-        Actions.runBlocking(drive.actionBuilder(drive.pose)
-                .setTangent(Math.toRadians(-270))
-                .splineToLinearHeading(new Pose2d(-10, 30, Math.toRadians(-90)), Math.toRadians(-90))
-                .build());*/
     }
 }
