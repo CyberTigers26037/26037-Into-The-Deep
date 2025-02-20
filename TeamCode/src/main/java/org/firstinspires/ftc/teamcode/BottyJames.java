@@ -94,8 +94,8 @@ public class BottyJames extends LinearOpMode {
         double armTurn = gamepad1.right_stick_x;
         double slidePower = -gamepad1.right_stick_y;
 
-        leftPower    = Range.clip(drive + turn, -1.0, 1.0);
-        rightPower   = Range.clip(drive - turn, -1.0, 1.0);
+        leftPower    = Range.clip(drive + turn, -0.5, 0.5);
+        rightPower   = Range.clip(drive - turn, -0.5, 0.5);
         leftDrive.setPower(leftPower);
         rightDrive.setPower(rightPower);
         armWormDrive.setMotorPower(armTurn);

@@ -8,7 +8,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class BottyJamesPincher extends ServoSubassembly {
     private static final double MIN_SAFE_DEGREES = -20;
     private static final double MAX_SAFE_DEGREES = 55;
-    private static final double OPEN_DEGREES     = 5;
+    private static final double OPEN_DEGREES     = 8;
     private boolean isOpen;
 
     public BottyJamesPincher(HardwareMap hwMap) {
