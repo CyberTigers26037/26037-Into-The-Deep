@@ -110,7 +110,7 @@ public class AutonomousBaskets extends AutonomousOpMode {
     }
 
     public void runAutonomous() {
-        double robotBasketDeliveryFirstSampleLocationX =   58;
+        double robotBasketDeliveryFirstSampleLocationX =   61;
         double robotBasketDeliveryFirstSampleLocationY =   51;
         double thirdSampleLocationX                    = 58.5;
         double thirdSampleLocationY                    =   45;
@@ -145,7 +145,7 @@ public class AutonomousBaskets extends AutonomousOpMode {
         prepareToDriveArmUp();
         waitForViperSlideToBeReadyToDrive();
         // Drop first sample in
-        drive.setExtraCorrectionTime(0.5);
+        drive.setExtraCorrectionTime(0.75);
         Actions.runBlocking(drive.actionBuilder(drive.pose)
                 .turnTo(Math.toRadians(240))
                 .build());
@@ -157,7 +157,7 @@ public class AutonomousBaskets extends AutonomousOpMode {
         prepareToDriveArmUp();
         // Pick up second sample
         Actions.runBlocking(drive.actionBuilder(drive.pose)
-                .turnTo(Math.toRadians(269.5))
+                .turnTo(Math.toRadians(270.8))
                 .build());
         sleep(200);
         pickUpSample2(0.7,3);
