@@ -20,6 +20,7 @@ public class BottyJames extends LinearOpMode {
     private BottyJamesLinearActuator armActuator;
     private BottyJamesWormDriveArm armWormDrive;
     private boolean previousRightStickButton;
+    private boolean previousButtonA;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -89,8 +90,8 @@ public class BottyJames extends LinearOpMode {
     double leftPower;
     double rightPower;
 
-        double drive = gamepad1.left_stick_y;
-        double turn  =  -gamepad1.left_stick_x;
+        double drive = gamepad1.left_stick_y * 0.5;
+        double turn  =  -gamepad1.left_stick_x * 0.5;
         double armTurn = gamepad1.right_stick_x;
         double slidePower = -gamepad1.right_stick_y;
 
@@ -103,12 +104,8 @@ public class BottyJames extends LinearOpMode {
         armActuator.execute();
         armWormDrive.execute();
 
-        if (gamepad1.a) {
-            claw.openPincher();
-            claw.elbowDown();
-        }
-        if (gamepad1.b) {
-            claw.closePincher();
+        if (gamepad1.a && !previousButtonA) {
+            claw.togglePincher();
         }
         if (gamepad1.dpad_up) {
             claw.elbowStraight();
@@ -120,6 +117,7 @@ public class BottyJames extends LinearOpMode {
             claw.togglePincher();
         }
         previousRightStickButton = gamepad1.right_stick_button;
+        previousButtonA = gamepad1.a;
 
 
         // Show the elapsed game time and wheel power.
