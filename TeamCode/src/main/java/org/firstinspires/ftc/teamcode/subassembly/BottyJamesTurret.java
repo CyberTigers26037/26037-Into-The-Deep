@@ -11,6 +11,8 @@ public class BottyJamesTurret {
     private final Servo leftFireMotorServo;
     private final Servo rightFireMotorServo;
     private final Servo firingPinServo;
+    private final Servo bearingServo;
+    private final Servo elevationServo;
     private boolean currentlyFiring;
     private static final double FIRE_SPEED = 0.25;
     private final double FIRE_ZERO_POSITION = 0.5;
@@ -33,6 +35,21 @@ public class BottyJamesTurret {
         setServoRange(leftFireMotorServo);
         setServoRange(rightFireMotorServo);
         firingPinServo.setPosition(FIRE_ZERO_POSITION);
+
+        bearingServo = hardwareMap.get(Servo.class, "BearingServoTurret");
+        elevationServo = hardwareMap.get(Servo.class, "ElevationServoTurret");
+        elevationServo.setPosition(0.5);
+        bearingServo.setPosition(0.5);
+    }
+
+    public void aim(double bearingDegrees, double elevationDegrees) {
+        setServoToAngle(bearingServo, bearingDegrees);
+        setServoToAngle(elevationServo, elevationDegrees);
+    }
+
+    private void setServoToAngle(Servo servo, double degrees){
+        double pos = ((degrees / 135) + 1) / 2;
+        servo.setPosition(pos);
     }
 
     public void execute() {
