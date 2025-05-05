@@ -10,10 +10,10 @@ import org.firstinspires.ftc.teamcode.subassembly.BottyJamesLinearActuator;
 import org.firstinspires.ftc.teamcode.subassembly.BottyJamesWormDriveArm;
 
 
-@TeleOp(name= "BottyJamesDEMO")
+@TeleOp(name= "BottyJamesCandyArm")
 
 @SuppressWarnings("unused")
-public class BottyJames extends LinearOpMode {
+public class BottyJamesWithCandyArm extends LinearOpMode {
     private DcMotor leftDrive = null;
     private DcMotor rightDrive = null;
     private BottyJamesClaw claw;

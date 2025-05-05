@@ -21,11 +21,11 @@ public class BottyJamesTurret {
     private static final long FIRE_TIMELINE_START_MOTORS = 0;
     private static final long FIRE_TIMELINE_EXTEND_FIRING_PIN1 = 250;
     private static final long FIRE_TIMELINE_RETRACT_FIRING_PIN1 = 500;
-    private static final long FIRE_TIMELINE_EXTEND_FIRING_PIN2 = 750;
-    private static final long FIRE_TIMELINE_RETRACT_FIRING_PIN2 = 1000;
-    private static final long FIRE_TIMELINE_EXTEND_FIRING_PIN3 = 1250;
-    private static final long FIRE_TIMELINE_RETRACT_FIRING_PIN3 = 1500;
-    private static final long FIRE_TIMELINE_STOP_MOTORS = 1750;
+//    private static final long FIRE_TIMELINE_EXTEND_FIRING_PIN2 = 750;
+//    private static final long FIRE_TIMELINE_RETRACT_FIRING_PIN2 = 1000;
+//    private static final long FIRE_TIMELINE_EXTEND_FIRING_PIN3 = 1250;
+//    private static final long FIRE_TIMELINE_RETRACT_FIRING_PIN3 = 1500;
+    private static final long FIRE_TIMELINE_STOP_MOTORS = 750;
     private double currentFiringSpeed;
     private static final double FIRE_SLOW_DOWN_DECREMENT = 0.02;
     public BottyJamesTurret(HardwareMap hardwareMap){
@@ -63,18 +63,18 @@ public class BottyJamesTurret {
                     currentlyFiring = false;
                 }
             }
-            else if (System.currentTimeMillis() > firingStartTime + FIRE_TIMELINE_RETRACT_FIRING_PIN3) {
-                firingPinServo.setPosition(FIRE_ZERO_POSITION);
-            }
-            else if (System.currentTimeMillis() > firingStartTime + FIRE_TIMELINE_EXTEND_FIRING_PIN3) {
-                firingPinServo.setPosition(FIRE_FIRE_POSITION);
-            }
-            else if (System.currentTimeMillis() > firingStartTime + FIRE_TIMELINE_RETRACT_FIRING_PIN2) {
-                firingPinServo.setPosition(FIRE_ZERO_POSITION);
-            }
-            else if (System.currentTimeMillis() > firingStartTime + FIRE_TIMELINE_EXTEND_FIRING_PIN2) {
-                firingPinServo.setPosition(FIRE_FIRE_POSITION);
-            }
+//            else if (System.currentTimeMillis() > firingStartTime + FIRE_TIMELINE_RETRACT_FIRING_PIN3) {
+//                firingPinServo.setPosition(FIRE_ZERO_POSITION);
+//            }
+//            else if (System.currentTimeMillis() > firingStartTime + FIRE_TIMELINE_EXTEND_FIRING_PIN3) {
+//                firingPinServo.setPosition(FIRE_FIRE_POSITION);
+//            }
+//            else if (System.currentTimeMillis() > firingStartTime + FIRE_TIMELINE_RETRACT_FIRING_PIN2) {
+//                firingPinServo.setPosition(FIRE_ZERO_POSITION);
+//            }
+//            else if (System.currentTimeMillis() > firingStartTime + FIRE_TIMELINE_EXTEND_FIRING_PIN2) {
+//                firingPinServo.setPosition(FIRE_FIRE_POSITION);
+//            }
             else if (System.currentTimeMillis() > firingStartTime + FIRE_TIMELINE_RETRACT_FIRING_PIN1) {
                 firingPinServo.setPosition(FIRE_ZERO_POSITION);
             }
