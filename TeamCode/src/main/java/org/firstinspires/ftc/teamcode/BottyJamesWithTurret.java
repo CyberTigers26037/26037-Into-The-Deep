@@ -45,7 +45,7 @@ public class BottyJamesWithTurret extends LinearOpMode {
             AprilTagPoseFtc detectedTagPose = detectAprilTag();
 
             if(detectedTagPose != null) {
-                turret.aim(-detectedTagPose.bearing, detectedTagPose.elevation + 15);
+                turret.aim(-detectedTagPose.bearing, detectedTagPose.elevation + 15 + 4.5);
                 if(gamepad1.right_trigger > 0.5){
                     turret.startFiring();
                 }
@@ -63,6 +63,9 @@ public class BottyJamesWithTurret extends LinearOpMode {
         leftDrive.setDirection(DcMotor.Direction.REVERSE);
         rightDrive.setDirection(DcMotor.Direction.FORWARD);
         turret = new BottyJamesTurret(hardwareMap);
+        turret.aim(0,9.5);
+        turret.execute();
+        turret.initializeFiringMotors();
         telemetry.addData("Status", "Initialized");
 
     }

@@ -93,6 +93,23 @@ public class BottyJamesTurret {
         currentlyFiring = true;
     }
 
+    public void initializeFiringMotors() {
+        leftFireMotorServo.setPosition(1);
+        rightFireMotorServo.setPosition(1);
+        sleep(200);
+        leftFireMotorServo.setPosition(0);
+        rightFireMotorServo.setPosition(0);
+        sleep(200);
+    }
+
+    public final void sleep(long milliseconds) {
+        try {
+            Thread.sleep(milliseconds);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
     private void setServoRange(Servo servo) {
         if(servo.getController() instanceof ServoControllerEx) {
             ServoControllerEx controller = (ServoControllerEx) servo.getController();
