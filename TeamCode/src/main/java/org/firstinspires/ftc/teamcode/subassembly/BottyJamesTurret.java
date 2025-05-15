@@ -14,7 +14,7 @@ public class BottyJamesTurret {
     private final Servo bearingServo;
     private final Servo elevationServo;
     private boolean currentlyFiring;
-    private static final double FIRE_SPEED = 0.25;
+    private static final double FIRE_SPEED = 0.5;
     private final double FIRE_ZERO_POSITION = 0.5;
     private static final double FIRE_FIRE_POSITION = 0.3;
     private long firingStartTime;
